@@ -26,14 +26,17 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end align-center" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item fs-5 px-2">
+                <li class="nav-item fs-5">
                     <a class="nav-link active" aria-current="page" href="/products/all">Products</a>
                 </li>
-                <li class="nav-item fs-5 px-1">
+                <li class="nav-item fs-5">
                     <a class="nav-link active" aria-current="page" href="/giftcard">Gift Cards</a>
                 </li>
-                <li class="nav-item fs-5 px-2">
+                <li class="nav-item fs-5">
                     <a class="nav-link active" aria-current="page" href="/contacts">Contact</a>
+                </li>
+                <li class="nav-item fs-5">
+                    <a class="nav-link active" aria-current="page" href="/users/service">Service</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
@@ -54,52 +57,52 @@
     </div>
 </nav>
 
+
 <div class="container-lg">
 
     <div class="text-center pt-5">
-        <h2>REGISTER</h2>
+        <h2>ADD BELT</h2>
     </div>
     <div class="row justify-content-center my-5">
         <div class="col-lg-6">
 
             <form>
-                <label for="email" class="form-label">Email address:</label>
+                <label for="brand" class="form-label">Brand:</label>
                 <div class="input-group mb-4">
-                    <span class="input-group-text">
-                        <i class="bi bi-envelope-fill"></i>
-                    </span>
-                    <input type="text" id="email" class="form-control" placeholder="e.g. email@example.com"/>
+                    <input type="text" id="brand" class="form-control" placeholder="Brand..."/>
                 </div>
 
-                <label for="firstName" class="form-label">First Name:</label>
+                <label for="name" class="form-label">Name:</label>
                 <div class="input-group mb-4">
-                    <span class="input-group-text">
-                        <i class="bi bi-person-fill"></i>
-                    </span>
-                    <input type="text" id="firstName" class="form-control" placeholder="First name..."/>
-                </div>
-                <label for="lastName" class="form-label">Last Name:</label>
-                <div class="input-group mb-4">
-                    <span class="input-group-text">
-                        <i class="bi bi-person-fill"></i>
-                    </span>
-                    <input type="text" id="lastName" class="form-control" placeholder="Last name..."/>
+                    <input type="text" id="name" class="form-control" placeholder="Name..."/>
                 </div>
 
-                <label for="password" class="form-label">Password:</label>
+                <label for="description" class="form-label">Description:</label>
+                <div class="input-group mb-4">
+                    <input type="text" id="description" class="form-control" placeholder="Description..."/>
+                </div>
+
+                <label for="price" class="form-label">Price:</label>
+                <div class="input-group mb-4">
+                    <input type="number" id="price" class="form-control" placeholder="Price..."/>
+                </div>
+
+                <label for="materialType" class="form-label">Material Type:</label>
                 <div class="mb-4 input-group">
-                    <span class="input-group-text">
-                        <i class="bi bi-key"></i>
-                    </span>
-                    <input type="text" id="password" class="form-control"/>
+                    <select id="materialType" class="form-select" aria-label="Default select example">
+                        <option selected>Select Material Type</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                    </select>
                 </div>
 
-                <label for="confirmPassword" class="form-label">Confirm Password:</label>
+                <label for="leverType" class="form-label">Lever Type:</label>
                 <div class="mb-4 input-group">
-                    <span class="input-group-text">
-                        <i class="bi bi-key"></i>
-                    </span>
-                    <input type="text" id="confirmPassword" class="form-control"/>
+                    <select id="leverType" class="form-select" aria-label="Default select example">
+                        <option selected>Select Lever Type</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                    </select>
                 </div>
 
                 <div class="my-5 text-center">
@@ -111,8 +114,9 @@
     </div>
 </div>
 
+
 <!-- FOOTER -->
-<div class="container pt-4 border-top">
+<div class="container py-4 border-top">
     <footer class="mt-auto">
         <div class="row">
             <div class="col-2">
@@ -166,12 +170,9 @@
         <div class="d-flex justify-content-between py-4 mt-4 border-top">
             <p>© 2022 Educational purposes only. No rights reserved.</p>
             <ul class="list-unstyled d-flex pe-5">
-                <li class="ms-3"><a class="link-dark" style="font-size: 21px" href="#"><i class="bi bi-twitter"></i></a>
-                </li>
-                <li class="ms-3"><a class="link-dark" style="font-size: 21px" href="#"><i
-                        class="bi bi-instagram"></i></a></li>
-                <li class="ms-3"><a class="link-dark" style="font-size: 21px" href="#"><i
-                        class="bi bi-facebook"></i></a></li>
+                <li class="ms-3"><a class="link-dark" style="font-size: 21px" href="#"><i class="bi bi-twitter"></i></a></li>
+                <li class="ms-3"><a class="link-dark" style="font-size: 21px" href="#"><i class="bi bi-instagram"></i></a></li>
+                <li class="ms-3"><a class="link-dark" style="font-size: 21px" href="#"><i class="bi bi-facebook"></i></a></li>
             </ul>
         </div>
     </footer>

@@ -45,7 +45,6 @@ public class UserService {
                 .setFirstName("Admin")
                 .setLastName("Adminov")
                 .setEmail("admin@mail.com")
-                .setUsername("admin123")
                 .setPassword(this.passwordEncoder.encode("asdasd"));
 
         this.userRepository.save(admin);
@@ -56,7 +55,6 @@ public class UserService {
                 .setFirstName("Moderator")
                 .setLastName("Moderatorov")
                 .setEmail("moderator@mail.com")
-                .setUsername("moderator123")
                 .setPassword(this.passwordEncoder.encode("asdasd"));
 
         this.userRepository.save(moderator);
@@ -67,7 +65,6 @@ public class UserService {
                 .setFirstName("User")
                 .setLastName("Userov")
                 .setEmail("user@mail.com")
-                .setUsername("user123")
                 .setPassword(this.passwordEncoder.encode("asdasd"));
 
         this.userRepository.save(user);

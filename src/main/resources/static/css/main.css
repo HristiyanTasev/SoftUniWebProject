@@ -1,0 +1,36 @@
+.masthead {
+    background-size: cover;
+    min-height: 80vh;
+    position: relative;
+    color: white;
+}
+
+.color-overlay {
+    position: absolute;
+    background-color: rgba(0,0,0,.4);
+    height: 100%;
+    width: 100%;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+.single-col {
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.dark-bg {
+    background-color: #363636;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .masthead {
+        min-height: 50vh;
+    }
+    h1 {
+        font-size: calc(1.525rem + 3.3vw);
+    }
+}

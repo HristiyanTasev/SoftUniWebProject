@@ -8,7 +8,7 @@ import java.util.Set;
 public class UserEntity extends BaseEntity{
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String email;
 
     @Column(nullable = false)
     private String firstName;
@@ -16,11 +16,11 @@ public class UserEntity extends BaseEntity{
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
     @Column(nullable = false)
     private String password;
+
+    @OneToOne
+    private CartEntity cart;
 
     @ManyToMany
     @JoinTable(name = "users_roles",
@@ -29,15 +29,6 @@ public class UserEntity extends BaseEntity{
     private Set<UserRoleEntity> roles;
 
     public UserEntity() {
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public UserEntity setUsername(String username) {
-        this.username = username;
-        return this;
     }
 
     public String getFirstName() {
@@ -82,6 +73,15 @@ public class UserEntity extends BaseEntity{
 
     public UserEntity setRoles(Set<UserRoleEntity> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public CartEntity getCart() {
+        return cart;
+    }
+
+    public UserEntity setCart(CartEntity cart) {
+        this.cart = cart;
         return this;
     }
 }

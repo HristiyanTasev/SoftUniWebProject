@@ -11,119 +11,183 @@
 
     <title>Elite Sports Equipment</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-md navbar-dark bg-dark pt-5 pb-5">
-    <div class="container-lg">
-        <a class="navbar-brand me-5 fs-4" href="/">
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark pt-5 pb-5">
+        <div class="container-lg">
+            <a class="navbar-brand me-5 fs-4" href="/">
             <span class="fw-bold">
             Elite Sports Equipment
             </span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end align-center" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item fs-5 px-2">
-                    <a class="nav-link active" aria-current="page" href="/products/all">Products</a>
-                </li>
-                <li class="nav-item fs-5 px-1">
-                    <a class="nav-link active" aria-current="page" href="/giftcard">Gift Cards</a>
-                </li>
-                <li class="nav-item fs-5 px-2">
-                    <a class="nav-link active" aria-current="page" href="/contacts">Contact</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item px-2">
-                    <a class="nav-link active" style="font-size: 25px" aria-current="page" href="/user/profile"><i
-                            class="bi bi-person"></i></a>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link active" style="font-size: 22px" aria-current="page" href="/user/favourites"><i
-                            class="bi bi-heart"></i></a>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link active" style="font-size: 22px" aria-current="page" href="/user/cart"><i
-                            class="bi bi-bag"></i></a>
-                </li>
-            </ul>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end align-center" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item fs-5">
+                        <a class="nav-link active" aria-current="page" href="/products/all">Products</a>
+                    </li>
+                    <li class="nav-item fs-5">
+                        <a class="nav-link active" aria-current="page" href="/giftcard">Gift Cards</a>
+                    </li>
+                    <li class="nav-item fs-5">
+                        <a class="nav-link active" aria-current="page" href="/contacts">Contact</a>
+                    </li>
+                    <li class="nav-item fs-5">
+                        <a class="nav-link active" aria-current="page" href="/users/service">Service</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item px-2">
+                        <a class="nav-link active" style="font-size: 25px" aria-current="page" href="/user/profile"><i
+                                class="bi bi-person"></i></a>
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link active" style="font-size: 22px" aria-current="page"
+                           href="/user/favourites"><i
+                                class="bi bi-heart"></i></a>
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link active" style="font-size: 22px" aria-current="page" href="/user/cart"><i
+                                class="bi bi-bag"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="masthead" style="background-image: url('/static/images/landing-page.png');">
+        <div class="color-overlay d-flex justify-content-center align-items-center">
+            <div class="single-col container text-center">
+                <h1 class="pb-3">Only the best quality products!</h1>
+                <a href="#" class="btn btn-outline-light stretched-link"><strong>Explore All Products</strong></a>
+            </div>
         </div>
     </div>
-</nav>
 
+    <div class="container py-3 text-center">
 
+        <hr class="featurette-divider my-3">
 
+        <h1>
+            PRODUCTS ON SALE
+        </h1>
 
-
-<!-- FOOTER -->
-<div class="container py-4 border-top">
-    <footer>
-        <div class="row">
-            <div class="col-2">
-                <h5>Pages</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="/" class="nav-link p-0 text-muted">Home</a></li>
-                    <li class="nav-item mb-2"><a href="/products/all" class="nav-link p-0 text-muted">Products</a></li>
-                    <li class="nav-item mb-2"><a href="/products/giftcard" class="nav-link p-0 text-muted">Gift
-                        Cards</a></li>
-                </ul>
-            </div>
-
-            <div class="col-2">
-                <h5>Products</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="/products/belts" class="nav-link p-0 text-muted">Belts</a></li>
-                    <li class="nav-item mb-2"><a href="/products/straps" class="nav-link p-0 text-muted">Straps</a></li>
-                    <li class="nav-item mb-2"><a href="/products/sleeves" class="nav-link p-0 text-muted">Sleeves</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="col-2">
-                <h5>Contacts</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2 text-muted">
-                        <i class="bi bi-house-fill pe-2"></i>Sofia, Address, BG
-                    </li>
-                    <li class="nav-item mb-2 text-muted">
-                        <i class="bi bi-envelope-fill pe-2"></i>example@email.com
-                    </li>
-                    <li class="nav-item mb-2 text-muted">
-                        <i class="bi bi-phone-vibrate-fill pe-2"></i>+000 000 0000
-                    </li>
-                </ul>
-            </div>
-
-            <div class="col-4 offset-1">
-                <form>
-                    <h5>Subscribe to our newsletter</h5>
-                    <p>Monthly digest of whats new and exciting from us.</p>
-                    <div class="d-flex w-100 gap-2">
-                        <label for="newsletter1" class="visually-hidden">Email address</label>
-                        <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
-                        <button class="btn btn-dark" type="button">Subscribe</button>
+        <div class="row py-4">
+            <div class="col-lg-4">
+                <div class="card" >
+                    <img src="/static/images/knee-sleeve.png" class="rounded" alt="...">
+                    <div class="card-body">
+                        <h2>Item name</h2>
+                        <p class="text-danger fs-4">$45.99</p>
+                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
                     </div>
-                </form>
-            </div>
+                </div>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <div class="card">
+                    <img src="/static/images/knee-sleeve.png" class="rounded" alt="...">
+                    <div class="card-body">
+                        <h2>Item name</h2>
+                        <p class="text-danger fs-4">$45.99</p>
+                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
+                    </div>
+                </div>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <div class="card">
+                    <img src="/static/images/knee-sleeve.png" class="rounded" alt="...">
+                    <div class="card-body">
+                        <h2>Item name</h2>
+                        <p class="text-danger fs-4">$45.99</p>
+                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
+                    </div>
+                </div>
+            </div><!-- /.col-lg-4 -->
         </div>
+    </div>
+    <!-- FOOTER -->
+    <div class="container py-4 border-top">
+        <footer class="mt-auto">
+            <div class="row">
+                <div class="col-2">
+                    <h5>Pages</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="/" class="nav-link p-0 text-muted">Home</a></li>
+                        <li class="nav-item mb-2"><a href="/products/all" class="nav-link p-0 text-muted">Products</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="/products/giftcard" class="nav-link p-0 text-muted">Gift
+                            Cards</a></li>
+                    </ul>
+                </div>
 
-        <div class="d-flex justify-content-between py-4 mt-4 border-top">
-            <p>© 2022 Educational purposes only. No rights reserved.</p>
-            <ul class="list-unstyled d-flex pe-5">
-                <li class="ms-3"><a class="link-dark" style="font-size: 21px" href="#"><i class="bi bi-twitter"></i></a></li>
-                <li class="ms-3"><a class="link-dark" style="font-size: 21px" href="#"><i class="bi bi-instagram"></i></a></li>
-                <li class="ms-3"><a class="link-dark" style="font-size: 21px" href="#"><i class="bi bi-facebook"></i></a></li>
-            </ul>
-        </div>
-    </footer>
-</div>
+                <div class="col-2">
+                    <h5>Products</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="/products/belts" class="nav-link p-0 text-muted">Belts</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="/products/straps" class="nav-link p-0 text-muted">Straps</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="/products/sleeves"
+                                                     class="nav-link p-0 text-muted">Sleeves</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-2">
+                    <h5>Contacts</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2 text-muted">
+                            <i class="bi bi-house-fill pe-2"></i>Sofia, Address, BG
+                        </li>
+                        <li class="nav-item mb-2 text-muted">
+                            <i class="bi bi-envelope-fill pe-2"></i>example@email.com
+                        </li>
+                        <li class="nav-item mb-2 text-muted">
+                            <i class="bi bi-phone-vibrate-fill pe-2"></i>+000 000 0000
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-3 offset-1">
+                    <form>
+                        <h5>Subscribe to our newsletter</h5>
+                        <p>Monthly digest of whats new and exciting from us.</p>
+                        <div class="d-flex w-100 gap-2">
+                            <label for="newsletter1" class="visually-hidden">Email address</label>
+                            <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
+                            <button class="btn btn-dark" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between py-4 mt-4 border-top">
+                <p>© 2022 Educational purposes only. No rights reserved.</p>
+                <ul class="list-unstyled d-flex pe-5">
+                    <li class="ms-3"><a class="link-dark" style="font-size: 21px" href="#"><i class="bi bi-twitter"></i></a>
+                    </li>
+                    <li class="ms-3"><a class="link-dark" style="font-size: 21px" href="#"><i
+                            class="bi bi-instagram"></i></a></li>
+                    <li class="ms-3"><a class="link-dark" style="font-size: 21px" href="#"><i
+                            class="bi bi-facebook"></i></a></li>
+                </ul>
+            </div>
+        </footer>
+
+    </div>
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+
 
 </body>
 </html>

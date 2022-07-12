@@ -25,9 +25,6 @@ public class CartEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "sleeve_id", referencedColumnName = "id"))
     private List<SleeveEntity> sleeves;
 
-    @OneToOne
-    private UserEntity buyer;
-
     public CartEntity() {
     }
 
@@ -58,12 +55,5 @@ public class CartEntity extends BaseEntity {
         return this;
     }
 
-    public UserEntity getBuyer() {
-        return buyer;
-    }
 
-    public CartEntity setBuyer(UserEntity buyer) {
-        this.buyer = buyer;
-        return this;
-    }
 }
