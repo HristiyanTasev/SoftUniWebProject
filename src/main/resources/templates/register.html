@@ -62,13 +62,24 @@
     <div class="row justify-content-center my-5">
         <div class="col-lg-6">
 
-            <form>
+            <form
+                    th:action="@{/users/register}"
+                    th:method="POST"
+                    th:object="${userRegisterDTO}">
                 <label for="email" class="form-label">Email address:</label>
                 <div class="input-group mb-4">
                     <span class="input-group-text">
                         <i class="bi bi-envelope-fill"></i>
                     </span>
-                    <input type="text" id="email" class="form-control" placeholder="e.g. email@example.com"/>
+                    <input type="text"
+                           id="email"
+                           th:field="*{email}"
+                           th:errorclass="is-invalid"
+                           class="form-control"
+                           placeholder="e.g. email@example.com"/>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Email is required and should be valid.
+                    </p>
                 </div>
 
                 <label for="firstName" class="form-label">First Name:</label>
@@ -76,14 +87,30 @@
                     <span class="input-group-text">
                         <i class="bi bi-person-fill"></i>
                     </span>
-                    <input type="text" id="firstName" class="form-control" placeholder="First name..."/>
+                    <input type="text"
+                           id="firstName"
+                           th:field="*{firstName}"
+                           th:errorclass="is-invalid"
+                           class="form-control"
+                           placeholder="First name..."/>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        First name is required and should be between 2 and 20 symbols.
+                    </p>
                 </div>
                 <label for="lastName" class="form-label">Last Name:</label>
                 <div class="input-group mb-4">
                     <span class="input-group-text">
                         <i class="bi bi-person-fill"></i>
                     </span>
-                    <input type="text" id="lastName" class="form-control" placeholder="Last name..."/>
+                    <input type="text"
+                           id="lastName"
+                           th:field="*{lastName}"
+                           th:errorclass="is-invalid"
+                           class="form-control"
+                           placeholder="Last name..."/>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Last name is required and should be between 2 and 20 symbols.
+                    </p>
                 </div>
 
                 <label for="password" class="form-label">Password:</label>
@@ -91,7 +118,15 @@
                     <span class="input-group-text">
                         <i class="bi bi-key"></i>
                     </span>
-                    <input type="text" id="password" class="form-control"/>
+                    <input type="password"
+                           id="password"
+                           th:field="*{password}"
+                           th:errorclass="is-invalid"
+                           class="form-control"
+                           placeholder="Password..."/>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Password is required and should be at least 5 symbols.
+                    </p>
                 </div>
 
                 <label for="confirmPassword" class="form-label">Confirm Password:</label>
@@ -99,7 +134,15 @@
                     <span class="input-group-text">
                         <i class="bi bi-key"></i>
                     </span>
-                    <input type="text" id="confirmPassword" class="form-control"/>
+                    <input type="password"
+                           id="confirmPassword"
+                           th:field="*{confirmPassword}"
+                           th:errorclass="is-invalid"
+                           class="form-control"
+                           placeholder="Confirm password..."/>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Passwords should match.
+                    </p>
                 </div>
 
                 <div class="my-5 text-center">

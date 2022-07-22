@@ -2,6 +2,7 @@ package bg.softuni.eliteSportsEquipment.service;
 
 import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.UserRoleEntity;
+import bg.softuni.eliteSportsEquipment.model.user.AppUserDetails;
 import bg.softuni.eliteSportsEquipment.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,22 +23,25 @@ public class AppUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository
                 .findByEmail(username)
-                .map(this::map).orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
+                .map(this::map)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
     }
 
     private UserDetails map(UserEntity user) {
-        return User.builder()
-                .username(user.getEmail())
-                .password(user.getPassword())
-                .authorities(user
+        return new AppUserDetails(
+                user.getPassword(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user
                         .getRoles()
                         .stream()
                         .map(this::map)
-                        .toList())
-                .build();
+                        .toList());
     }
 
     private GrantedAuthority map(UserRoleEntity role) {
-        return new SimpleGrantedAuthority("ROLE_" + role.getUserRole().name());
+        return new SimpleGrantedAuthority("ROLE_"
+                + role.getUserRole().name());
     }
 }
