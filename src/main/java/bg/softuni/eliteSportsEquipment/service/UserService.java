@@ -1,5 +1,6 @@
 package bg.softuni.eliteSportsEquipment.service;
 
+import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.UserRegisterDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.UserRoleEntity;
@@ -105,5 +106,22 @@ public class UserService {
         this.userRepository.save(newUser);
 
         this.login(newUser);
+    }
+
+    public void editAddress(AddressDTO addressDTO, String email) {
+        UserEntity currentUser = this.userRepository.findByEmail(email).get();
+
+        currentUser.setAddress("");
+
+        String address = String.format("%s, %s", addressDTO.getCity(), addressDTO.getAddress());
+        currentUser.setAddress(address);
+
+        this.userRepository.save(currentUser);
+    }
+
+    public boolean hasAddress(String email) {
+        UserEntity currentUser = this.userRepository.findByEmail(email).get();
+
+        return currentUser.getAddress() != null;
     }
 }

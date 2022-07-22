@@ -8,7 +8,5 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-
-    // TODO: find out why target = "active" is not working
     UserEntity userDtoToUserEntity(UserRegisterDTO registerDTO);
 }

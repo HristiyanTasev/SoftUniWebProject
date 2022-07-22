@@ -6,7 +6,8 @@ import javax.validation.constraints.Size;
 
 public class UserRegisterDTO {
 
-    @Email(message = "User email should be valid.")
+    @Email
+    @NotBlank
     private String email;
 
     @Size(min = 2, max = 20)
@@ -16,6 +17,8 @@ public class UserRegisterDTO {
     @Size(min = 2, max = 20)
     @NotBlank
     private String lastName;
+
+    private String address;
 
     @Size(min = 5)
     @NotBlank
@@ -63,5 +66,14 @@ public class UserRegisterDTO {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public UserRegisterDTO setAddress(String address) {
+        this.address = address;
+        return this;
     }
 }

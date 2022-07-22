@@ -1,6 +1,8 @@
 package bg.softuni.eliteSportsEquipment.model.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,14 +21,20 @@ public class UserEntity extends BaseEntity{
     @Column(nullable = false)
     private String password;
 
+    private String address;
+
     @OneToOne
     private CartEntity cart;
 
-    @ManyToMany
+    @OneToMany
+    private List<OrderEntity> orders;
+
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
         joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<UserRoleEntity> roles;
+    private Set<UserRoleEntity> roles = new HashSet<>();
 
     public UserEntity() {
     }
@@ -82,6 +90,24 @@ public class UserEntity extends BaseEntity{
 
     public UserEntity setCart(CartEntity cart) {
         this.cart = cart;
+        return this;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public UserEntity setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public List<OrderEntity> getOrders() {
+        return orders;
+    }
+
+    public UserEntity setOrders(List<OrderEntity> orders) {
+        this.orders = orders;
         return this;
     }
 }

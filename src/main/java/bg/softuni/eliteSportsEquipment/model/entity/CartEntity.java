@@ -7,22 +7,13 @@ import java.util.List;
 @Table(name = "carts")
 public class CartEntity extends BaseEntity {
 
-    @ManyToMany
-    @JoinTable(name = "carts_belts",
-            joinColumns = @JoinColumn(name = "cart_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "belt_id", referencedColumnName = "id"))
+    @OneToMany
     private List<BeltEntity> belts;
 
-    @ManyToMany
-    @JoinTable(name = "carts_straps",
-            joinColumns = @JoinColumn(name = "cart_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "strap_id", referencedColumnName = "id"))
+    @OneToMany
     private List<StrapEntity> straps;
 
-    @ManyToMany
-    @JoinTable(name = "carts_sleeves",
-            joinColumns = @JoinColumn(name = "cart_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "sleeve_id", referencedColumnName = "id"))
+    @OneToMany
     private List<SleeveEntity> sleeves;
 
     public CartEntity() {

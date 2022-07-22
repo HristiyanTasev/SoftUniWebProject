@@ -1,8 +1,10 @@
 package bg.softuni.eliteSportsEquipment.web;
 
-import bg.softuni.eliteSportsEquipment.model.dto.UserRegisterDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
 import bg.softuni.eliteSportsEquipment.service.UserService;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,9 +25,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @ModelAttribute
-    private UserRegisterDTO initUserRegisterDTO() {
-        return new UserRegisterDTO();
+    @ModelAttribute("addressDTO")
+    private AddressDTO initAddAddressDTO() {
+        return new AddressDTO();
     }
 
     @GetMapping("/login")
@@ -33,31 +35,64 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("/register")
-    private String register() {
-        return "register";
-    }
+    @PostMapping("/login-error")
+    public String onFailedLogin(
+            @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY) String username,
+            RedirectAttributes redirectAttributes) {
 
-    @PostMapping("/register")
-    private String register(@Valid UserRegisterDTO userRegisterDTO,
-                            BindingResult bindingResult,
-                            RedirectAttributes redirectAttributes) {
+        redirectAttributes
+                .addFlashAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY, username);
+        redirectAttributes.addFlashAttribute("badCredentials", true);
 
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addAttribute("userRegisterDTO", userRegisterDTO);
-            redirectAttributes.addAttribute("org.springframework.validation.BindingResult.userModel",
-                    bindingResult);
-
-            return "redirect:/register";
-        }
-
-        userService.registerAndLogin(userRegisterDTO);
-
-        return "redirect:/";
+        return "redirect:/users/login";
     }
 
     @GetMapping("/profile")
-    private String userProfile(Principal principal) {
+    private String userProfile(Principal principal, Model model) {
+        model.addAttribute("hasAddress", hasAddress(principal));
         return "profile";
+    }
+
+    @GetMapping("/address")
+    private String userAddress(Principal principal, Model model) {
+        model.addAttribute("hasAddress", hasAddress(principal));
+
+        return "address";
+    }
+
+    @PostMapping("/address")
+    private String userAddress(@Valid AddressDTO addressDTO,
+                                  BindingResult bindingResult,
+                                  RedirectAttributes redirectAttributes,
+                                  Model model,
+                                  Principal principal) {
+
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("addressDTO", addressDTO);
+            redirectAttributes
+                    .addFlashAttribute("org.springframework.validation.BindingResult.addressDTO",
+                            bindingResult);
+            model.addAttribute("hasAddress", hasAddress(principal));
+
+            return "redirect:/users/address";
+        }
+
+        String email = principal.getName();
+
+        this.userService.editAddress(addressDTO, email);
+
+        return "redirect:/users/profile";
+    }
+
+    @GetMapping("/cart")
+    private String userCart() {
+
+        return "cart";
+    }
+
+    private boolean hasAddress(Principal principal) {
+        String email = principal.getName();
+        return this.userService.hasAddress(email);
     }
 }
