@@ -1,5 +1,7 @@
 package bg.softuni.eliteSportsEquipment.model.entity;
 
+import bg.softuni.eliteSportsEquipment.model.enums.OrderStatusEnum;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,9 +13,8 @@ public class OrderEntity extends BaseEntity {
 
     private LocalDateTime createdAt;
 
-    private boolean isCompleted;
-
-    private boolean isTravelling;
+    @Enumerated(EnumType.STRING)
+    private OrderStatusEnum orderStatus;
 
     @OneToMany
     private List<BeltEntity> belts = new ArrayList<>();
@@ -63,21 +64,12 @@ public class OrderEntity extends BaseEntity {
         return this;
     }
 
-    public boolean isCompleted() {
-        return isCompleted;
+    public OrderStatusEnum getOrderStatus() {
+        return orderStatus;
     }
 
-    public OrderEntity setCompleted(boolean completed) {
-        isCompleted = completed;
-        return this;
-    }
-
-    public boolean isTravelling() {
-        return isTravelling;
-    }
-
-    public OrderEntity setTravelling(boolean travelling) {
-        isTravelling = travelling;
+    public OrderEntity setOrderStatus(OrderStatusEnum orderStatus) {
+        this.orderStatus = orderStatus;
         return this;
     }
 }

@@ -26,7 +26,7 @@ public class UserEntity extends BaseEntity{
     @OneToOne
     private CartEntity cart;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<OrderEntity> orders;
 
 
