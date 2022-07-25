@@ -48,14 +48,12 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    private String userProfile(Principal principal, Model model) {
-        model.addAttribute("hasAddress", hasAddress(principal));
+    private String userProfile() {
         return "profile";
     }
 
     @GetMapping("/address")
     private String userAddress(Principal principal, Model model) {
-        model.addAttribute("hasAddress", hasAddress(principal));
 
         return "address";
     }
@@ -64,7 +62,6 @@ public class UserController {
     private String userAddress(@Valid AddressDTO addressDTO,
                                   BindingResult bindingResult,
                                   RedirectAttributes redirectAttributes,
-                                  Model model,
                                   Principal principal) {
 
 
@@ -73,7 +70,6 @@ public class UserController {
             redirectAttributes
                     .addFlashAttribute("org.springframework.validation.BindingResult.addressDTO",
                             bindingResult);
-            model.addAttribute("hasAddress", hasAddress(principal));
 
             return "redirect:/users/address";
         }
@@ -89,10 +85,5 @@ public class UserController {
     private String userCart() {
 
         return "cart";
-    }
-
-    private boolean hasAddress(Principal principal) {
-        String email = principal.getName();
-        return this.userService.hasAddress(email);
     }
 }

@@ -81,6 +81,40 @@
                     </p>
                 </div>
 
+                <label for="city" class="form-label">City:</label>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </span>
+                    <input type="text"
+                           id="city"
+                           name="city"
+                           th:field="*{city}"
+                           th:errorclass="is-invalid"
+                           class="form-control"
+                           placeholder="City..."/>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        City is required and should be between 2 and 30 symbols.
+                    </p>
+                </div>
+
+                <label for="address" class="form-label">Address:</label>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">
+                        <i class="bi bi-geo-alt"></i>
+                    </span>
+                    <input type="text"
+                           id="address"
+                           name="address"
+                           th:field="*{address}"
+                           th:errorclass="is-invalid"
+                           class="form-control"
+                           placeholder="Address..."/>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Address is required and should be between 2 and 30 symbols.
+                    </p>
+                </div>
+
                 <label for="password" class="form-label">Password:</label>
                 <div class="mb-4 input-group">
                     <span class="input-group-text">

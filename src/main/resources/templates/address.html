@@ -21,8 +21,7 @@
 <!-- Navbar end -->
 
 <div class="text-center pt-5">
-    <h2 th:if="${!hasAddress}" >ADD ADDRESS</h2>
-    <h2 th:if="${hasAddress}" >EDIT ADDRESS</h2>
+    <h2 th:if="${hasAddress}">EDIT ADDRESS</h2>
 </div>
 <div class="row justify-content-center my-5">
     <div class="col-lg-6">
@@ -64,10 +63,7 @@
                 </p>
             </div>
             <div class="my-3 text-center">
-                <button type="submit" class="btn btn-danger btn-lg"
-                        th:if="${!hasAddress}">ADD ADDRESS</button>
-                <button type="submit" class="btn btn-danger btn-lg"
-                        th:if="${hasAddress}">EDIT ADDRESS</button>
+                <button type="submit" class="btn btn-danger btn-lg">EDIT ADDRESS</button>
             </div>
             <div class="mb-5 text-center">
                 <a class="text-danger" href="/users/profile">Cancel</a>

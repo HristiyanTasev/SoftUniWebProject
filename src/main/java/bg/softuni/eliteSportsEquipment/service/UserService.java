@@ -101,6 +101,7 @@ public class UserService {
     public void registerAndLogin(UserRegisterDTO userRegisterDTO) {
 
         UserEntity newUser = userMapper.userDtoToUserEntity(userRegisterDTO);
+        newUser.setAddress(userRegisterDTO.getCity(), userRegisterDTO.getAddress());
         newUser.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
 
         this.userRepository.save(newUser);
@@ -111,17 +112,11 @@ public class UserService {
     public void editAddress(AddressDTO addressDTO, String email) {
         UserEntity currentUser = this.userRepository.findByEmail(email).get();
 
-        currentUser.setAddress("");
+        currentUser.setAddress("", "");
 
-        String address = String.format("%s, %s", addressDTO.getCity(), addressDTO.getAddress());
-        currentUser.setAddress(address);
+//        String address = String.format("%s, %s", addressDTO.getCity(), addressDTO.getAddress());
+        currentUser.setAddress(addressDTO.getCity(), addressDTO.getAddress());
 
         this.userRepository.save(currentUser);
-    }
-
-    public boolean hasAddress(String email) {
-        UserEntity currentUser = this.userRepository.findByEmail(email).get();
-
-        return currentUser.getAddress() != null;
     }
 }

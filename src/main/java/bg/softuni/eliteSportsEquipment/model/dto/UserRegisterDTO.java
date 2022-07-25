@@ -18,6 +18,12 @@ public class UserRegisterDTO {
     @NotBlank
     private String lastName;
 
+    @Size(min = 2, max = 30)
+    @NotBlank
+    private String city;
+
+    @Size(min = 2, max = 30)
+    @NotBlank
     private String address;
 
     @Size(min = 5)
@@ -66,6 +72,15 @@ public class UserRegisterDTO {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public UserRegisterDTO setCity(String city) {
+        this.city = city;
+        return this;
     }
 
     public String getAddress() {

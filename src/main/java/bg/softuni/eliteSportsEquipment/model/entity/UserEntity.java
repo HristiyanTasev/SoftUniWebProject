@@ -97,8 +97,8 @@ public class UserEntity extends BaseEntity{
         return address;
     }
 
-    public UserEntity setAddress(String address) {
-        this.address = address;
+    public UserEntity setAddress(String city, String address) {
+        this.address = setFullAddress(city, address);
         return this;
     }
 
@@ -109,5 +109,9 @@ public class UserEntity extends BaseEntity{
     public UserEntity setOrders(List<OrderEntity> orders) {
         this.orders = orders;
         return this;
+    }
+
+    private String setFullAddress(String city, String address) {
+        return String.format("%s, %s", city, address);
     }
 }

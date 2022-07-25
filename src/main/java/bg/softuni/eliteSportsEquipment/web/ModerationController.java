@@ -17,4 +17,6 @@ public class ModerationController {
 
         return "contacts";
     }
+
+    //TODO make admin panel so admins can assign roles to all users
 }

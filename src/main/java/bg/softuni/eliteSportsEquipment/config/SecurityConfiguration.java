@@ -27,7 +27,9 @@ public class SecurityConfiguration {
         http
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers("/", "/users/login", "/users/register", "/contacts").permitAll()
+                .antMatchers("/", "/contacts", "/products/all"
+                        , "/products/belts", "/products/straps", "/products/sleeves").permitAll()
+                .antMatchers("/users/login", "/users/register").anonymous()
                 .antMatchers("/service/orders").hasRole(UserRoleEnum.MODERATOR.name())
                 .antMatchers("/products/add/belt", "/products/add/sleeve", "/products/add/strap")
                     .hasRole(UserRoleEnum.ADMIN.name())
