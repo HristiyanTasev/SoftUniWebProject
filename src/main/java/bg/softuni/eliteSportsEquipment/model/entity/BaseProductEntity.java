@@ -18,8 +18,6 @@ public class BaseProductEntity extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
 
-    private Integer quantity;
-
     public String getName() {
         return name;
     }
@@ -53,15 +51,6 @@ public class BaseProductEntity extends BaseEntity {
 
     public BaseProductEntity setBrand(String brand) {
         this.brand = brand;
-        return this;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public BaseProductEntity setQuantity(Integer quantity) {
-        this.quantity = quantity;
         return this;
     }
 }

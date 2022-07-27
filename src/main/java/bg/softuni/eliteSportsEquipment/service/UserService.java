@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -114,9 +115,12 @@ public class UserService {
 
         currentUser.setAddress("", "");
 
-//        String address = String.format("%s, %s", addressDTO.getCity(), addressDTO.getAddress());
         currentUser.setAddress(addressDTO.getCity(), addressDTO.getAddress());
 
         this.userRepository.save(currentUser);
+    }
+
+    public Optional<UserEntity> getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
     }
 }

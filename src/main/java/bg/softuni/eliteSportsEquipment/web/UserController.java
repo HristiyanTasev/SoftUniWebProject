@@ -1,6 +1,9 @@
 package bg.softuni.eliteSportsEquipment.web;
 
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.UserDetailsDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.UserOrdersDTO;
+import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
 import bg.softuni.eliteSportsEquipment.service.UserService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/users")
@@ -48,7 +54,24 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    private String userProfile() {
+    private String userProfile(Principal principal, Model model) {
+        UserEntity currentUser = this.userService.getUserByEmail(principal.getName()).get();
+
+        List<UserOrdersDTO> userOrders = currentUser
+                .getOrders()
+                .stream()
+                .map(orderEntity ->
+                        new UserOrdersDTO(orderEntity.getId(),
+                                orderEntity.getCreatedAt(),
+                                orderEntity.getOrderStatus().name()))
+                .collect(Collectors.toList());
+
+        UserDetailsDTO userDetails = new UserDetailsDTO(currentUser.getFullName(),
+                currentUser.getEmail(),
+                currentUser.getAddress());
+
+        model.addAttribute("userDetails", userDetails);
+
         return "profile";
     }
 
@@ -60,9 +83,9 @@ public class UserController {
 
     @PostMapping("/address")
     private String userAddress(@Valid AddressDTO addressDTO,
-                                  BindingResult bindingResult,
-                                  RedirectAttributes redirectAttributes,
-                                  Principal principal) {
+                               BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes,
+                               Principal principal) {
 
 
         if (bindingResult.hasErrors()) {

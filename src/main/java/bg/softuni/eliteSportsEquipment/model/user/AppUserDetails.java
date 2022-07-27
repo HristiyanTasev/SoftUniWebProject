@@ -34,21 +34,6 @@ public class AppUserDetails implements UserDetails {
         return lastName;
     }
 
-    public String getFullName() {
-        StringBuilder fullName = new StringBuilder();
-        if (getFirstName() != null) {
-            fullName.append(getFirstName());
-        }
-        if (getLastName() != null) {
-            if (!fullName.isEmpty()) {
-                fullName.append(" ");
-            }
-            fullName.append(getLastName());
-        }
-
-        return fullName.toString();
-    }
-
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         return authorities;

@@ -114,4 +114,19 @@ public class UserEntity extends BaseEntity{
     private String setFullAddress(String city, String address) {
         return String.format("%s, %s", city, address);
     }
+
+    public String getFullName() {
+        StringBuilder fullName = new StringBuilder();
+        if (this.getFirstName() != null) {
+            fullName.append(this.getFirstName());
+        }
+        if (this.getLastName() != null) {
+            if (!fullName.isEmpty()) {
+                fullName.append(" ");
+            }
+            fullName.append(this.getLastName());
+        }
+
+        return fullName.toString();
+    }
 }
