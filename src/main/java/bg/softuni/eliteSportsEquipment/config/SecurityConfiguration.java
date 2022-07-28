@@ -28,7 +28,8 @@ public class SecurityConfiguration {
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/", "/contacts", "/products/all"
-                        , "/products/belts", "/products/straps", "/products/sleeves").permitAll()
+                        , "/products/belts", "/products/straps", "/products/sleeves"
+                        , "/products/details/**").permitAll()
                 .antMatchers("/users/login", "/users/register").anonymous()
                 .antMatchers("/service/orders").hasRole(UserRoleEnum.MODERATOR.name())
                 .antMatchers("/products/add/belt", "/products/add/sleeve", "/products/add/strap")
