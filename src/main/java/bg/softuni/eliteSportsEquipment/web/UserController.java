@@ -109,4 +109,10 @@ public class UserController {
 
         return "cart";
     }
+
+    @GetMapping("/favourites")
+    private String userFavourites() {
+
+        return "favourites";
+    }
 }

@@ -29,6 +29,13 @@
 
 <div class="container mb-4 text-center">
     <div class="row" th:object="${userDetails}">
+        <div class="col-md-5 my-3">
+            <h2 class="mb-3">ACCOUNT DETAILS</h2>
+            <h5 th:text="*{fullName}" class="mb-3">Full Name</h5>
+            <h5 th:text="*{email}" class="mb-3">Email</h5>
+            <h5 th:text="*{address}" class="mb-3">Address</h5>
+            <a class="btn btn-danger btn-sm" href="/users/address">Edit Address</a>
+        </div>
         <div class="col-md-7 my-3">
             <h2>ORDERS</h2>
             <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -107,13 +114,6 @@
             <!--                    <span class="badge bg-success rounded-pill">Completed</span>-->
             <!--                </a>-->
             <!--            </div>-->
-        </div>
-        <div class="col-md-5 my-3">
-            <h2 class="mb-3">ACCOUNT DETAILS</h2>
-            <h5 th:text="*{fullName}" class="mb-3">Full Name</h5>
-            <h5 th:text="*{email}" class="mb-3">Email</h5>
-            <h5 th:text="*{address}" class="mb-3">Address</h5>
-            <a class="btn btn-danger btn-sm" href="/users/address">Edit Address</a>
         </div>
     </div>
 </div>
