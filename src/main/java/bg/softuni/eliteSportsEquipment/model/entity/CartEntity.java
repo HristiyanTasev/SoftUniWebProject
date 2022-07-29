@@ -8,43 +8,18 @@ import java.util.List;
 public class CartEntity extends BaseEntity {
 
     @OneToMany
-    private List<BeltEntity> belts;
-
-    @OneToMany
-    private List<StrapEntity> straps;
-
-    @OneToMany
-    private List<SleeveEntity> sleeves;
+    private List<ProductEntity> products;
 
     public CartEntity() {
     }
 
-    public List<BeltEntity> getBelts() {
-        return belts;
+
+    public List<ProductEntity> getProducts() {
+        return products;
     }
 
-    public CartEntity setBelts(List<BeltEntity> belts) {
-        this.belts = belts;
+    public CartEntity setProducts(List<ProductEntity> products) {
+        this.products = products;
         return this;
     }
-
-    public List<StrapEntity> getStraps() {
-        return straps;
-    }
-
-    public CartEntity setStraps(List<StrapEntity> straps) {
-        this.straps = straps;
-        return this;
-    }
-
-    public List<SleeveEntity> getSleeves() {
-        return sleeves;
-    }
-
-    public CartEntity setSleeves(List<SleeveEntity> sleeves) {
-        this.sleeves = sleeves;
-        return this;
-    }
-
-
 }

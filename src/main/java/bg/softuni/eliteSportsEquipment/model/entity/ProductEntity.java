@@ -3,8 +3,15 @@ package bg.softuni.eliteSportsEquipment.model.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@MappedSuperclass
-public class BaseProductEntity extends BaseEntity {
+@Entity
+@Table(name = "products")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
+public class ProductEntity extends BaseEntity {
+
+    @Basic
+    @Column(insertable = false, updatable = false)
+    private String type;
 
     @Column(nullable = false)
     private String brand;
@@ -18,11 +25,22 @@ public class BaseProductEntity extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
 
+    public ProductEntity() {
+    }
+
+    public ProductEntity(String type, String brand, String name, String description, BigDecimal price) {
+        this.type = type;
+        this.brand = brand;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
     public String getName() {
         return name;
     }
 
-    public BaseProductEntity setName(String name) {
+    public ProductEntity setName(String name) {
         this.name = name;
         return this;
     }
@@ -31,7 +49,7 @@ public class BaseProductEntity extends BaseEntity {
         return description;
     }
 
-    public BaseProductEntity setDescription(String description) {
+    public ProductEntity setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -40,7 +58,7 @@ public class BaseProductEntity extends BaseEntity {
         return price;
     }
 
-    public BaseProductEntity setPrice(BigDecimal price) {
+    public ProductEntity setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }
@@ -49,8 +67,12 @@ public class BaseProductEntity extends BaseEntity {
         return brand;
     }
 
-    public BaseProductEntity setBrand(String brand) {
+    public ProductEntity setBrand(String brand) {
         this.brand = brand;
         return this;
+    }
+
+    public String getType() {
+        return type;
     }
 }

@@ -17,13 +17,8 @@ public class OrderEntity extends BaseEntity {
     private OrderStatusEnum orderStatus;
 
     @OneToMany
-    private List<BeltEntity> belts = new ArrayList<>();
+    private List<ProductEntity> products = new ArrayList<>();
 
-    @OneToMany
-    private List<StrapEntity> straps = new ArrayList<>();
-
-    @OneToMany
-    private List<SleeveEntity> sleeves = new ArrayList<>();
 
     public OrderEntity() {
     }
@@ -37,39 +32,21 @@ public class OrderEntity extends BaseEntity {
         return this;
     }
 
-    public List<BeltEntity> getBelts() {
-        return belts;
-    }
-
-    public OrderEntity setBelts(List<BeltEntity> belts) {
-        this.belts = belts;
-        return this;
-    }
-
-    public List<StrapEntity> getStraps() {
-        return straps;
-    }
-
-    public OrderEntity setStraps(List<StrapEntity> straps) {
-        this.straps = straps;
-        return this;
-    }
-
-    public List<SleeveEntity> getSleeves() {
-        return sleeves;
-    }
-
-    public OrderEntity setSleeves(List<SleeveEntity> sleeves) {
-        this.sleeves = sleeves;
-        return this;
-    }
-
     public OrderStatusEnum getOrderStatus() {
         return orderStatus;
     }
 
     public OrderEntity setOrderStatus(OrderStatusEnum orderStatus) {
         this.orderStatus = orderStatus;
+        return this;
+    }
+
+    public List<ProductEntity> getProducts() {
+        return products;
+    }
+
+    public OrderEntity setProducts(List<ProductEntity> products) {
+        this.products = products;
         return this;
     }
 }

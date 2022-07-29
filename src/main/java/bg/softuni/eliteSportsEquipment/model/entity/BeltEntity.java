@@ -3,13 +3,17 @@ package bg.softuni.eliteSportsEquipment.model.entity;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltLeverEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltMaterialEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
+import bg.softuni.eliteSportsEquipment.model.enums.TypeOfProductEnum;
 
 import javax.persistence.*;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.Locale;
 
 @Entity
-@Table(name = "belts")
-public class BeltEntity extends BaseProductEntity {
+@DiscriminatorValue(value = "belt")
+public class BeltEntity extends ProductEntity {
+
+    private static final String PRODUCT_TYPE = TypeOfProductEnum.BELT.toString().toLowerCase(Locale.ROOT);
 
     @Enumerated(EnumType.STRING)
     private BeltMaterialEnum materialType;
@@ -21,6 +25,10 @@ public class BeltEntity extends BaseProductEntity {
     private SizeEnum size;
 
     public BeltEntity() {
+    }
+
+    public BeltEntity(String brand, String name, String description, BigDecimal price) {
+        super(PRODUCT_TYPE, brand, name, description, price);
     }
 
     public BeltMaterialEnum getMaterialType() {

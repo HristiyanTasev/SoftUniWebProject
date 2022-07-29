@@ -2,13 +2,17 @@ package bg.softuni.eliteSportsEquipment.model.entity;
 
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.SleeveTypeEnum;
+import bg.softuni.eliteSportsEquipment.model.enums.TypeOfProductEnum;
 
 import javax.persistence.*;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.Locale;
 
 @Entity
-@Table(name = "sleeves")
-public class SleeveEntity extends BaseProductEntity {
+@DiscriminatorValue(value = "sleeve")
+public class SleeveEntity extends ProductEntity {
+
+    private static final String PRODUCT_TYPE = TypeOfProductEnum.SLEEVE.toString().toLowerCase(Locale.ROOT);
 
     @Enumerated(EnumType.STRING)
     private SleeveTypeEnum sleeveType;
@@ -17,6 +21,10 @@ public class SleeveEntity extends BaseProductEntity {
     private SizeEnum size;
 
     public SleeveEntity() {
+    }
+
+    public SleeveEntity(String brand, String name, String description, BigDecimal price) {
+        super(PRODUCT_TYPE, brand, name, description, price);
     }
 
     public SleeveTypeEnum getSleeveType() {
