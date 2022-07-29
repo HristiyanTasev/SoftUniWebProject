@@ -23,7 +23,7 @@ public class UserEntity extends BaseEntity{
 
     private String address;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private CartEntity cart;
 
     @OneToMany(fetch = FetchType.EAGER)

@@ -2,6 +2,7 @@ package bg.softuni.eliteSportsEquipment.service;
 
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.UserRegisterDTO;
+import bg.softuni.eliteSportsEquipment.model.entity.CartEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.UserRoleEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.UserRoleEnum;

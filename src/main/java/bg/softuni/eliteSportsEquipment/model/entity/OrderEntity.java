@@ -17,8 +17,7 @@ public class OrderEntity extends BaseEntity {
     private OrderStatusEnum orderStatus;
 
     @OneToMany
-    private List<ProductEntity> products = new ArrayList<>();
-
+    private List<ProductEntity> products;
 
     public OrderEntity() {
     }

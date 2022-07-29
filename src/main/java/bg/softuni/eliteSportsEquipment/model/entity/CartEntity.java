@@ -13,6 +13,9 @@ public class CartEntity extends BaseEntity {
     public CartEntity() {
     }
 
+    public CartEntity(List<ProductEntity> products) {
+        this.products = products;
+    }
 
     public List<ProductEntity> getProducts() {
         return products;

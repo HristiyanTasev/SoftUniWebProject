@@ -1,9 +1,6 @@
 package bg.softuni.eliteSportsEquipment.init;
 
-import bg.softuni.eliteSportsEquipment.service.BeltService;
-import bg.softuni.eliteSportsEquipment.service.SleeveService;
-import bg.softuni.eliteSportsEquipment.service.StrapService;
-import bg.softuni.eliteSportsEquipment.service.UserService;
+import bg.softuni.eliteSportsEquipment.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -14,12 +11,16 @@ public class AppInit implements CommandLineRunner {
     private final BeltService beltService;
     private final SleeveService sleeveService;
     private final StrapService strapService;
+    private final CartService cartService;
 
-    public AppInit(UserService userService, BeltService beltService, SleeveService sleeveService, StrapService strapService) {
+    public AppInit(UserService userService, BeltService beltService,
+                   SleeveService sleeveService, StrapService strapService,
+                   CartService cartService) {
         this.userService = userService;
         this.beltService = beltService;
         this.sleeveService = sleeveService;
         this.strapService = strapService;
+        this.cartService = cartService;
     }
 
     @Override
@@ -28,5 +29,6 @@ public class AppInit implements CommandLineRunner {
         this.beltService.init();
         this.sleeveService.init();
         this.strapService.init();
+        this.cartService.init();
     }
 }
