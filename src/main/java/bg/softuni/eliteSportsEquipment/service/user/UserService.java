@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.service;
+package bg.softuni.eliteSportsEquipment.service.user;
 
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.UserRegisterDTO;
@@ -61,6 +61,7 @@ public class UserService {
                 .setFirstName("Admin")
                 .setLastName("Adminov")
                 .setEmail("admin@mail.com")
+                .setAddress("Grad", "Adres")
                 .setPassword(this.passwordEncoder.encode("asdasd"));
 
         this.userRepository.save(admin);
@@ -72,6 +73,7 @@ public class UserService {
                 .setFirstName("Moderator")
                 .setLastName("Moderatorov")
                 .setEmail("moderator@mail.com")
+                .setAddress("Grad", "Adres")
                 .setPassword(this.passwordEncoder.encode("asdasd"));
 
         this.userRepository.save(moderator);
@@ -82,6 +84,7 @@ public class UserService {
                 .setFirstName("User")
                 .setLastName("Userov")
                 .setEmail("user@mail.com")
+                .setAddress("Grad", "Adres")
                 .setPassword(this.passwordEncoder.encode("asdasd"));
 
         this.userRepository.save(user);
@@ -123,5 +126,9 @@ public class UserService {
 
     public Optional<UserEntity> getUserByEmail(String email) {
         return this.userRepository.findByEmail(email);
+    }
+
+    public Optional<UserEntity> getUserById(Long id) {
+        return this.userRepository.findById(id);
     }
 }

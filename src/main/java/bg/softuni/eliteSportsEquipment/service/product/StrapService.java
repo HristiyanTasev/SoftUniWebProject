@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.service;
+package bg.softuni.eliteSportsEquipment.service.product;
 
 import bg.softuni.eliteSportsEquipment.model.entity.StrapEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.StrapTypeEnum;

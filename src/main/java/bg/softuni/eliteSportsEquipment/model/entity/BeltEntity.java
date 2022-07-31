@@ -7,6 +7,7 @@ import bg.softuni.eliteSportsEquipment.model.enums.TypeOfProductEnum;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Locale;
 
 @Entity
@@ -21,8 +22,9 @@ public class BeltEntity extends ProductEntity {
     @Enumerated(EnumType.STRING)
     private BeltLeverEnum leverType;
 
+    @ElementCollection
     @Enumerated(EnumType.STRING)
-    private SizeEnum size;
+    private List<SizeEnum> sizes = List.of(SizeEnum.values());
 
     public BeltEntity() {
     }
@@ -49,13 +51,12 @@ public class BeltEntity extends ProductEntity {
         return this;
     }
 
-
-    public SizeEnum getSize() {
-        return size;
+    public List<SizeEnum> getSizes() {
+        return sizes;
     }
 
-    public BeltEntity setSize(SizeEnum size) {
-        this.size = size;
+    public BeltEntity setSizes(List<SizeEnum> sizes) {
+        this.sizes = sizes;
         return this;
     }
 }

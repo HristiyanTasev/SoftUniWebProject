@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.service;
+package bg.softuni.eliteSportsEquipment.service.product;
 
 import bg.softuni.eliteSportsEquipment.model.entity.BeltEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltLeverEnum;
@@ -21,29 +21,28 @@ public class BeltService {
     public void init() {
         if (allProductsRepository.findCountProductsByType("belt") < 1) {
             initOneBelt("SBD", "Kolan", "Long Belt Description",
-                    40.99, "LEATHER", "PRONG", "M");
+                    40.99, "LEATHER", "PRONG");
 
             initOneBelt("ESE", "Kolan2", "2Long Belt Description",
-                    60.99, "LEATHER", "LEVER", "L");
+                    60.99, "LEATHER", "LEVER");
 
             initOneBelt("SBD", "Kolan3", "Long Belt Description",
-                    70.99, "LEATHER", "LEVER", "M");
+                    70.99, "LEATHER", "LEVER");
 
             initOneBelt("SBD", "Kolan4", "Long Belt Description",
-                    80.99, "NYLON", "PRONG", "S");
+                    80.99, "NYLON", "PRONG");
         }
     }
 
     private void initOneBelt(String brand, String name, String description,
                              Double price, String materialType,
-                             String leverType, String size) {
+                             String leverType) {
 
         BeltEntity baseProduct = new BeltEntity(brand, name, description, BigDecimal.valueOf(price));
 
         baseProduct
                 .setMaterialType(BeltMaterialEnum.valueOf(materialType))
-                .setLeverType(BeltLeverEnum.valueOf(leverType))
-                .setSize(SizeEnum.valueOf(size));
+                .setLeverType(BeltLeverEnum.valueOf(leverType));
 
         this.allProductsRepository.save(baseProduct);
     }

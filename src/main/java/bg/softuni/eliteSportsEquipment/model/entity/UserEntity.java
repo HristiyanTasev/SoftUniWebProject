@@ -1,6 +1,7 @@
 package bg.softuni.eliteSportsEquipment.model.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,9 +27,8 @@ public class UserEntity extends BaseEntity{
     @OneToOne(cascade = CascadeType.ALL)
     private CartEntity cart;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<OrderEntity> orders;
-
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<OrderEntity> orders = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
@@ -102,11 +102,11 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
-    public List<OrderEntity> getOrders() {
+    public Set<OrderEntity> getOrders() {
         return orders;
     }
 
-    public UserEntity setOrders(List<OrderEntity> orders) {
+    public UserEntity setOrders(Set<OrderEntity> orders) {
         this.orders = orders;
         return this;
     }

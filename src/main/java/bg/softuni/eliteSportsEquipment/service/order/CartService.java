@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.service;
+package bg.softuni.eliteSportsEquipment.service.order;
 
 import bg.softuni.eliteSportsEquipment.model.entity.CartEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.ProductEntity;
@@ -8,6 +8,7 @@ import bg.softuni.eliteSportsEquipment.repository.CartRepository;
 import bg.softuni.eliteSportsEquipment.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service

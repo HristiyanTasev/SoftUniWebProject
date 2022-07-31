@@ -4,7 +4,7 @@ import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.UserDetailsDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.UserOrdersDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
-import bg.softuni.eliteSportsEquipment.service.UserService;
+import bg.softuni.eliteSportsEquipment.service.user.UserService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -77,6 +76,7 @@ public class UserController {
 
     @GetMapping("/address")
     private String userAddress(Principal principal, Model model) {
+
 
         return "address";
     }

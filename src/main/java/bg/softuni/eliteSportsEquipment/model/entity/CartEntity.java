@@ -7,7 +7,7 @@ import java.util.List;
 @Table(name = "carts")
 public class CartEntity extends BaseEntity {
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<ProductEntity> products;
 
     public CartEntity() {

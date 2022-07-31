@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.service;
+package bg.softuni.eliteSportsEquipment.service.user;
 
 import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.UserRoleEntity;

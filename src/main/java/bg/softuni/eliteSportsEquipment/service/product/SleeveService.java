@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.service;
+package bg.softuni.eliteSportsEquipment.service.product;
 
 import bg.softuni.eliteSportsEquipment.model.entity.SleeveEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
@@ -20,27 +20,26 @@ public class SleeveService {
     public void init() {
         if (allProductsRepository.findCountProductsByType("sleeve") < 1) {
             initOneSleeve("SBD", "Sleeve", "Long Sleeve Description",
-                    40.99, "ELBOW", "M");
+                    40.99, "ELBOW");
 
             initOneSleeve("ESE", "Sleeve2", "2Long Sleeve Description",
-                    60.99, "KNEE", "L");
+                    60.99, "KNEE");
 
             initOneSleeve("SBD", "Sleeve3", "Long Sleeve Description",
-                    70.99, "ELBOW", "M");
+                    70.99, "ELBOW");
 
             initOneSleeve("SBD", "Sleeve4", "Long Sleeve Description",
-                    80.99, "KNEE", "S");
+                    80.99, "KNEE");
         }
     }
 
     private void initOneSleeve(String brand, String name, String description,
-                               Double price, String sleeveType, String size) {
+                               Double price, String sleeveType) {
 
         SleeveEntity baseProduct = new SleeveEntity(brand, name, description, BigDecimal.valueOf(price));
 
         baseProduct
-                .setSleeveType(SleeveTypeEnum.valueOf(sleeveType))
-                .setSize(SizeEnum.valueOf(size));
+                .setSleeveType(SleeveTypeEnum.valueOf(sleeveType));
 
         this.allProductsRepository.save(baseProduct);
     }

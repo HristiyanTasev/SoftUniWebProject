@@ -2,7 +2,7 @@ package bg.softuni.eliteSportsEquipment.config;
 
 import bg.softuni.eliteSportsEquipment.model.enums.UserRoleEnum;
 import bg.softuni.eliteSportsEquipment.repository.UserRepository;
-import bg.softuni.eliteSportsEquipment.service.AppUserDetailsService;
+import bg.softuni.eliteSportsEquipment.service.user.AppUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -6,6 +6,7 @@ import bg.softuni.eliteSportsEquipment.model.enums.TypeOfProductEnum;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Locale;
 
 @Entity
@@ -17,8 +18,9 @@ public class SleeveEntity extends ProductEntity {
     @Enumerated(EnumType.STRING)
     private SleeveTypeEnum sleeveType;
 
+    @ElementCollection
     @Enumerated(EnumType.STRING)
-    private SizeEnum size;
+    private List<SizeEnum> sizes = List.of(SizeEnum.values());
 
     public SleeveEntity() {
     }
@@ -36,12 +38,12 @@ public class SleeveEntity extends ProductEntity {
         return this;
     }
 
-    public SizeEnum getSize() {
-        return size;
+    public List<SizeEnum> getSizes() {
+        return sizes;
     }
 
-    public SleeveEntity setSize(SizeEnum size) {
-        this.size = size;
+    public SleeveEntity setSizes(List<SizeEnum> sizes) {
+        this.sizes = sizes;
         return this;
     }
 }

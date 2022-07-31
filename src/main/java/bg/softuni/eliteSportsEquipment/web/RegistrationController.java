@@ -1,7 +1,7 @@
 package bg.softuni.eliteSportsEquipment.web;
 
 import bg.softuni.eliteSportsEquipment.model.dto.UserRegisterDTO;
-import bg.softuni.eliteSportsEquipment.service.UserService;
+import bg.softuni.eliteSportsEquipment.service.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;

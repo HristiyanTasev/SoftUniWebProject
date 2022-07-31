@@ -31,130 +31,25 @@
         </div>
         <div class="col-9 row">
             <div class="col-lg-3">
-                <p class="fs-4">83 Products</p>
+                <p class="fs-4" th:text="|${products.size()} Products|">83 Products</p>
             </div>
             <div class="col-lg-9">
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0">
                     <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
                 </form>
             </div>
-            <div class="col-lg-3 col-sm-6 py-3 text-center">
+            <div class="col-lg-3 col-md-4 col-sm-6 py-3 text-center" th:each="product: ${products}">
                 <div class="card">
                     <img src="/images/knee-sleeve.png" class="rounded" alt="...">
                     <div class="card-body">
-                        <h3>Item name</h3>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="/products/id">View product</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 py-3 text-center">
-                <div class="card">
-                    <img src="/images/knee-sleeve.png" class="rounded" alt="...">
-                    <div class="card-body">
-                        <h3>Item name</h3>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 py-3 text-center">
-                <div class="card">
-                    <img src="/images/knee-sleeve.png" class="rounded" alt="...">
-                    <div class="card-body">
-                        <h3>Item name</h3>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 py-3 text-center">
-                <div class="card">
-                    <img src="/images/knee-sleeve.png" class="rounded" alt="...">
-                    <div class="card-body">
-                        <h3>Item name</h3>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 py-3 text-center">
-                <div class="card">
-                    <img src="/images/knee-sleeve.png" class="rounded" alt="...">
-                    <div class="card-body">
-                        <h3>Item name</h3>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="/products/id">View product</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 py-3 text-center">
-                <div class="card">
-                    <img src="/images/knee-sleeve.png" class="rounded" alt="...">
-                    <div class="card-body">
-                        <h3>Item name</h3>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 py-3 text-center">
-                <div class="card">
-                    <img src="/images/knee-sleeve.png" class="rounded" alt="...">
-                    <div class="card-body">
-                        <h3>Item name</h3>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 py-3 text-center">
-                <div class="card">
-                    <img src="/images/knee-sleeve.png" class="rounded" alt="...">
-                    <div class="card-body">
-                        <h3>Item name</h3>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 py-3 text-center">
-                <div class="card">
-                    <img src="/images/knee-sleeve.png" class="rounded" alt="...">
-                    <div class="card-body">
-                        <h3>Item name</h3>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="/products/id">View product</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 py-3 text-center">
-                <div class="card">
-                    <img src="/images/knee-sleeve.png" class="rounded" alt="...">
-                    <div class="card-body">
-                        <h3>Item name</h3>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 py-3 text-center">
-                <div class="card">
-                    <img src="/images/knee-sleeve.png" class="rounded" alt="...">
-                    <div class="card-body">
-                        <h3>Item name</h3>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 py-3 text-center">
-                <div class="card">
-                    <img src="/images/knee-sleeve.png" class="rounded" alt="...">
-                    <div class="card-body">
-                        <h3>Item name</h3>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
+                        <h3 th:text="*{product.getName()}">Item name</h3>
+                        <p class="text-danger fs-4" th:text="*{product.getPrice()}">$45.99</p>
+                        <p>
+                            <a class="btn btn-outline-danger stretched-link"
+                               th:href="@{/products/details/{id}(id = ${product.id})}">
+                                View product
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>
