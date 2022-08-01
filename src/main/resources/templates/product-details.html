@@ -64,7 +64,7 @@
                 for powerlifting and heavy training.<br></p>
             <div class="d-grid gap-2 mt-2">
                 <a class="btn btn-success" th:href="@{/users/cart/add/{id}(id= ${product.id})}">ADD TO CART</a>
-                <button class="btn btn-danger" type="button">ADD TO FAVOURITES</button>
+                <a class="btn btn-danger" th:href="@{/users/favourites/add/{id}(id= ${product.id})}">ADD TO FAVOURITES</a>
             </div>
         </div>
     </div>

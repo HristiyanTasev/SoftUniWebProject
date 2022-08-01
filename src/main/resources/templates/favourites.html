@@ -20,7 +20,7 @@
 
 <div class="text-center pt-5">
     <h1>FAVOURITES</h1>
-    <p th:if="${favProducts == null}">You don't have favourite products yet.</p>
+    <p th:if="${favProducts == null || favProducts.size < 1}">You don't have favourite products yet.</p>
     <div class="mb-5 text-center">
         <a class="text-success" href="/products/all">Continue shopping</a>
     </div>
@@ -42,9 +42,9 @@
             <p th:text="*{p.price}">90.00$</p>
         </div>
         <div class="col-md-2 text-sm-center text-md-start align-self-center my-2 d-grid gap-2">
-            <button type="button" class="btn btn-success btn-sm">Add to Cart</button>
+            <a class="btn btn-success btn-sm" th:href="@{/users/cart/add/{id}(id= ${p.id})}">Add to Cart</a>
             <a class="btn btn-warning btn-sm" th:href="@{/products/details/{id}(id = ${p.id})}">View Product</a>
-            <button type="button" class="btn btn-danger btn-sm">Remove</button>
+            <a class="btn btn-danger btn-sm" th:href="@{/users/favourites/delete/{id}(id = ${p.id})}">Remove</a>
         </div>
     </div>
 </div>

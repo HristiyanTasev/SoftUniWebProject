@@ -15,7 +15,7 @@ import java.util.Set;
 public class FavouriteEntity extends BaseEntity{
 
     @ManyToMany
-    private List<ProductEntity> products;
+    private List<ProductEntity> products = new ArrayList<>();
 
     public FavouriteEntity() {
     }

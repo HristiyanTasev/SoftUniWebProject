@@ -116,11 +116,19 @@ public class UserController {
         return "favourites";
     }
 
-   /* @GetMapping("/favourites/add/{id}")
+    @GetMapping("/favourites/add/{id}")
     private String addToFavourite(@PathVariable(name = "id") Long productId, Principal principal) {
 
-        this.cartService.addProductById(productId, principal.getName());
+        this.favouriteService.addProductById(productId, principal.getName());
 
-        return "redirect:/users/cart";
-    }*/
+        return "redirect:/users/favourites";
+    }
+
+    @GetMapping("/favourites/delete/{id}")
+    private String deleteFromFavourite(@PathVariable(name = "id") Long productId, Principal principal) {
+
+        this.favouriteService.deleteProductById(productId, principal.getName());
+
+        return "redirect:/users/favourites";
+    }
 }

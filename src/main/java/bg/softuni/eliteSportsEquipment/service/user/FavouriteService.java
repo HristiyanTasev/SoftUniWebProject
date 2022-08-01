@@ -1,6 +1,7 @@
 package bg.softuni.eliteSportsEquipment.service.user;
 
 import bg.softuni.eliteSportsEquipment.model.dto.UserFavouritesDTO;
+import bg.softuni.eliteSportsEquipment.model.entity.CartEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.FavouriteEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.ProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
@@ -64,5 +65,30 @@ public class FavouriteService {
         }
 
         return null;
+    }
+
+    public void addProductById(Long productId, String name) {
+        UserEntity currentUser = this.userRepository.findByEmail(name).orElseThrow();
+        ProductEntity productToAdd = this.allProductsRepository.findById(productId).orElseThrow();
+
+        if (currentUser.getFavourites() == null) {
+            currentUser.setFavourites(new FavouriteEntity());
+        }
+
+        currentUser.getFavourites().getProducts().add(productToAdd);
+        this.userRepository.save(currentUser);
+    }
+
+    public void deleteProductById(Long productId, String name) {
+        UserEntity currentUser = this.userRepository.findByEmail(name).orElseThrow();
+        ProductEntity productToDelete = this.allProductsRepository.findById(productId).orElseThrow();
+        boolean hasProduct = currentUser.getFavourites().getProducts().contains(productToDelete);
+
+        if (!hasProduct) {
+            return;
+        }
+
+        currentUser.getFavourites().getProducts().remove(productToDelete);
+        this.userRepository.save(currentUser);
     }
 }
