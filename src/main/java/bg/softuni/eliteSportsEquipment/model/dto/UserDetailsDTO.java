@@ -11,13 +11,11 @@ public class UserDetailsDTO {
     private String address;
     private List<UserOrdersDTO> orders;
 
-    // TODO add orders
-
-    public UserDetailsDTO(String fullName, String email, String address) {
+    public UserDetailsDTO(String fullName, String email, String address, List<UserOrdersDTO> orders) {
         this.fullName = fullName;
         this.email = email;
         this.address = address;
-//        this.orders = orders;
+        this.orders = orders;
     }
 
     public String getFullName() {

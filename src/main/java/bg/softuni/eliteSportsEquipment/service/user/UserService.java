@@ -1,8 +1,9 @@
 package bg.softuni.eliteSportsEquipment.service.user;
 
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.UserDetailsDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.UserOrdersDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.UserRegisterDTO;
-import bg.softuni.eliteSportsEquipment.model.entity.CartEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.UserRoleEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.UserRoleEnum;
@@ -17,8 +18,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -115,7 +118,7 @@ public class UserService {
     }
 
     public void editAddress(AddressDTO addressDTO, String email) {
-        UserEntity currentUser = this.userRepository.findByEmail(email).get();
+        UserEntity currentUser = getUserByEmail(email);
 
         currentUser.setAddress("", "");
 
@@ -124,11 +127,29 @@ public class UserService {
         this.userRepository.save(currentUser);
     }
 
-    public Optional<UserEntity> getUserByEmail(String email) {
-        return this.userRepository.findByEmail(email);
+    public UserDetailsDTO getUserDetails(String email) {
+        UserEntity currentUser = getUserByEmail(email);
+
+        List<UserOrdersDTO> userOrders = new ArrayList<>();
+
+        if (currentUser.getOrders() != null && currentUser.getOrders().size() >= 1) {
+            userOrders = currentUser
+                    .getOrders()
+                    .stream()
+                    .map(orderEntity ->
+                            new UserOrdersDTO(orderEntity.getId(),
+                                    orderEntity.getCreatedAt(),
+                                    orderEntity.getOrderStatus().name()))
+                    .collect(Collectors.toList());
+        }
+
+        return new UserDetailsDTO(currentUser.getFullName(),
+                currentUser.getEmail(),
+                currentUser.getAddress(),
+                userOrders);
     }
 
-    public Optional<UserEntity> getUserById(Long id) {
-        return this.userRepository.findById(id);
+    public UserEntity getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email).orElseThrow();
     }
 }

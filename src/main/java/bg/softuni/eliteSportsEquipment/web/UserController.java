@@ -3,8 +3,6 @@ package bg.softuni.eliteSportsEquipment.web;
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.UserDetailsDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.UserFavouritesDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.UserOrdersDTO;
-import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
 import bg.softuni.eliteSportsEquipment.service.user.FavouriteService;
 import bg.softuni.eliteSportsEquipment.service.user.UserService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -17,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/users")
@@ -55,20 +52,7 @@ public class UserController {
 
     @GetMapping("/profile")
     private String userProfile(Principal principal, Model model) {
-        UserEntity currentUser = this.userService.getUserByEmail(principal.getName()).get();
-
-        List<UserOrdersDTO> userOrders = currentUser
-                .getOrders()
-                .stream()
-                .map(orderEntity ->
-                        new UserOrdersDTO(orderEntity.getId(),
-                                orderEntity.getCreatedAt(),
-                                orderEntity.getOrderStatus().name()))
-                .collect(Collectors.toList());
-
-        UserDetailsDTO userDetails = new UserDetailsDTO(currentUser.getFullName(),
-                currentUser.getEmail(),
-                currentUser.getAddress());
+        UserDetailsDTO userDetails = this.userService.getUserDetails(principal.getName());
 
         model.addAttribute("userDetails", userDetails);
 
