@@ -19,7 +19,7 @@ public class ProductEntity extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text")
     private String description;
     
     @Column(nullable = false)

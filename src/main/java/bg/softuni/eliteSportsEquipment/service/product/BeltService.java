@@ -3,7 +3,6 @@ package bg.softuni.eliteSportsEquipment.service.product;
 import bg.softuni.eliteSportsEquipment.model.entity.BeltEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltLeverEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltMaterialEnum;
-import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +25,11 @@ public class BeltService {
             initOneBelt("ESE", "Kolan2", "2Long Belt Description",
                     60.99, "LEATHER", "LEVER");
 
-            initOneBelt("SBD", "Kolan3", "Long Belt Description",
+            initOneBelt("SBD", "Kolan3", """
+                            Manufactured with high grade 7mm neoprene, designed to minimise the risk of
+                                            injury and to aid
+                                            performance. Relied on by strength athletes around the world, these 7mm knee sleeves are ideal
+                                            for powerlifting and heavy training.""",
                     70.99, "LEATHER", "LEVER");
 
             initOneBelt("SBD", "Kolan4", "Long Belt Description",

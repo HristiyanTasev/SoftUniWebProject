@@ -3,12 +3,12 @@ package bg.softuni.eliteSportsEquipment.service.product;
 import bg.softuni.eliteSportsEquipment.model.dto.ProductDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.ProductDetailDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.ProductEntity;
+import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,11 +36,17 @@ public class AllProductsService {
     public ProductDetailDTO getProductById(Long productId) {
         ProductEntity productEntity = this.allProductsRepository.findById(productId).orElseThrow();
 
-//        ProductDetailDTO product = new ProductDetailDTO(
-//                productEntity.getName(),
-//                productEntity.getPrice(),
-//                productEntity.
-//                productEntity.getDescription())
-        return null;
+        ProductDetailDTO product = new ProductDetailDTO(
+                productEntity.getId(),
+                productEntity.getType(),
+                productEntity.getName(),
+                productEntity.getPrice(),
+                productEntity.getDescription());
+
+        if (!productEntity.getType().equals("strap")) {
+            product.setSize(Arrays.stream(SizeEnum.values()).map(Enum::name).collect(Collectors.toList()));
+        }
+
+        return product;
     }
 }

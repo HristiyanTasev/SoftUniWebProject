@@ -27,6 +27,9 @@ public class UserEntity extends BaseEntity{
     @OneToOne(cascade = CascadeType.ALL)
     private CartEntity cart;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private FavouriteEntity favourites;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<OrderEntity> orders = new HashSet<>();
 
@@ -128,5 +131,14 @@ public class UserEntity extends BaseEntity{
         }
 
         return fullName.toString();
+    }
+
+    public FavouriteEntity getFavourites() {
+        return favourites;
+    }
+
+    public UserEntity setFavourites(FavouriteEntity favourites) {
+        this.favourites = favourites;
+        return this;
     }
 }

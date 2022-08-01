@@ -18,7 +18,7 @@ public class SleeveEntity extends ProductEntity {
     @Enumerated(EnumType.STRING)
     private SleeveTypeEnum sleeveType;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private List<SizeEnum> sizes = List.of(SizeEnum.values());
 

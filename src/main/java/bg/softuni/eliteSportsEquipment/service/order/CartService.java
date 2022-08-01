@@ -1,5 +1,6 @@
 package bg.softuni.eliteSportsEquipment.service.order;
 
+import bg.softuni.eliteSportsEquipment.model.dto.CartDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.CartEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.ProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
@@ -39,5 +40,21 @@ public class CartService {
 
         user.setCart(cart);
         this.userRepository.save(user);
+    }
+
+    public void addProductById(Long productId, String name) {
+        UserEntity currentUser = this.userRepository.findByEmail(name).orElseThrow();
+        ProductEntity productToAdd = this.allProductsRepository.findById(productId).orElseThrow();
+
+        if (currentUser.getCart() == null) {
+            currentUser.setCart(new CartEntity());
+        }
+
+        currentUser.getCart().getProducts().add(productToAdd);
+        this.userRepository.save(currentUser);
+    }
+
+    public CartDTO getCartByUserEmail(String email) {
+        return null;
     }
 }

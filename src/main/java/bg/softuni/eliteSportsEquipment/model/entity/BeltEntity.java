@@ -22,7 +22,7 @@ public class BeltEntity extends ProductEntity {
     @Enumerated(EnumType.STRING)
     private BeltLeverEnum leverType;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private List<SizeEnum> sizes = List.of(SizeEnum.values());
 

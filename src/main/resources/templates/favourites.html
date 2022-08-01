@@ -20,57 +20,30 @@
 
 <div class="text-center pt-5">
     <h1>FAVOURITES</h1>
+    <p th:if="${favProducts == null}">You don't have favourite products yet.</p>
+    <div class="mb-5 text-center">
+        <a class="text-success" href="/products/all">Continue shopping</a>
+    </div>
 </div>
 
-<div class="container my-5">
-    <div class="d-md-flex d-sm-block justify-content-md-between justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3">
+
+
+<div class="container my-5" th:unless="${favProducts == null}">
+    <div class="d-md-flex d-sm-block justify-content-md-between justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3"
+         th:each="p: ${favProducts}">
         <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
             <img src="/images/knee-sleeve.png" class="img-thumbnail" alt="...">
         </div>
         <div class="col-md-2 text-sm-center text-md-start align-self-center">
-            <h1 class="fs-4">Product name</h1>
+            <h1 class="fs-4" th:text="*{p.name}">Product name</h1>
         </div>
         <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
             <h1 class="fs-5">Price:</h1>
-            <p>90.00$</p>
+            <p th:text="*{p.price}">90.00$</p>
         </div>
         <div class="col-md-2 text-sm-center text-md-start align-self-center my-2 d-grid gap-2">
             <button type="button" class="btn btn-success btn-sm">Add to Cart</button>
-            <button type="button" class="btn btn-warning btn-sm">View Product</button>
-            <button type="button" class="btn btn-danger btn-sm">Remove</button>
-        </div>
-    </div>
-    <div class="d-md-flex d-sm-block justify-content-md-between justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3">
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <img src="/images/knee-sleeve.png" class="img-thumbnail" alt="...">
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center">
-            <h1 class="fs-4">Product name</h1>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="fs-5">Price:</h1>
-            <p>90.00$</p>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2 d-grid gap-2">
-            <button type="button" class="btn btn-success btn-sm">Add to Cart</button>
-            <button type="button" class="btn btn-warning btn-sm">View Product</button>
-            <button type="button" class="btn btn-danger btn-sm">Remove</button>
-        </div>
-    </div>
-    <div class="d-md-flex d-sm-block justify-content-md-between justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3">
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <img src="/images/knee-sleeve.png" class="img-thumbnail" alt="...">
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center">
-            <h1 class="fs-4">Product name</h1>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="fs-5">Price:</h1>
-            <p>90.00$</p>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2 d-grid gap-2">
-            <button type="button" class="btn btn-success btn-sm">Add to Cart</button>
-            <button type="button" class="btn btn-warning btn-sm">View Product</button>
+            <a class="btn btn-warning btn-sm" th:href="@{/products/details/{id}(id = ${p.id})}">View Product</a>
             <button type="button" class="btn btn-danger btn-sm">Remove</button>
         </div>
     </div>

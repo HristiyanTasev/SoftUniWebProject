@@ -1,21 +1,45 @@
 package bg.softuni.eliteSportsEquipment.model.dto;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDetailDTO {
+
+    private Long id;
+    private String type;
     private String name;
     private BigDecimal price;
-    private String size;
+    private List<String> size = new ArrayList<>();
     private String description;
 
     public ProductDetailDTO() {
     }
 
-    public ProductDetailDTO(String name, BigDecimal price, String size, String description) {
+    public ProductDetailDTO(Long id, String type, String name, BigDecimal price, String description) {
+        this.id = id;
+        this.type = type;
         this.name = name;
         this.price = price;
-        this.size = size;
         this.description = description;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public ProductDetailDTO setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public ProductDetailDTO setType(String type) {
+        this.type = type;
+        return this;
     }
 
     public String getName() {
@@ -36,11 +60,11 @@ public class ProductDetailDTO {
         return this;
     }
 
-    public String getSize() {
+    public List<String> getSize() {
         return size;
     }
 
-    public ProductDetailDTO setSize(String size) {
+    public ProductDetailDTO setSize(List<String> size) {
         this.size = size;
         return this;
     }

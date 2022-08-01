@@ -1,6 +1,7 @@
 package bg.softuni.eliteSportsEquipment.web;
 
 import bg.softuni.eliteSportsEquipment.model.dto.ProductDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.ProductDetailDTO;
 import bg.softuni.eliteSportsEquipment.service.product.AllProductsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +31,10 @@ public class ProductController {
     }
 
     @GetMapping("/details/{id}")
-    private String productDetails(@PathVariable("id") Long productId) {
-        this.allProductsService.getProductById(productId);
+    private String productDetails(@PathVariable("id") Long productId, Model model) {
+        ProductDetailDTO product = this.allProductsService.getProductById(productId);
+
+        model.addAttribute("product", product);
 
         return "product-details";
     }

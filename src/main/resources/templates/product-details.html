@@ -18,7 +18,7 @@
 
 
 <div class="container my-3">
-    <div class="row">
+    <div class="row" th:object="${product}">
         <div class="col-lg-7">
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
@@ -46,21 +46,24 @@
         </div>
 
         <div class="col-lg-5">
-            <h1 class="fs-2">Product Name</h1>
-            <p class="fs-4 text-danger pb-2 border-2 border-bottom">$59.99</p>
-            <p class="fst-italic fs-4">PRODUCT SIZE</p>
-            <select class="form-select mb-3" aria-label="Sizing select">
-                <option selected>Sizes</option>
-                <option value="1">S</option>
-                <option value="2">M</option>
-                <option value="3">L</option>
-            </select>
+            <h1 class="fs-2" th:text="*{name}">Product Name</h1>
+            <p class="fs-4 text-danger pb-2 border-2 border-bottom" th:text="|$*{price}|">$59.99</p>
+            <div th:unless="${#strings.equals(product.type, 'strap')}">
+                <p class="fst-italic fs-4">PRODUCT SIZE</p>
+                <select class="form-select mb-3"
+                        aria-label="Sizing select">
+                    <option selected>Sizes</option>
+                    <option th:each="s: ${product.size}" th:value="${s}" th:text="${s}">S</option>
+                </select>
+            </div>
             <p class="fst-italic fs-4 mt-3">DESCRIPTION</p>
-            <p class="fst-italic fs-6 mt-2 pb-2 border-2 border-bottom">Manufactured with high grade 7mm neoprene, designed to&nbsp;minimise the risk of injury and to aid
+            <p class="fst-italic fs-6 mt-2 pb-2 border-2 border-bottom"
+               th:text="*{description}">Manufactured with high grade 7mm neoprene, designed to&nbsp;minimise the risk of
+                injury and to aid
                 performance.<br><br>Relied on by strength athletes around the world, these 7mm knee sleeves are ideal
                 for powerlifting and heavy training.<br></p>
             <div class="d-grid gap-2 mt-2">
-                <button class="btn btn-success" type="button">ADD TO CART</button>
+                <a class="btn btn-success" th:href="@{/users/cart/add/{id}(id= ${product.id})}">ADD TO CART</a>
                 <button class="btn btn-danger" type="button">ADD TO FAVOURITES</button>
             </div>
         </div>

@@ -2,17 +2,16 @@ package bg.softuni.eliteSportsEquipment.web;
 
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.UserDetailsDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.UserFavouritesDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.UserOrdersDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
+import bg.softuni.eliteSportsEquipment.service.user.FavouriteService;
 import bg.softuni.eliteSportsEquipment.service.user.UserService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -25,9 +24,11 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService userService;
+    private final FavouriteService favouriteService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, FavouriteService favouriteService) {
         this.userService = userService;
+        this.favouriteService = favouriteService;
     }
 
     @ModelAttribute("addressDTO")
@@ -104,15 +105,22 @@ public class UserController {
         return "redirect:/users/profile";
     }
 
-    @GetMapping("/cart")
-    private String userCart() {
-
-        return "cart";
-    }
-
     @GetMapping("/favourites")
-    private String userFavourites() {
+    private String userFavourites(Model model, Principal principal) {
+        String email = principal.getName();
+
+        List<UserFavouritesDTO> favProducts = this.favouriteService.getFavProductsByEmail(email);
+
+        model.addAttribute("favProducts", favProducts);
 
         return "favourites";
     }
+
+   /* @GetMapping("/favourites/add/{id}")
+    private String addToFavourite(@PathVariable(name = "id") Long productId, Principal principal) {
+
+        this.cartService.addProductById(productId, principal.getName());
+
+        return "redirect:/users/cart";
+    }*/
 }
