@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.model.dto;
+package bg.softuni.eliteSportsEquipment.model.dto.userDTO;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

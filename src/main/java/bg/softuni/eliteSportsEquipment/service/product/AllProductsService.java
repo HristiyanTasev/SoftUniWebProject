@@ -1,7 +1,7 @@
 package bg.softuni.eliteSportsEquipment.service.product;
 
-import bg.softuni.eliteSportsEquipment.model.dto.ProductDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.ProductDetailDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDetailDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.ProductEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;

@@ -1,8 +1,10 @@
 package bg.softuni.eliteSportsEquipment.service.product;
 
+import bg.softuni.eliteSportsEquipment.model.dto.productDTO.BeltAddDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.BeltEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltLeverEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltMaterialEnum;
+import bg.softuni.eliteSportsEquipment.model.mapper.BeltMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,11 @@ import java.math.BigDecimal;
 public class BeltService {
 
     private final AllProductsRepository allProductsRepository;
+    private final BeltMapper beltMapper;
 
-    public BeltService(AllProductsRepository allProductsRepository) {
+    public BeltService(AllProductsRepository allProductsRepository, BeltMapper beltMapper) {
         this.allProductsRepository = allProductsRepository;
+        this.beltMapper = beltMapper;
     }
 
     public void init() {
@@ -48,6 +52,17 @@ public class BeltService {
                 .setLeverType(BeltLeverEnum.valueOf(leverType));
 
         this.allProductsRepository.save(baseProduct);
+    }
+
+    public boolean addBelt(BeltAddDTO beltAddDTO) {
+        if (allProductsRepository.findByName(beltAddDTO.getName()).isPresent()) {
+            return false;
+        }
+
+        BeltEntity newBelt = this.beltMapper.addBeltDtoToBeltEntity(beltAddDTO);
+
+        this.allProductsRepository.save(newBelt);
+        return true;
     }
 
     //@Enumerated(EnumType.STRING)

@@ -1,9 +1,9 @@
 package bg.softuni.eliteSportsEquipment.service.user;
 
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.UserDetailsDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.UserOrdersDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.UserRegisterDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserDetailsDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserOrdersDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserRegisterDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.UserRoleEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.UserRoleEnum;

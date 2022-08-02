@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.model.dto;
+package bg.softuni.eliteSportsEquipment.model.dto.userDTO;
 
 import java.math.BigDecimal;
 

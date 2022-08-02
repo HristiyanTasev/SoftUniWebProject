@@ -1,8 +1,8 @@
 package bg.softuni.eliteSportsEquipment.web;
 
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.UserDetailsDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.UserFavouritesDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserDetailsDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserFavouritesDTO;
 import bg.softuni.eliteSportsEquipment.service.user.FavouriteService;
 import bg.softuni.eliteSportsEquipment.service.user.UserService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;

@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.model.dto;
+package bg.softuni.eliteSportsEquipment.model.dto.productDTO;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

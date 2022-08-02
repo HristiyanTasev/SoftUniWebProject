@@ -1,6 +1,4 @@
-package bg.softuni.eliteSportsEquipment.model.dto;
-
-import org.springframework.format.annotation.DateTimeFormat;
+package bg.softuni.eliteSportsEquipment.model.dto.userDTO;
 
 import java.time.LocalDateTime;
 

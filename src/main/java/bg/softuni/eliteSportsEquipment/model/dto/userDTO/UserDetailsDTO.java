@@ -1,6 +1,4 @@
-package bg.softuni.eliteSportsEquipment.model.dto;
-
-import bg.softuni.eliteSportsEquipment.model.entity.OrderEntity;
+package bg.softuni.eliteSportsEquipment.model.dto.userDTO;
 
 import java.util.List;
 

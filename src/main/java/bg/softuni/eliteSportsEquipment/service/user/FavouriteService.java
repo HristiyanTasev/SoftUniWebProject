@@ -1,7 +1,6 @@
 package bg.softuni.eliteSportsEquipment.service.user;
 
-import bg.softuni.eliteSportsEquipment.model.dto.UserFavouritesDTO;
-import bg.softuni.eliteSportsEquipment.model.entity.CartEntity;
+import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserFavouritesDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.FavouriteEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.ProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
