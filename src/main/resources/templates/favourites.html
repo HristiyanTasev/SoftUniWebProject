@@ -27,7 +27,6 @@
 </div>
 
 
-
 <div class="container my-5" th:unless="${favProducts == null}">
     <div class="d-md-flex d-sm-block justify-content-md-between justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3"
          th:each="p: ${favProducts}">
@@ -44,7 +43,11 @@
         <div class="col-md-2 text-sm-center text-md-start align-self-center my-2 d-grid gap-2">
             <a class="btn btn-success btn-sm" th:href="@{/users/cart/add/{id}(id= ${p.id})}">Add to Cart</a>
             <a class="btn btn-warning btn-sm" th:href="@{/products/details/{id}(id = ${p.id})}">View Product</a>
-            <a class="btn btn-danger btn-sm" th:href="@{/users/favourites/delete/{id}(id = ${p.id})}">Remove</a>
+            <form
+                  th:action="@{/users/favourites/delete/{id}(id = ${p.id})}"
+                  th:method="delete">
+                <input type="submit" value="Remove" class="btn btn-danger btn-sm" style="width:100%">
+            </form>
         </div>
     </div>
 </div>

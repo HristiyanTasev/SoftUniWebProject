@@ -108,7 +108,7 @@ public class UserController {
         return "redirect:/users/favourites";
     }
 
-    @GetMapping("/favourites/delete/{id}")
+    @DeleteMapping("/favourites/delete/{id}")
     private String deleteFromFavourite(@PathVariable(name = "id") Long productId, Principal principal) {
 
         this.favouriteService.deleteProductById(productId, principal.getName());
