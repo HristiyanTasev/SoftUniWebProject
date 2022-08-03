@@ -38,33 +38,13 @@
         </h1>
 
         <div class="row py-4">
-            <div class="col-lg-4">
-                <div class="card" >
-                    <img src="/images/knee-sleeve.png" class="rounded" alt="...">
-                    <div class="card-body">
-                        <h2>Item name</h2>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="/products/id">View product</a></p>
-                    </div>
-                </div>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
+            <div class="col-lg-4" th:each="p: ${featuredProducts}">
                 <div class="card">
                     <img src="/images/knee-sleeve.png" class="rounded" alt="...">
                     <div class="card-body">
-                        <h2>Item name</h2>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
-                    </div>
-                </div>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-                <div class="card">
-                    <img src="/images/knee-sleeve.png" class="rounded" alt="...">
-                    <div class="card-body">
-                        <h2>Item name</h2>
-                        <p class="text-danger fs-4">$45.99</p>
-                        <p><a class="btn btn-outline-danger stretched-link" href="#">View product</a></p>
+                        <h2 th:text="*{p.name}">Item name</h2>
+                        <p class="text-danger fs-4" th:text="*{p.price}">$45.99</p>
+                        <p><a class="btn btn-outline-danger stretched-link" th:href="@{/products/details/{id}(id = *{p.id})}">View product</a></p>
                     </div>
                 </div>
             </div><!-- /.col-lg-4 -->

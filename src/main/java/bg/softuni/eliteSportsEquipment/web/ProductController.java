@@ -7,6 +7,7 @@ import bg.softuni.eliteSportsEquipment.model.enums.BeltLeverEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltMaterialEnum;
 import bg.softuni.eliteSportsEquipment.service.product.AllProductsService;
 import bg.softuni.eliteSportsEquipment.service.product.BeltService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,14 +27,15 @@ public class ProductController {
     private final AllProductsService allProductsService;
     private final BeltService beltService;
 
-    @ModelAttribute("beltAddDTO")
-    public BeltAddDTO initBeltAddDTO() {
-        return new BeltAddDTO();
-    }
-
+    @Autowired
     public ProductController(AllProductsService allProductsService, BeltService beltService) {
         this.allProductsService = allProductsService;
         this.beltService = beltService;
+    }
+
+    @ModelAttribute("beltAddDTO")
+    public BeltAddDTO initBeltAddDTO() {
+        return new BeltAddDTO();
     }
 
     @GetMapping("/all")
@@ -64,7 +66,8 @@ public class ProductController {
         return "add-belt";
     }
 
-    //TODO make it only for admins
+    // TODO Service-ite stavat null sled kato dobavq preAuthorize anotaciqta (vsichko raboti predi tova)
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add/belt")
     private String beltAdd(@Valid BeltAddDTO beltAddDTO,
                            BindingResult bindingResult,
@@ -75,7 +78,7 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("beltAddDTO", beltAddDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.beltAddDTO", bindingResult);
 
-            //TODO add custom error handling for taken name
+            //TODO add custom error handling for taken product name
 //            redirectAttributes.addFlashAttribute("nameTaken", true);
 
             return "redirect:/products/add/belt";

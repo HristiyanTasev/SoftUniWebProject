@@ -4,7 +4,7 @@ import bg.softuni.eliteSportsEquipment.model.dto.productDTO.BeltAddDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.BeltEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltLeverEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltMaterialEnum;
-import bg.softuni.eliteSportsEquipment.model.mapper.BeltMapper;
+import bg.softuni.eliteSportsEquipment.model.mapper.ProductMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +14,11 @@ import java.math.BigDecimal;
 public class BeltService {
 
     private final AllProductsRepository allProductsRepository;
-    private final BeltMapper beltMapper;
+    private final ProductMapper productMapper;
 
-    public BeltService(AllProductsRepository allProductsRepository, BeltMapper beltMapper) {
+    public BeltService(AllProductsRepository allProductsRepository, ProductMapper productMapper) {
         this.allProductsRepository = allProductsRepository;
-        this.beltMapper = beltMapper;
+        this.productMapper = productMapper;
     }
 
     public void init() {
@@ -59,7 +59,7 @@ public class BeltService {
             return false;
         }
 
-        BeltEntity newBelt = this.beltMapper.addBeltDtoToBeltEntity(beltAddDTO);
+        BeltEntity newBelt = this.productMapper.addBeltDtoToBeltEntity(beltAddDTO);
 
         this.allProductsRepository.save(newBelt);
         return true;
