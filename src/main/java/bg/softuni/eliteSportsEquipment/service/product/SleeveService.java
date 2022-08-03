@@ -1,8 +1,11 @@
 package bg.softuni.eliteSportsEquipment.service.product;
 
+import bg.softuni.eliteSportsEquipment.model.dto.productDTO.SleeveAddDTO;
+import bg.softuni.eliteSportsEquipment.model.entity.BeltEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.SleeveEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.SleeveTypeEnum;
+import bg.softuni.eliteSportsEquipment.model.mapper.ProductMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +15,11 @@ import java.math.BigDecimal;
 public class SleeveService {
 
     private final AllProductsRepository allProductsRepository;
+    private final ProductMapper productMapper;
 
-    public SleeveService(AllProductsRepository allProductsRepository) {
+    public SleeveService(AllProductsRepository allProductsRepository, ProductMapper productMapper) {
         this.allProductsRepository = allProductsRepository;
+        this.productMapper = productMapper;
     }
 
     public void init() {
@@ -42,5 +47,16 @@ public class SleeveService {
                 .setSleeveType(SleeveTypeEnum.valueOf(sleeveType));
 
         this.allProductsRepository.save(baseProduct);
+    }
+
+    public boolean addSleeve(SleeveAddDTO sleeveAddDTO) {
+        if (allProductsRepository.findByName(sleeveAddDTO.getName()).isPresent()) {
+            return false;
+        }
+
+        SleeveEntity newSleeve = this.productMapper.addSleeveDtoToSleeveEntity(sleeveAddDTO);
+
+        this.allProductsRepository.save(newSleeve);
+        return true;
     }
 }

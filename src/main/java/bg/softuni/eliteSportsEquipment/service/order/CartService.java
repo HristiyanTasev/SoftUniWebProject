@@ -42,7 +42,7 @@ public class CartService {
         this.userRepository.save(user);
     }
 
-    public void addProductById(Long productId, String name) {
+    public void addProductToCartById(Long productId, String name) {
         UserEntity currentUser = this.userRepository.findByEmail(name).orElseThrow();
         ProductEntity productToAdd = this.allProductsRepository.findById(productId).orElseThrow();
 

@@ -12,11 +12,5 @@ public class ModerationController {
         return "service-page";
     }
 
-    @GetMapping("/contacts")
-    public String aboutUs() {
-
-        return "contacts";
-    }
-
     //TODO make admin panel so admins can assign roles to all users
 }

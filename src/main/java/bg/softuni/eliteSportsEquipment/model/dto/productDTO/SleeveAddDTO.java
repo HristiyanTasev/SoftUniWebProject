@@ -1,0 +1,72 @@
+package bg.softuni.eliteSportsEquipment.model.dto.productDTO;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
+
+public class SleeveAddDTO {
+    @NotBlank
+    private String brand;
+
+    @NotBlank
+    private String name;
+
+    @NotBlank
+    private String description;
+
+    @Positive
+    @NotNull
+    private BigDecimal price;
+
+    @NotBlank
+    private String sleeveType;
+
+    public SleeveAddDTO() {
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public SleeveAddDTO setBrand(String brand) {
+        this.brand = brand;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SleeveAddDTO setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public SleeveAddDTO setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public SleeveAddDTO setPrice(BigDecimal price) {
+        this.price = price;
+        return this;
+    }
+
+    public String getSleeveType() {
+        return sleeveType;
+    }
+
+    public SleeveAddDTO setSleeveType(String sleeveType) {
+        this.sleeveType = sleeveType;
+        return this;
+    }
+}

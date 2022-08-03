@@ -18,12 +18,18 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    private String home(Model model) {
+    public String home(Model model) {
 
         List<ProductDTO> featuredProducts = this.allProductsService.getFeaturedProducts();
 
         model.addAttribute("featuredProducts", featuredProducts);
 
         return "index";
+    }
+
+    @GetMapping("/contacts")
+    public String aboutUs() {
+
+        return "contacts";
     }
 }

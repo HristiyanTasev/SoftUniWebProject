@@ -28,12 +28,12 @@ public class RegistrationController {
     }
 
     @GetMapping("/register")
-    private String register() {
+    public String register() {
         return "register";
     }
 
     @PostMapping("/register")
-    private String register(@Valid UserRegisterDTO userRegisterDTO,
+    public String register(@Valid UserRegisterDTO userRegisterDTO,
                             BindingResult bindingResult,
                             RedirectAttributes redirectAttributes) {
 

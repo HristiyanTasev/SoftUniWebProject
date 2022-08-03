@@ -1,12 +1,14 @@
 package bg.softuni.eliteSportsEquipment.web;
 
-import bg.softuni.eliteSportsEquipment.model.dto.productDTO.BeltAddDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDetailDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.productDTO.*;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltLeverEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltMaterialEnum;
+import bg.softuni.eliteSportsEquipment.model.enums.SleeveTypeEnum;
+import bg.softuni.eliteSportsEquipment.model.enums.StrapTypeEnum;
 import bg.softuni.eliteSportsEquipment.service.product.AllProductsService;
 import bg.softuni.eliteSportsEquipment.service.product.BeltService;
+import bg.softuni.eliteSportsEquipment.service.product.SleeveService;
+import bg.softuni.eliteSportsEquipment.service.product.StrapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -26,11 +28,16 @@ public class ProductController {
 
     private final AllProductsService allProductsService;
     private final BeltService beltService;
+    private final StrapService strapService;
+    private final SleeveService sleeveService;
 
     @Autowired
-    public ProductController(AllProductsService allProductsService, BeltService beltService) {
+    public ProductController(AllProductsService allProductsService, BeltService beltService,
+                             StrapService strapService, SleeveService sleeveService) {
         this.allProductsService = allProductsService;
         this.beltService = beltService;
+        this.strapService = strapService;
+        this.sleeveService = sleeveService;
     }
 
     @ModelAttribute("beltAddDTO")
@@ -38,8 +45,18 @@ public class ProductController {
         return new BeltAddDTO();
     }
 
+    @ModelAttribute("strapAddDTO")
+    public StrapAddDTO initStrapAddDTO() {
+        return new StrapAddDTO();
+    }
+
+    @ModelAttribute("sleeveAddDTO")
+    public SleeveAddDTO initSleeveAddDTO() {
+        return new SleeveAddDTO();
+    }
+
     @GetMapping("/all")
-    private String allProducts(Model model) {
+    public String allProducts(Model model) {
         List<ProductDTO> allProducts = this.allProductsService.getAllProducts();
 
         model.addAttribute("products", allProducts);
@@ -48,7 +65,7 @@ public class ProductController {
     }
 
     @GetMapping("/details/{id}")
-    private String productDetails(@PathVariable("id") Long productId, Model model) {
+    public String productDetails(@PathVariable("id") Long productId, Model model) {
         ProductDetailDTO product = this.allProductsService.getProductById(productId);
 
         model.addAttribute("product", product);
@@ -57,7 +74,7 @@ public class ProductController {
     }
 
     @GetMapping("/add/belt")
-    private String beltAdd(Model model) {
+    public String beltAdd(Model model) {
         List<String> materials = Arrays.stream(BeltMaterialEnum.values()).map(Enum::name).collect(Collectors.toList());
         List<String> levers = Arrays.stream(BeltLeverEnum.values()).map(Enum::name).collect(Collectors.toList());
 
@@ -66,10 +83,9 @@ public class ProductController {
         return "add-belt";
     }
 
-    // TODO Service-ite stavat null sled kato dobavq preAuthorize anotaciqta (vsichko raboti predi tova)
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add/belt")
-    private String beltAdd(@Valid BeltAddDTO beltAddDTO,
+    public String beltAdd(@Valid BeltAddDTO beltAddDTO,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes) {
 
@@ -85,18 +101,59 @@ public class ProductController {
         }
 
 
-        return "redirect:/users/profile";
+        return "redirect:/products/all";
     }
 
     @GetMapping("/add/strap")
-    private String strapAdd() {
+    public String strapAdd(Model model) {
+        List<String> strapTypes = Arrays.stream(StrapTypeEnum.values()).map(Enum::name).collect(Collectors.toList());
+
+        model.addAttribute("strapTypes", strapTypes);
 
         return "add-strap";
     }
 
-    @GetMapping("/add/sleeve")
-    private String sleeveAdd() {
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/add/strap")
+    public String strapAdd(@Valid StrapAddDTO strapAddDTO,
+                          BindingResult bindingResult,
+                          RedirectAttributes redirectAttributes) {
 
+
+        if (bindingResult.hasErrors() || !this.strapService.addStrap(strapAddDTO)) {
+            redirectAttributes.addFlashAttribute("strapAddDTO", strapAddDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.strapAddDTO", bindingResult);
+
+            return "redirect:/products/add/strap";
+        }
+
+
+        return "redirect:/products/all";
+    }
+
+    @GetMapping("/add/sleeve")
+    public String sleeveAdd(Model model) {
+        List<String> sleeveTypes = Arrays.stream(SleeveTypeEnum.values()).map(Enum::name).collect(Collectors.toList());
+
+        model.addAttribute("sleeveTypes", sleeveTypes);
         return "add-sleeve";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/add/sleeve")
+    public String sleeveAdd(@Valid SleeveAddDTO sleeveAddDTO,
+                           BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes) {
+
+
+        if (bindingResult.hasErrors() || !this.sleeveService.addSleeve(sleeveAddDTO)) {
+            redirectAttributes.addFlashAttribute("sleeveAddDTO", sleeveAddDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.sleeveAddDTO", bindingResult);
+
+            return "redirect:/products/add/sleeve";
+        }
+
+
+        return "redirect:/products/all";
     }
 }

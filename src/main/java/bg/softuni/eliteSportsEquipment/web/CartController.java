@@ -20,7 +20,7 @@ public class CartController {
     }
 
     @GetMapping("/cart")
-    private String userCart(Model model, Principal principal) {
+    public String userCart(Model model, Principal principal) {
 //        String email = principal.getName();
 //
 //        this.cartService.getCartByUserEmail(email);
@@ -29,9 +29,9 @@ public class CartController {
     }
 
     @GetMapping("/cart/add/{id}")
-    private String addToCart(@PathVariable(name = "id") Long productId, Principal principal) {
+    public String addToCart(@PathVariable(name = "id") Long productId, Principal principal) {
 
-        this.cartService.addProductById(productId, principal.getName());
+        this.cartService.addProductToCartById(productId, principal.getName());
 
         return "redirect:/users/cart";
     }

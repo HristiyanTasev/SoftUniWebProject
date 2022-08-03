@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    private String login() {
+    public String login() {
         return "login";
     }
 
@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    private String userProfile(Principal principal, Model model) {
+    public String userProfile(Principal principal, Model model) {
         UserDetailsDTO userDetails = this.userService.getUserDetails(principal.getName());
 
         model.addAttribute("userDetails", userDetails);
@@ -60,14 +60,14 @@ public class UserController {
     }
 
     @GetMapping("/address")
-    private String userAddress(Principal principal, Model model) {
+    public String userAddress(Principal principal, Model model) {
 
 
         return "address";
     }
 
     @PostMapping("/address")
-    private String userAddress(@Valid AddressDTO addressDTO,
+    public String userAddress(@Valid AddressDTO addressDTO,
                                BindingResult bindingResult,
                                RedirectAttributes redirectAttributes,
                                Principal principal) {
@@ -90,7 +90,7 @@ public class UserController {
     }
 
     @GetMapping("/favourites")
-    private String userFavourites(Model model, Principal principal) {
+    public String userFavourites(Model model, Principal principal) {
         String email = principal.getName();
 
         List<UserFavouritesDTO> favProducts = this.favouriteService.getFavProductsByEmail(email);
@@ -101,7 +101,7 @@ public class UserController {
     }
 
     @GetMapping("/favourites/add/{id}")
-    private String addToFavourite(@PathVariable(name = "id") Long productId, Principal principal) {
+    public String addToFavourite(@PathVariable(name = "id") Long productId, Principal principal) {
 
         this.favouriteService.addProductById(productId, principal.getName());
 
@@ -109,7 +109,7 @@ public class UserController {
     }
 
     @DeleteMapping("/favourites/delete/{id}")
-    private String deleteFromFavourite(@PathVariable(name = "id") Long productId, Principal principal) {
+    public String deleteFromFavourite(@PathVariable(name = "id") Long productId, Principal principal) {
 
         this.favouriteService.deleteProductById(productId, principal.getName());
 
