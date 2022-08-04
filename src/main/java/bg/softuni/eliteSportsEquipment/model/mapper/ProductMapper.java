@@ -1,12 +1,11 @@
 package bg.softuni.eliteSportsEquipment.model.mapper;
 
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.*;
-import bg.softuni.eliteSportsEquipment.model.entity.BeltEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.ProductEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.SleeveEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.StrapEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.BeltEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.SleeveEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.StrapEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {

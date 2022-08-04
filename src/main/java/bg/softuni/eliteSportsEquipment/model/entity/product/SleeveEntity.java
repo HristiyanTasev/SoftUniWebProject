@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.model.entity;
+package bg.softuni.eliteSportsEquipment.model.entity.product;
 
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.SleeveTypeEnum;

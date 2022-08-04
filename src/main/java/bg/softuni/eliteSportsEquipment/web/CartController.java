@@ -1,5 +1,7 @@
 package bg.softuni.eliteSportsEquipment.web;
 
+import bg.softuni.eliteSportsEquipment.model.dto.order.CartDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.order.CartProductDTO;
 import bg.softuni.eliteSportsEquipment.service.order.CartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +24,11 @@ public class CartController {
 
     @GetMapping("/cart")
     public String userCart(Model model, Principal principal) {
-//        String email = principal.getName();
-//
-//        this.cartService.getCartByUserEmail(email);
+        String email = principal.getName();
+
+        CartDTO userCart = this.cartService.getCartByUserEmail(email);
+
+        model.addAttribute("userCart", userCart);
 
         return "cart";
     }

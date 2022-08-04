@@ -1,10 +1,7 @@
 package bg.softuni.eliteSportsEquipment.repository;
 
-import bg.softuni.eliteSportsEquipment.model.entity.CartEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

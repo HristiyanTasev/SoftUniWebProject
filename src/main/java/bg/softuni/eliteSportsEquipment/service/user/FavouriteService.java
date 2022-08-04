@@ -1,9 +1,9 @@
 package bg.softuni.eliteSportsEquipment.service.user;
 
 import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserFavouritesDTO;
-import bg.softuni.eliteSportsEquipment.model.entity.FavouriteEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.ProductEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.order.FavouriteEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
 import bg.softuni.eliteSportsEquipment.repository.FavouriteRepository;
 import bg.softuni.eliteSportsEquipment.repository.UserRepository;

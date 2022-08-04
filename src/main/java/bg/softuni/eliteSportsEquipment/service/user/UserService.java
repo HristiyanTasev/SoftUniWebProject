@@ -4,8 +4,8 @@ import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserDetailsDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserOrdersDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserRegisterDTO;
-import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.UserRoleEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.user.UserRoleEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.UserRoleEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.UserMapper;
 import bg.softuni.eliteSportsEquipment.repository.UserRepository;
@@ -132,16 +132,18 @@ public class UserService {
 
         List<UserOrdersDTO> userOrders = new ArrayList<>();
 
-        if (currentUser.getOrders() != null && currentUser.getOrders().size() >= 1) {
-            userOrders = currentUser
-                    .getOrders()
-                    .stream()
-                    .map(orderEntity ->
-                            new UserOrdersDTO(orderEntity.getId(),
-                                    orderEntity.getCreatedAt(),
-                                    orderEntity.getOrderStatus().name()))
-                    .collect(Collectors.toList());
-        }
+
+        //TODO rework orders in db and fix the getting of orders
+//        if (currentUser.getOrders() != null && currentUser.getOrders().size() >= 1) {
+//            userOrders = currentUser
+//                    .getOrders()
+//                    .stream()
+//                    .map(orderEntity ->
+//                            new UserOrdersDTO(orderEntity.getId(),
+//                                    orderEntity.getCreatedAt(),
+//                                    orderEntity.getOrderStatus().name()))
+//                    .collect(Collectors.toList());
+//        }
 
         return new UserDetailsDTO(currentUser.getFullName(),
                 currentUser.getEmail(),

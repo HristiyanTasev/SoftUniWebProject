@@ -2,10 +2,10 @@ package bg.softuni.eliteSportsEquipment.service.product;
 
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDetailDTO;
-import bg.softuni.eliteSportsEquipment.model.entity.BeltEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.ProductEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.SleeveEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.StrapEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.BeltEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.SleeveEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.StrapEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.ProductMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;

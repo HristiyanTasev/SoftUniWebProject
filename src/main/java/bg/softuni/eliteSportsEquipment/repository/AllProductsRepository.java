@@ -1,6 +1,6 @@
 package bg.softuni.eliteSportsEquipment.repository;
 
-import bg.softuni.eliteSportsEquipment.model.entity.ProductEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

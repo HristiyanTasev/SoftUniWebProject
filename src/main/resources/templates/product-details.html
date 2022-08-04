@@ -47,7 +47,7 @@
 
         <div class="col-lg-5">
             <h1 class="fs-2" th:text="*{name}">Product Name</h1>
-            <p class="fs-4 text-danger pb-2 border-2 border-bottom" th:text="|$*{price}|">$59.99</p>
+            <p class="fs-4 text-danger pb-2 border-2 border-bottom border-dark" th:text="|$*{price}|">$59.99</p>
             <div th:unless="${#strings.equals(product.type, 'strap')}">
                 <p class="fst-italic fs-4">PRODUCT SIZE</p>
                 <select class="form-select mb-3"
@@ -80,7 +80,7 @@
             </th:block>
 
             <p class="fst-italic fs-4 mt-3">DESCRIPTION: </p>
-            <p class="fst-italic fs-5 mt-2 pb-2 border-2 border-bottom"
+            <p class="fst-italic fs-5 mt-2 pb-2 border-2 border-bottom border-dark"
                th:text="*{description}">Manufactured with high grade 7 mm neoprene, designed to&nbsp;minimise the risk
                 of
                 injury and to aid

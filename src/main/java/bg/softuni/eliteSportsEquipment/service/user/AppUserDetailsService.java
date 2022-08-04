@@ -1,12 +1,11 @@
 package bg.softuni.eliteSportsEquipment.service.user;
 
-import bg.softuni.eliteSportsEquipment.model.entity.UserEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.UserRoleEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.user.UserRoleEntity;
 import bg.softuni.eliteSportsEquipment.model.user.AppUserDetails;
 import bg.softuni.eliteSportsEquipment.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

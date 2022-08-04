@@ -1,14 +1,17 @@
-package bg.softuni.eliteSportsEquipment.model.entity;
+package bg.softuni.eliteSportsEquipment.model.entity.user;
+
+import bg.softuni.eliteSportsEquipment.model.entity.BaseEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.order.CartEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.order.FavouriteEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.order.OrderEntity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class UserEntity extends BaseEntity{
+public class UserEntity extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String email;

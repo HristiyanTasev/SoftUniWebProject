@@ -1,4 +1,6 @@
-package bg.softuni.eliteSportsEquipment.model.entity;
+package bg.softuni.eliteSportsEquipment.model.entity.product;
+
+import bg.softuni.eliteSportsEquipment.model.entity.BaseEntity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

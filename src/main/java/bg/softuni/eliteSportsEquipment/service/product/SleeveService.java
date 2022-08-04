@@ -1,9 +1,7 @@
 package bg.softuni.eliteSportsEquipment.service.product;
 
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.SleeveAddDTO;
-import bg.softuni.eliteSportsEquipment.model.entity.BeltEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.SleeveEntity;
-import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
+import bg.softuni.eliteSportsEquipment.model.entity.product.SleeveEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SleeveTypeEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.ProductMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;

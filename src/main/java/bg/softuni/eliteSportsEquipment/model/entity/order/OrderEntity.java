@@ -1,5 +1,7 @@
-package bg.softuni.eliteSportsEquipment.model.entity;
+package bg.softuni.eliteSportsEquipment.model.entity.order;
 
+import bg.softuni.eliteSportsEquipment.model.entity.BaseEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.OrderStatusEnum;
 
 import javax.persistence.*;

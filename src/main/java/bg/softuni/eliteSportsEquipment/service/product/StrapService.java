@@ -1,8 +1,7 @@
 package bg.softuni.eliteSportsEquipment.service.product;
 
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.StrapAddDTO;
-import bg.softuni.eliteSportsEquipment.model.entity.BeltEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.StrapEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.StrapEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.StrapTypeEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.ProductMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
