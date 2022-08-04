@@ -100,7 +100,7 @@ public class UserController {
         return "favourites";
     }
 
-    @GetMapping("/favourites/add/{id}")
+    @PutMapping("/favourites/add/{id}")
     public String addToFavourite(@PathVariable(name = "id") Long productId, Principal principal) {
 
         this.favouriteService.addProductById(productId, principal.getName());

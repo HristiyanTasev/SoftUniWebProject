@@ -87,9 +87,16 @@
                 performance.<br><br>Relied on by strength athletes around the world, these 7 mm knee sleeves are ideal
                 for powerlifting and heavy training.<br></p>
             <div class="d-grid gap-2 mt-2">
-                <a class="btn btn-success" th:href="@{/users/cart/add/{id}(id= ${product.id})}">ADD TO CART</a>
-                <a class="btn btn-danger" th:href="@{/users/favourites/add/{id}(id= ${product.id})}">ADD TO
-                    FAVOURITES</a>
+                <form
+                        th:action="@{/users/cart/add/{id}(id= ${product.id})}"
+                        th:method="put">
+                    <input type="submit" class="btn btn-success" style="width:100%" value="ADD TO CART">
+                </form>
+                <form
+                        th:action="@{/users/favourites/add/{id}(id= ${product.id})}"
+                        th:method="put">
+                    <input type="submit" class="btn btn-danger" style="width:100%" value="ADD TO FAVOURITES">
+                </form>
             </div>
         </div>
     </div>

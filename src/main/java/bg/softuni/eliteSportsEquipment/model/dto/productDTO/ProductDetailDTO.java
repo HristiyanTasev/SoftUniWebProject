@@ -20,14 +20,6 @@ public class ProductDetailDTO {
     public ProductDetailDTO() {
     }
 
-    public ProductDetailDTO(Long id, String type, String name, BigDecimal price, String description) {
-        this.id = id;
-        this.type = type;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-    }
-
     public Long getId() {
         return id;
     }

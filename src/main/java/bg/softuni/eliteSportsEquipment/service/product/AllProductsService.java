@@ -45,13 +45,6 @@ public class AllProductsService {
     public ProductDetailDTO getProductById(Long productId) {
         ProductEntity productEntity = this.allProductsRepository.findById(productId).orElseThrow();
 
-//        ProductDetailDTO product = new ProductDetailDTO(
-//                productEntity.getId(),
-//                productEntity.getType(),
-//                productEntity.getName(),
-//                productEntity.getPrice(),
-//                productEntity.getDescription());
-
         ProductDetailDTO product = this.productMapper.productEntityToProductDetailDTO(productEntity);
 
         if (!productEntity.getType().equals("strap")) {
