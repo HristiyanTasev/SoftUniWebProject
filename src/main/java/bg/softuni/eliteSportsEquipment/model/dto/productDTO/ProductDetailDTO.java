@@ -11,6 +11,10 @@ public class ProductDetailDTO {
     private String name;
     private BigDecimal price;
     private List<String> size = new ArrayList<>();
+    private String beltLeverType;
+    private String beltMaterialType;
+    private String strapType;
+    private String sleeveType;
     private String description;
 
     public ProductDetailDTO() {
@@ -66,6 +70,42 @@ public class ProductDetailDTO {
 
     public ProductDetailDTO setSize(List<String> size) {
         this.size = size;
+        return this;
+    }
+
+    public String getBeltLeverType() {
+        return beltLeverType;
+    }
+
+    public ProductDetailDTO setBeltLeverType(String beltLeverType) {
+        this.beltLeverType = beltLeverType;
+        return this;
+    }
+
+    public String getBeltMaterialType() {
+        return beltMaterialType;
+    }
+
+    public ProductDetailDTO setBeltMaterialType(String beltMaterialType) {
+        this.beltMaterialType = beltMaterialType;
+        return this;
+    }
+
+    public String getStrapType() {
+        return strapType;
+    }
+
+    public ProductDetailDTO setStrapType(String strapType) {
+        this.strapType = strapType;
+        return this;
+    }
+
+    public String getSleeveType() {
+        return sleeveType;
+    }
+
+    public ProductDetailDTO setSleeveType(String sleeveType) {
+        this.sleeveType = sleeveType;
         return this;
     }
 

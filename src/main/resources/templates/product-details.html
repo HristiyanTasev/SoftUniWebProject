@@ -56,15 +56,40 @@
                     <option th:each="s: ${product.size}" th:value="${s}" th:text="${s}">S</option>
                 </select>
             </div>
-            <p class="fst-italic fs-4 mt-3">DESCRIPTION</p>
-            <p class="fst-italic fs-6 mt-2 pb-2 border-2 border-bottom"
-               th:text="*{description}">Manufactured with high grade 7 mm neoprene, designed to&nbsp;minimise the risk of
+
+            <th:block th:switch="*{type}">
+                <div th:case="'belt'">
+                    <p class="fst-italic fs-4 mt-3">MATERIAL: <span
+                            class="fst-italic fs-5 mt-2 pb-2"
+                            th:text="*{beltMaterialType}"></span></p>
+
+                    <p class="fst-italic fs-4 mt-3">LEVER: <span
+                            class="fst-italic fs-5 mt-2 pb-2" th:text="*{beltLeverType}"></span>
+                    </p>
+                </div>
+                <div th:case="'strap'">
+                    <p class="fst-italic fs-4 mt-3">TYPE: <span
+                            class="fst-italic fs-5 mt-2 pb-2"
+                            th:text="*{strapType}"></span></p>
+                </div>
+                <div th:case="'sleeve'">
+                    <p class="fst-italic fs-4 mt-3">FOR: <span
+                            class="fst-italic fs-5 mt-2 pb-2"
+                            th:text="*{sleeveType}"></span></p>
+                </div>
+            </th:block>
+
+            <p class="fst-italic fs-4 mt-3">DESCRIPTION: </p>
+            <p class="fst-italic fs-5 mt-2 pb-2 border-2 border-bottom"
+               th:text="*{description}">Manufactured with high grade 7 mm neoprene, designed to&nbsp;minimise the risk
+                of
                 injury and to aid
                 performance.<br><br>Relied on by strength athletes around the world, these 7 mm knee sleeves are ideal
                 for powerlifting and heavy training.<br></p>
             <div class="d-grid gap-2 mt-2">
                 <a class="btn btn-success" th:href="@{/users/cart/add/{id}(id= ${product.id})}">ADD TO CART</a>
-                <a class="btn btn-danger" th:href="@{/users/favourites/add/{id}(id= ${product.id})}">ADD TO FAVOURITES</a>
+                <a class="btn btn-danger" th:href="@{/users/favourites/add/{id}(id= ${product.id})}">ADD TO
+                    FAVOURITES</a>
             </div>
         </div>
     </div>

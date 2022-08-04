@@ -2,7 +2,10 @@ package bg.softuni.eliteSportsEquipment.service.product;
 
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDetailDTO;
+import bg.softuni.eliteSportsEquipment.model.entity.BeltEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.ProductEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.SleeveEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.StrapEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.ProductMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
@@ -53,6 +56,22 @@ public class AllProductsService {
 
         if (!productEntity.getType().equals("strap")) {
             product.setSize(Arrays.stream(SizeEnum.values()).map(Enum::name).collect(Collectors.toList()));
+        }
+
+        switch (productEntity.getType()) {
+            case "belt" -> {
+                BeltEntity belt = (BeltEntity) productEntity;
+                product.setBeltLeverType(belt.getLeverType().toString());
+                product.setBeltMaterialType(belt.getMaterialType().toString());
+            }
+            case "strap" -> {
+                StrapEntity strap = (StrapEntity) productEntity;
+                product.setStrapType(strap.getStrapType().toString());
+            }
+            case "sleeve" -> {
+                SleeveEntity sleeve = (SleeveEntity) productEntity;
+                product.setSleeveType(sleeve.getSleeveType().toString());
+            }
         }
 
         return product;
