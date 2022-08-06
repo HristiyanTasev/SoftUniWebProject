@@ -1,10 +1,13 @@
 package bg.softuni.eliteSportsEquipment.model.dto.order;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 
 public class CartProductDTO {
 
+    private Long id;
     private String name;
+    private String size;
     private BigDecimal price;
     private Integer productQuantity;
     private BigDecimal totalPrice;
@@ -45,6 +48,24 @@ public class CartProductDTO {
 
     public CartProductDTO setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
+        return this;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public CartProductDTO setSize(String size) {
+        this.size = size;
+        return this;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public CartProductDTO setId(Long id) {
+        this.id = id;
         return this;
     }
 }

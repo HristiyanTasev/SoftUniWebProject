@@ -41,11 +41,6 @@
             <p th:text="*{p.price}">90.00$</p>
         </div>
         <div class="col-md-2 text-sm-center text-md-start align-self-center my-2 d-grid gap-2">
-            <form
-                    th:action="@{/users/cart/add/{id}(id= ${p.id})}"
-                    th:method="put">
-                <input type="submit" class="btn btn-success btn-sm" style="width:100%" value="Add To Cart">
-            </form>
             <a class="btn btn-warning btn-sm" th:href="@{/products/details/{id}(id = ${p.id})}">View Product</a>
             <form
                   th:action="@{/users/favourites/delete/{id}(id = ${p.id})}"

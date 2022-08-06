@@ -2,10 +2,12 @@ package bg.softuni.eliteSportsEquipment.service.order;
 
 import bg.softuni.eliteSportsEquipment.model.dto.order.CartDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.order.CartProductDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.order.CartUpdateDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.order.CartEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.order.CartProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
+import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.CartMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
 import bg.softuni.eliteSportsEquipment.repository.CartProductsRepository;
@@ -48,15 +50,17 @@ public class CartService {
         List<ProductEntity> products = this.allProductsRepository.findAll().subList(0, 4);
         List<CartProductEntity> cartProducts = new ArrayList<>();
 
-        cartProducts.add(new CartProductEntity().setProduct(products.get(0)).setProductQuantity(1));
-        cartProducts.add(new CartProductEntity().setProduct(products.get(1)).setProductQuantity(2));
-        cartProducts.add(new CartProductEntity().setProduct(products.get(2)).setProductQuantity(3));
-        cartProducts.add(new CartProductEntity().setProduct(products.get(3)).setProductQuantity(1));
+        CartEntity cart = new CartEntity();
 
+        cartProducts.add(new CartProductEntity().setProduct(products.get(0)).setProductQuantity(1).setSize(SizeEnum.M));
+        cartProducts.add(new CartProductEntity().setProduct(products.get(1)).setProductQuantity(2).setSize(SizeEnum.L));
+        cartProducts.add(new CartProductEntity().setProduct(products.get(2)).setProductQuantity(3).setSize(SizeEnum.S));
+        cartProducts.add(new CartProductEntity().setProduct(products.get(3)).setProductQuantity(1).setSize(SizeEnum.XS));
+
+        cart.setCartProducts(cartProducts);
         UserEntity user = this.userRepository.findById(1L).orElseThrow();
-        CartEntity cart = new CartEntity(cartProducts);
-
         user.setCart(cart);
+
         this.userRepository.save(user);
     }
 
@@ -87,7 +91,7 @@ public class CartService {
         }
     }
 
-    public void addProductToCartById(Long productId, String email) {
+    public void addProductToCartById(Long productId, String email, String size) {
         UserEntity currentUser = this.userRepository.findByEmail(email).orElseThrow();
         ProductEntity productToAdd = this.allProductsRepository.findById(productId).orElseThrow();
         CartEntity userCart = currentUser.getCart();
@@ -105,17 +109,25 @@ public class CartService {
 
         Optional<CartProductEntity> hasProduct = cartProducts
                 .stream()
-                .filter(p -> p.getProduct()
-                        .equals(productToAdd))
+                .filter(p -> {
+                    boolean product = p.getProduct()
+                            .equals(productToAdd);
+                    boolean hasSize = p.getSize().name().equals(size);
+
+                    return product && hasSize;
+                })
                 .findFirst();
 
-        hasProduct.ifPresent(cP -> {
-            cP.setProductQuantity(cP.getProductQuantity() + 1);
-//            cartProducts.stream().filter(p -> p.getProduct().getName().equals(cP.getProduct().getName()))
-        });
+        hasProduct.ifPresent(cP ->
+                cP.setProductQuantity(cP.getProductQuantity() + 1)
+        );
 
         if (hasProduct.isEmpty()) {
-            cartProducts.add(new CartProductEntity().setProduct(productToAdd).setProductQuantity(1));
+            cartProducts.add(new CartProductEntity()
+                    .setProduct(productToAdd)
+                    .setProductQuantity(1)
+                    .setSize(size != null ? SizeEnum.valueOf(size) : null));
+
             userCart.setCartProducts(cartProducts);
         }
 
@@ -123,7 +135,23 @@ public class CartService {
         this.userRepository.save(currentUser);
     }
 
-    public void updateProductQuantity() {
+    public void updateProductQuantity(Long id, String email) {
+
+    }
+
+    public void deleteProductFromCartById(Long id, String email) {
+        CartEntity cart = this.userRepository.findByEmail(email).orElseThrow().getCart();
+        Optional<CartProductEntity> productToRemove = this.cartProductsRepository.findById(id);
+
+        if (cart != null && productToRemove.isPresent()) {
+            cart.getCartProducts().remove(productToRemove.get());
+            this.cartRepository.save(cart);
+            this.cartProductsRepository.deleteById(id);
+        }
+
+    }
+
+    public void updateCart(CartUpdateDTO cartUpdateDTO) {
 
     }
 }

@@ -1,15 +1,15 @@
 package bg.softuni.eliteSportsEquipment.web;
 
 import bg.softuni.eliteSportsEquipment.model.dto.order.CartDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.order.CartProductDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.order.CartUpdateDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserRegisterDTO;
 import bg.softuni.eliteSportsEquipment.service.order.CartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
@@ -20,6 +20,11 @@ public class CartController {
 
     public CartController(CartService cartService) {
         this.cartService = cartService;
+    }
+
+    @ModelAttribute("cartUpdateDTO")
+    private CartUpdateDTO initCartUpdateDTO() {
+        return new CartUpdateDTO();
     }
 
     @GetMapping("/cart")
@@ -33,10 +38,33 @@ public class CartController {
         return "cart";
     }
 
-    @PutMapping("/cart/add/{id}")
-    public String addToCart(@PathVariable(name = "id") Long productId, Principal principal) {
+    @PostMapping("/cart/add/{id}")
+    public String addToCart(@PathVariable(name = "id") Long productId,
+                            @RequestParam(required = false) String size,
+                            Principal principal) {
 
-        this.cartService.addProductToCartById(productId, principal.getName());
+        this.cartService.addProductToCartById(productId, principal.getName(), size);
+
+        return "redirect:/users/cart";
+    }
+
+    @PatchMapping("/cart/update")
+    public String updateCart(@Valid CartUpdateDTO cartUpdateDTO,
+                             BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/users/cart";
+        }
+
+        this.cartService.updateCart(cartUpdateDTO);
+
+        return "redirect:/users/cart";
+    }
+
+    @DeleteMapping("/cart/delete/{id}")
+    public String deleteFromCart(@PathVariable(name = "id") Long productId, Principal principal) {
+
+        this.cartService.deleteProductFromCartById(productId, principal.getName());
 
         return "redirect:/users/cart";
     }

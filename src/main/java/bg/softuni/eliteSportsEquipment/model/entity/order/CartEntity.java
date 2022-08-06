@@ -1,6 +1,7 @@
 package bg.softuni.eliteSportsEquipment.model.entity.order;
 
 import bg.softuni.eliteSportsEquipment.model.entity.BaseEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,10 +10,7 @@ import java.util.List;
 @Table(name = "carts")
 public class CartEntity extends BaseEntity {
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    private List<ProductEntity> products = new ArrayList<>();
-
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<CartProductEntity> cartProducts;
 
     public CartEntity() {

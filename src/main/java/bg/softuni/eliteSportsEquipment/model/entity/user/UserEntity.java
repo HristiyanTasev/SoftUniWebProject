@@ -25,6 +25,7 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String address;
 
     @OneToOne(cascade = CascadeType.ALL)

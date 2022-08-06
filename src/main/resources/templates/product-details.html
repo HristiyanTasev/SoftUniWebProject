@@ -48,14 +48,18 @@
         <div class="col-lg-5">
             <h1 class="fs-2" th:text="*{name}">Product Name</h1>
             <p class="fs-4 text-danger pb-2 border-2 border-bottom border-dark" th:text="|$*{price}|">$59.99</p>
-            <div th:unless="${#strings.equals(product.type, 'strap')}">
-                <p class="fst-italic fs-4">PRODUCT SIZE</p>
-                <select class="form-select mb-3"
-                        aria-label="Sizing select">
-                    <option selected>Sizes</option>
-                    <option th:each="s: ${product.size}" th:value="${s}" th:text="${s}">S</option>
-                </select>
-            </div>
+            <form id="sizeForm"
+                  th:action="@{/users/cart/add/{id}(id= ${product.id})}"
+                  th:method="post">
+                <div th:unless="${#strings.equals(product.type, 'strap')}">
+                    <p class="fst-italic fs-4">PRODUCT SIZE</p>
+                    <select class="form-select mb-3"
+                            aria-label="Sizing select"
+                            name="size">
+                        <option th:each="s: ${product.size}" th:value="${s}" th:text="${s}">S</option>
+                    </select>
+                </div>
+            </form>
 
             <th:block th:switch="*{type}">
                 <div th:case="'belt'">
@@ -87,11 +91,7 @@
                 performance.<br><br>Relied on by strength athletes around the world, these 7 mm knee sleeves are ideal
                 for powerlifting and heavy training.<br></p>
             <div class="d-grid gap-2 mt-2">
-                <form
-                        th:action="@{/users/cart/add/{id}(id= ${product.id})}"
-                        th:method="put">
-                    <input type="submit" class="btn btn-success" style="width:100%" value="ADD TO CART">
-                </form>
+                <input type="submit" form="sizeForm" class="btn btn-success" style="width:100%" value="ADD TO CART">
                 <form
                         th:action="@{/users/favourites/add/{id}(id= ${product.id})}"
                         th:method="put">
