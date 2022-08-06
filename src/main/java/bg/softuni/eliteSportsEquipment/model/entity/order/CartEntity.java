@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "carts")
 public class CartEntity extends BaseEntity {
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<CartProductEntity> cartProducts;
 
     public CartEntity() {

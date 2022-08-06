@@ -1,10 +1,10 @@
 package bg.softuni.eliteSportsEquipment.model.entity.order;
 
 import bg.softuni.eliteSportsEquipment.model.entity.BaseEntity;
-import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.OrderStatusEnum;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +13,17 @@ import java.util.List;
 @Table(name = "orders")
 public class OrderEntity extends BaseEntity {
 
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
     private OrderStatusEnum orderStatus;
 
     @ManyToMany
-    private List<ProductEntity> products = new ArrayList<>();
+    private List<OrderProductEntity> orderProducts = new ArrayList<>();
+
+    @Column(nullable = false)
+    private BigDecimal finalPrice;
 
     public OrderEntity() {
     }
@@ -42,12 +46,21 @@ public class OrderEntity extends BaseEntity {
         return this;
     }
 
-    public List<ProductEntity> getProducts() {
-        return products;
+    public List<OrderProductEntity> getOrderProducts() {
+        return orderProducts;
     }
 
-    public OrderEntity setProducts(List<ProductEntity> products) {
-        this.products = products;
+    public OrderEntity setOrderProducts(List<OrderProductEntity> products) {
+        this.orderProducts = products;
+        return this;
+    }
+
+    public BigDecimal getFinalPrice() {
+        return finalPrice;
+    }
+
+    public OrderEntity setFinalPrice(BigDecimal finalPrice) {
+        this.finalPrice = finalPrice;
         return this;
     }
 }
