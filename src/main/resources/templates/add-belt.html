@@ -40,7 +40,8 @@
             <form
                     th:method="POST"
                     th:action="@{/products/add/belt}"
-                    th:object="${beltAddDTO}">
+                    th:object="${beltAddDTO}"
+                    enctype="multipart/form-data">
 
                 <p th:if="${#fields.hasAnyErrors()}" class="errors alert alert-danger">
                     All fields are required.
@@ -65,14 +66,14 @@
 
                 <label for="price" class="form-label">Price:</label>
                 <div class="input-group mb-4">
-                    <input type="number" id="price" class="form-control" placeholder="Price..."
+                    <input type="number" id="price" class="form-control" step="0.01" placeholder="Price..."
                            th:field="*{price}"/>
                 </div>
 
                 <label for="materialType" class="form-label">Material Type:</label>
                 <div class="mb-4 input-group">
                     <select id="materialType" class="form-select" aria-label="Select Material Type"
-                    th:field="*{materialType}">
+                            th:field="*{materialType}">
                         <option value="" selected>Select Material Type</option>
                         <option th:each="m: ${materials}" th:value="${m}" th:text="${m}">Leather</option>
                     </select>
@@ -85,6 +86,12 @@
                         <option value="" selected>Select Lever Type</option>
                         <option th:each="l: ${levers}" th:value="${l}" th:text="${l}">Prong</option>
                     </select>
+                </div>
+
+                <label for="formFile" class="form-label">Product Image:</label>
+                <div class="mb-4 input-group">
+                    <input class="form-control" type="file" id="formFile"
+                           th:field="*{picture}">
                 </div>
 
                 <div class="my-5 text-center">

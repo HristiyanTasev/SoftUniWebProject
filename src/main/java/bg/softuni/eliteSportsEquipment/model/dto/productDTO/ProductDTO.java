@@ -8,15 +8,17 @@ public class ProductDTO {
     private String name;
     private BigDecimal price;
     private String productType;
+    private String pictureURL;
 
     public ProductDTO() {
     }
 
-    public ProductDTO(Long id, String name, BigDecimal price, String productType) {
+    public ProductDTO(Long id, String name, BigDecimal price, String productType, String pictureURL) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.productType = productType;
+        this.pictureURL = pictureURL;
     }
 
     public Long getId() {
@@ -52,6 +54,15 @@ public class ProductDTO {
 
     public ProductDTO setProductType(String productType) {
         this.productType = productType;
+        return this;
+    }
+
+    public String getPictureURL() {
+        return pictureURL;
+    }
+
+    public ProductDTO setPictureURL(String pictureURL) {
+        this.pictureURL = pictureURL;
         return this;
     }
 }

@@ -27,6 +27,9 @@ public class ProductEntity extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
 
+    @OneToOne
+    private PictureEntity picture;
+
     public ProductEntity() {
     }
 
@@ -76,5 +79,14 @@ public class ProductEntity extends BaseEntity {
 
     public String getType() {
         return type;
+    }
+
+    public PictureEntity getPicture() {
+        return picture;
+    }
+
+    public ProductEntity setPicture(PictureEntity picture) {
+        this.picture = picture;
+        return this;
     }
 }

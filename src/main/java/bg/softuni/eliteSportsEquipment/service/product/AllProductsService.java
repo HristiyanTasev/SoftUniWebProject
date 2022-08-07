@@ -38,7 +38,8 @@ public class AllProductsService {
                         productEntity.getId(),
                         productEntity.getName(),
                         productEntity.getPrice(),
-                        productEntity.getType()))
+                        productEntity.getType(),
+                        productEntity.getPicture().getUrl()))
                 .collect(Collectors.toList());
     }
 

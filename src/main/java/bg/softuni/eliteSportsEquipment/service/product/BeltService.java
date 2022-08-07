@@ -2,12 +2,17 @@ package bg.softuni.eliteSportsEquipment.service.product;
 
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.BeltAddDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.product.BeltEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.PictureEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltLeverEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltMaterialEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.ProductMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
+import bg.softuni.eliteSportsEquipment.repository.PictureRepository;
+import bg.softuni.eliteSportsEquipment.service.cloudinary.CloudinaryService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 
 @Service
@@ -15,10 +20,15 @@ public class BeltService {
 
     private final AllProductsRepository allProductsRepository;
     private final ProductMapper productMapper;
+    private final PictureService pictureService;
+    private final PictureRepository pictureRepository;
 
-    public BeltService(AllProductsRepository allProductsRepository, ProductMapper productMapper) {
+    public BeltService(AllProductsRepository allProductsRepository, ProductMapper productMapper,
+                       PictureService pictureService, PictureRepository pictureRepository) {
         this.allProductsRepository = allProductsRepository;
         this.productMapper = productMapper;
+        this.pictureService = pictureService;
+        this.pictureRepository = pictureRepository;
     }
 
     public void init() {
@@ -41,16 +51,22 @@ public class BeltService {
         }
     }
 
-    private void initOneBelt(String brand, String name, String description,
+    public void initOneBelt(String brand, String name, String description,
                              Double price, String materialType,
                              String leverType) {
 
         BeltEntity baseProduct = new BeltEntity(brand, name, description, BigDecimal.valueOf(price));
 
+        PictureEntity pic = new PictureEntity()
+                .setUrl("https://res.cloudinary.com/djoiyj8ia/image/upload/v1659890181/prong_belt_xfgtgg.png")
+                .setPublicId("prong_belt_xfgtgg");
+
         baseProduct
                 .setMaterialType(BeltMaterialEnum.valueOf(materialType))
-                .setLeverType(BeltLeverEnum.valueOf(leverType));
+                .setLeverType(BeltLeverEnum.valueOf(leverType))
+                .setPicture(pic);
 
+        this.pictureRepository.save(pic);
         this.allProductsRepository.save(baseProduct);
     }
 
@@ -60,6 +76,13 @@ public class BeltService {
         }
 
         BeltEntity newBelt = this.productMapper.addBeltDtoToBeltEntity(beltAddDTO);
+
+        try {
+            PictureEntity picture = this.pictureService.createPictureEntity(beltAddDTO.getPicture());
+            newBelt.setPicture(picture);
+        } catch (IOException e) {
+            return false;
+        }
 
         this.allProductsRepository.save(newBelt);
         return true;

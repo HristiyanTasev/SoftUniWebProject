@@ -78,6 +78,7 @@ public class CartService {
                     .stream()
                     .map(cP -> {
                         CartProductDTO cartProductDTO = cartMapper.cartProductEntityToCartProductDTO(cP);
+                        cartProductDTO.setPictureURL(cP.getProduct().getPicture().getUrl());
                         cartProductDTO
                                 .setTotalPrice(cP.getProduct().getPrice()
                                         .multiply(new BigDecimal(cP.getProductQuantity())));

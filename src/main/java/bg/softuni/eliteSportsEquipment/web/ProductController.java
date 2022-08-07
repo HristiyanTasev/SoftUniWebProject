@@ -5,6 +5,7 @@ import bg.softuni.eliteSportsEquipment.model.enums.BeltLeverEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltMaterialEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.SleeveTypeEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.StrapTypeEnum;
+import bg.softuni.eliteSportsEquipment.service.cloudinary.CloudinaryService;
 import bg.softuni.eliteSportsEquipment.service.product.AllProductsService;
 import bg.softuni.eliteSportsEquipment.service.product.BeltService;
 import bg.softuni.eliteSportsEquipment.service.product.SleeveService;
@@ -30,14 +31,17 @@ public class ProductController {
     private final BeltService beltService;
     private final StrapService strapService;
     private final SleeveService sleeveService;
+    private final CloudinaryService cloudinaryService;
 
     @Autowired
     public ProductController(AllProductsService allProductsService, BeltService beltService,
-                             StrapService strapService, SleeveService sleeveService) {
+                             StrapService strapService, SleeveService sleeveService,
+                             CloudinaryService cloudinaryService) {
         this.allProductsService = allProductsService;
         this.beltService = beltService;
         this.strapService = strapService;
         this.sleeveService = sleeveService;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @ModelAttribute("beltAddDTO")
@@ -73,6 +77,7 @@ public class ProductController {
         return "product-details";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/add/belt")
     public String beltAdd(Model model) {
         List<String> materials = Arrays.stream(BeltMaterialEnum.values()).map(Enum::name).collect(Collectors.toList());
@@ -104,6 +109,7 @@ public class ProductController {
         return "redirect:/products/all";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/add/strap")
     public String strapAdd(Model model) {
         List<String> strapTypes = Arrays.stream(StrapTypeEnum.values()).map(Enum::name).collect(Collectors.toList());
@@ -131,6 +137,7 @@ public class ProductController {
         return "redirect:/products/all";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/add/sleeve")
     public String sleeveAdd(Model model) {
         List<String> sleeveTypes = Arrays.stream(SleeveTypeEnum.values()).map(Enum::name).collect(Collectors.toList());

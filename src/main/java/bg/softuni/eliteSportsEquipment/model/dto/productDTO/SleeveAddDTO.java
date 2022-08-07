@@ -1,5 +1,7 @@
 package bg.softuni.eliteSportsEquipment.model.dto.productDTO;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -21,6 +23,9 @@ public class SleeveAddDTO {
 
     @NotBlank
     private String sleeveType;
+
+    @NotNull
+    private MultipartFile picture;
 
     public SleeveAddDTO() {
     }
@@ -67,6 +72,15 @@ public class SleeveAddDTO {
 
     public SleeveAddDTO setSleeveType(String sleeveType) {
         this.sleeveType = sleeveType;
+        return this;
+    }
+
+    public MultipartFile getPicture() {
+        return picture;
+    }
+
+    public SleeveAddDTO setPicture(MultipartFile picture) {
+        this.picture = picture;
         return this;
     }
 }

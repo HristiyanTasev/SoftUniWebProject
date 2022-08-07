@@ -1,5 +1,7 @@
 package bg.softuni.eliteSportsEquipment.model.dto.productDTO;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -22,6 +24,9 @@ public class StrapAddDTO {
 
     @NotBlank
     private String strapType;
+
+    @NotNull
+    private MultipartFile picture;
 
     public StrapAddDTO() {
     }
@@ -68,6 +73,15 @@ public class StrapAddDTO {
 
     public StrapAddDTO setStrapType(String strapType) {
         this.strapType = strapType;
+        return this;
+    }
+
+    public MultipartFile getPicture() {
+        return picture;
+    }
+
+    public StrapAddDTO setPicture(MultipartFile picture) {
+        this.picture = picture;
         return this;
     }
 }

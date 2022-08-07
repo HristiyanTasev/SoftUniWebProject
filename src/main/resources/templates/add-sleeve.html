@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,7 +39,9 @@
             <form
                     th:method="POST"
                     th:action="@{/products/add/sleeve}"
-                    th:object="${sleeveAddDTO}">
+                    th:object="${sleeveAddDTO}"
+                    enctype="multipart/form-data">
+
                 <p th:if="${#fields.hasAnyErrors()}" class="errors alert alert-danger">
                     All fields are required.
                 </p>
@@ -62,7 +65,7 @@
 
                 <label for="price" class="form-label">Price:</label>
                 <div class="input-group mb-4">
-                    <input type="number" id="price" class="form-control" placeholder="Price..."
+                    <input type="number" id="price" class="form-control" step="0.01" placeholder="Price..."
                            th:field="*{price}"/>
                 </div>
 
@@ -73,6 +76,12 @@
                         <option value="" selected>Select Sleeve Type</option>
                         <option th:each="s: ${sleeveTypes}" th:value="${s}" th:text="${s}">One</option>
                     </select>
+                </div>
+
+                <label for="formFile" class="form-label">Product Image:</label>
+                <div class="mb-4 input-group">
+                    <input class="form-control" type="file" id="formFile"
+                           th:field="*{picture}">
                 </div>
 
                 <div class="my-5 text-center">

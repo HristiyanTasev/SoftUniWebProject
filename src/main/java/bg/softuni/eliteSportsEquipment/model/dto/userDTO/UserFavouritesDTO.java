@@ -5,17 +5,18 @@ import java.math.BigDecimal;
 public class UserFavouritesDTO {
 
     private Long id;
-    // TODO add picture when cloudinary gets implemented
     private String name;
     private BigDecimal price;
+    private String pictureURL;
 
     public UserFavouritesDTO() {
     }
 
-    public UserFavouritesDTO(Long id, String name, BigDecimal price) {
+    public UserFavouritesDTO(Long id, String name, BigDecimal price, String pictureURL) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.pictureURL = pictureURL;
     }
 
     public Long getId() {
@@ -42,6 +43,15 @@ public class UserFavouritesDTO {
 
     public UserFavouritesDTO setPrice(BigDecimal price) {
         this.price = price;
+        return this;
+    }
+
+    public String getPictureURL() {
+        return pictureURL;
+    }
+
+    public UserFavouritesDTO setPictureURL(String pictureURL) {
+        this.pictureURL = pictureURL;
         return this;
     }
 }

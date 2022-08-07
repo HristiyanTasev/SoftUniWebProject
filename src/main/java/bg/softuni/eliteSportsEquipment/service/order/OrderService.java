@@ -42,10 +42,10 @@ public class OrderService {
 
     public void initOrder(String orderStatus) {
         UserEntity user = this.userRepository.findById(1L).orElseThrow();
-//        CartEntity userCart = user.getCart();
-//
-//        OrderEntity userOrder = new OrderEntity();
-//
+        CartEntity userCart = user.getCart();
+
+        OrderEntity userOrder = new OrderEntity();
+
 //        //TODO rework orders in db and fix the init
 //        userOrder.setOrderStatus(OrderStatusEnum.valueOf(orderStatus))
 //                .setCreatedAt(LocalDateTime.now())
@@ -54,9 +54,9 @@ public class OrderService {
 //                        .stream()
 //                        .map(orderMapper::cartProductEntityToOrderProductEntity)
 //                        .collect(Collectors.toList()));
-//
-//        user.getOrders().add(userOrder);
 
-        this.userRepository.save(user);
+//        user.getOrders().add(userOrder);
+//
+//        this.userRepository.save(user);
     }
 }

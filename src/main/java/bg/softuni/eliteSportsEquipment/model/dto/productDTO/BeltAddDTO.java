@@ -1,5 +1,7 @@
 package bg.softuni.eliteSportsEquipment.model.dto.productDTO;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -25,6 +27,9 @@ public class BeltAddDTO {
 
     @NotBlank
     private String leverType;
+
+    @NotNull
+    private MultipartFile picture;
 
     public BeltAddDTO() {
     }
@@ -80,6 +85,15 @@ public class BeltAddDTO {
 
     public BeltAddDTO setLeverType(String leverType) {
         this.leverType = leverType;
+        return this;
+    }
+
+    public MultipartFile getPicture() {
+        return picture;
+    }
+
+    public BeltAddDTO setPicture(MultipartFile picture) {
+        this.picture = picture;
         return this;
     }
 }

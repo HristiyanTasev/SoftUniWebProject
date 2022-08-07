@@ -1,12 +1,15 @@
 package bg.softuni.eliteSportsEquipment.service.product;
 
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.SleeveAddDTO;
+import bg.softuni.eliteSportsEquipment.model.entity.product.PictureEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.product.SleeveEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SleeveTypeEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.ProductMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
+import bg.softuni.eliteSportsEquipment.repository.PictureRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 
 @Service
@@ -14,10 +17,15 @@ public class SleeveService {
 
     private final AllProductsRepository allProductsRepository;
     private final ProductMapper productMapper;
+    private final PictureService pictureService;
+    private final PictureRepository pictureRepository;
 
-    public SleeveService(AllProductsRepository allProductsRepository, ProductMapper productMapper) {
+    public SleeveService(AllProductsRepository allProductsRepository, ProductMapper productMapper,
+                         PictureService pictureService, PictureRepository pictureRepository) {
         this.allProductsRepository = allProductsRepository;
         this.productMapper = productMapper;
+        this.pictureService = pictureService;
+        this.pictureRepository = pictureRepository;
     }
 
     public void init() {
@@ -41,9 +49,15 @@ public class SleeveService {
 
         SleeveEntity baseProduct = new SleeveEntity(brand, name, description, BigDecimal.valueOf(price));
 
-        baseProduct
-                .setSleeveType(SleeveTypeEnum.valueOf(sleeveType));
+        PictureEntity pic = new PictureEntity()
+                .setUrl("https://res.cloudinary.com/djoiyj8ia/image/upload/v1659890149/elbow_sleeve_l2pfsu.png")
+                .setPublicId("elbow_sleeve_l2pfsu");
 
+        baseProduct
+                .setSleeveType(SleeveTypeEnum.valueOf(sleeveType))
+                .setPicture(pic);
+
+        this.pictureRepository.save(pic);
         this.allProductsRepository.save(baseProduct);
     }
 
@@ -53,6 +67,13 @@ public class SleeveService {
         }
 
         SleeveEntity newSleeve = this.productMapper.addSleeveDtoToSleeveEntity(sleeveAddDTO);
+
+        try {
+            PictureEntity picture = this.pictureService.createPictureEntity(sleeveAddDTO.getPicture());
+            newSleeve.setPicture(picture);
+        } catch (IOException e) {
+            return false;
+        }
 
         this.allProductsRepository.save(newSleeve);
         return true;

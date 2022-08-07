@@ -11,6 +11,7 @@ public class CartProductDTO {
     private BigDecimal price;
     private Integer productQuantity;
     private BigDecimal totalPrice;
+    private String pictureURL;
 
     public CartProductDTO() {
     }
@@ -66,6 +67,15 @@ public class CartProductDTO {
 
     public CartProductDTO setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String getPictureURL() {
+        return pictureURL;
+    }
+
+    public CartProductDTO setPictureURL(String pictureURL) {
+        this.pictureURL = pictureURL;
         return this;
     }
 }

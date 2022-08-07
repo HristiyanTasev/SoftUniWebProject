@@ -56,7 +56,7 @@ public class FavouriteService {
             if (favProducts.size() >= 1) {
                 favProductsView = favProducts
                         .stream()
-                        .map(p -> new UserFavouritesDTO(p.getId(), p.getName(), p.getPrice()))
+                        .map(p -> new UserFavouritesDTO(p.getId(), p.getName(), p.getPrice(), p.getPicture().getUrl()))
                         .collect(Collectors.toList());
             }
 

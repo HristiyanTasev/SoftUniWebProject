@@ -16,6 +16,7 @@ public class ProductDetailDTO {
     private String strapType;
     private String sleeveType;
     private String description;
+    private String pictureURL;
 
     public ProductDetailDTO() {
     }
@@ -107,6 +108,15 @@ public class ProductDetailDTO {
 
     public ProductDetailDTO setDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public String getPictureURL() {
+        return pictureURL;
+    }
+
+    public ProductDetailDTO setPictureURL(String pictureURL) {
+        this.pictureURL = pictureURL;
         return this;
     }
 }
