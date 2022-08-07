@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,6 +22,7 @@
         <li class="nav-item">
             <a class="nav-link link-danger active" aria-current="page" href="/service/orders">Orders</a>
         </li>
+        <th:block sec:authorize="hasRole('ADMIN')">
         <li class="nav-item">
             <a class="nav-link link-danger" href="/products/add/belt">Add Belt</a>
         </li>
@@ -29,6 +32,7 @@
         <li class="nav-item">
             <a class="nav-link link-danger" href="/products/add/sleeve">Add Sleeve</a>
         </li>
+        </th:block>
     </ul>
 </div>
 

@@ -31,17 +31,14 @@ public class ProductController {
     private final BeltService beltService;
     private final StrapService strapService;
     private final SleeveService sleeveService;
-    private final CloudinaryService cloudinaryService;
 
     @Autowired
     public ProductController(AllProductsService allProductsService, BeltService beltService,
-                             StrapService strapService, SleeveService sleeveService,
-                             CloudinaryService cloudinaryService) {
+                             StrapService strapService, SleeveService sleeveService) {
         this.allProductsService = allProductsService;
         this.beltService = beltService;
         this.strapService = strapService;
         this.sleeveService = sleeveService;
-        this.cloudinaryService = cloudinaryService;
     }
 
     @ModelAttribute("beltAddDTO")
