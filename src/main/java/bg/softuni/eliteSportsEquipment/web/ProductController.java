@@ -11,6 +11,9 @@ import bg.softuni.eliteSportsEquipment.service.product.BeltService;
 import bg.softuni.eliteSportsEquipment.service.product.SleeveService;
 import bg.softuni.eliteSportsEquipment.service.product.StrapService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,8 +60,9 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public String allProducts(Model model) {
-        List<ProductDTO> allProducts = this.allProductsService.getAllProducts();
+    public String allProducts(Model model,
+                              @PageableDefault(page = 0, size = 12) Pageable pageable) {
+        Page<ProductDTO> allProducts = this.allProductsService.getAllProducts(pageable);
 
         model.addAttribute("products", allProducts);
 

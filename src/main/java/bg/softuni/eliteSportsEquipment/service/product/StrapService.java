@@ -41,6 +41,18 @@ public class StrapService {
 
             initOneStrap("SBD", "Strap4", "Long Strap Description",
                     80.99, "FIGURE_EIGHT");
+
+            initOneStrap("SBD", "Strap5", "Long Strap Description",
+                    100.99, "LASSO");
+
+            initOneStrap("pr", "Strap6", "Long Strap Description",
+                    30.99, "FIGURE_EIGHT");
+
+            initOneStrap("PR", "Strap7", "Long Strap Description",
+                    45.99, "LASSO");
+
+            initOneStrap("SBD", "Strap8", "Long Strap Description",
+                    80.99, "FIGURE_EIGHT");
         }
     }
 

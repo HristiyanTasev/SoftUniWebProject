@@ -8,9 +8,7 @@ import bg.softuni.eliteSportsEquipment.model.enums.BeltMaterialEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.ProductMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
 import bg.softuni.eliteSportsEquipment.repository.PictureRepository;
-import bg.softuni.eliteSportsEquipment.service.cloudinary.CloudinaryService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -46,14 +44,27 @@ public class BeltService {
                                             for powerlifting and heavy training.""",
                     70.99, "LEATHER", "LEVER");
 
-            initOneBelt("SBD", "Kolan4", "Long Belt Description",
-                    80.99, "NYLON", "PRONG");
+            initOneBelt("ESE", "Kolan4", "Long Belt Description",
+                    20.99, "NYLON", "LEVER");
+
+            initOneBelt("ESE", "Kolan5", "Long Belt Description",
+                    200.99, "LEATHER", "PRONG");
+
+            initOneBelt("PR", "Kolan6", "Long Belt Description",
+                    140.99, "NYLON", "PRONG");
+
+            initOneBelt("SBD", "Kolan7", "Long Belt Description",
+                    100.99, "LEATHER", "LEVER");
+
+            initOneBelt("SBD", "Kolan8", "Long Belt Description",
+                    110.99, "NYLON", "PRONG");
+
         }
     }
 
     public void initOneBelt(String brand, String name, String description,
-                             Double price, String materialType,
-                             String leverType) {
+                            Double price, String materialType,
+                            String leverType) {
 
         BeltEntity baseProduct = new BeltEntity(brand, name, description, BigDecimal.valueOf(price));
 

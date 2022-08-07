@@ -9,6 +9,8 @@ import bg.softuni.eliteSportsEquipment.model.entity.product.StrapEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.ProductMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -29,18 +31,9 @@ public class AllProductsService {
         this.productMapper = productMapper;
     }
 
-    public List<ProductDTO> getAllProducts() {
-        List<ProductEntity> allProductEntities = this.allProductsRepository.findAll();
-
-        return allProductEntities
-                .stream()
-                .map(productEntity -> new ProductDTO(
-                        productEntity.getId(),
-                        productEntity.getName(),
-                        productEntity.getPrice(),
-                        productEntity.getType(),
-                        productEntity.getPicture().getUrl()))
-                .collect(Collectors.toList());
+    public Page<ProductDTO> getAllProducts(Pageable pageable) {
+        return this.allProductsRepository.findAll(pageable)
+                .map(this.productMapper::productEntityToProductDTO);
     }
 
     public ProductDetailDTO getProductById(Long productId) {

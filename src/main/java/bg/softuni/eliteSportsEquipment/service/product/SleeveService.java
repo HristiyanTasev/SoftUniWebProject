@@ -39,8 +39,20 @@ public class SleeveService {
             initOneSleeve("SBD", "Sleeve3", "Long Sleeve Description",
                     70.99, "ELBOW");
 
-            initOneSleeve("SBD", "Sleeve4", "Long Sleeve Description",
+            initOneSleeve("ESE", "Sleeve4", "Long Sleeve Description",
                     80.99, "KNEE");
+
+            initOneSleeve("SBD", "Sleeve5", "Long Sleeve Description",
+                    80.99, "KNEE");
+
+            initOneSleeve("PR", "Sleeve6", "Long Sleeve Description",
+                    80.99, "ELBOW");
+
+            initOneSleeve("PR", "Sleeve7", "Long Sleeve Description",
+                    60.00, "KNEE");
+
+            initOneSleeve("SBD", "Sleeve8", "Long Sleeve Description",
+                    100.00, "KNEE");
         }
     }
 
