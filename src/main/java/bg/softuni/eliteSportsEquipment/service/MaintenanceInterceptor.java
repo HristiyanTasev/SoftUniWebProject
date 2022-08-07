@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Configuration
@@ -18,11 +19,10 @@ public class MaintenanceInterceptor implements HandlerInterceptor {
                              Object handler) throws Exception {
 
         if (!request.getRequestURI().equals("/maintenance")) {
-            LocalTime now = LocalTime.now();
-            DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
+            LocalDateTime now = LocalDateTime.now();
 
             //Unable to access website between 4 and 5 am every sunday
-            if ((now.getHour() >= 4 && now.getHour() <= 5) && dayOfWeek.name().equals("SUNDAY")) {
+            if ((now.getHour() >= 4 && now.getHour() <= 5) && now.getDayOfWeek().name().equals("SUNDAY")) {
                 response.sendRedirect("/maintenance");
                 return false;
             }
