@@ -1,13 +1,12 @@
 package bg.softuni.eliteSportsEquipment.web;
 
 import bg.softuni.eliteSportsEquipment.model.dto.order.CartDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.order.CartUpdateDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserRegisterDTO;
 import bg.softuni.eliteSportsEquipment.service.order.CartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -22,20 +21,41 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @ModelAttribute("cartUpdateDTO")
-    private CartUpdateDTO initCartUpdateDTO() {
-        return new CartUpdateDTO();
-    }
+//    @ModelAttribute("cartDTO")
+//    private CartDTO initCartDTO() {
+//        return new CartDTO();
+//    }
 
     @GetMapping("/cart")
     public String userCart(Model model, Principal principal) {
         String email = principal.getName();
 
-        CartDTO userCart = this.cartService.getCartByUserEmail(email);
-
-        model.addAttribute("userCart", userCart);
+        if (!model.containsAttribute("userCart")) {
+            CartDTO userCart = this.cartService.getCartByUserEmail(email);
+            model.addAttribute("userCart", userCart);
+        }
 
         return "cart";
+    }
+
+    @PatchMapping("/cart/update")
+    public String updateCart(@Valid CartDTO cartDTO,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes,
+                             Principal principal) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userCart", cartDTO);
+            redirectAttributes
+                    .addFlashAttribute("org.springframework.validation.BindingResult.userCart",
+                            bindingResult);
+
+            return "redirect:/users/cart";
+        }
+
+        this.cartService.updateCart(cartDTO, principal.getName());
+
+        return "redirect:/users/cart";
     }
 
     @PostMapping("/cart/add/{id}")
@@ -44,19 +64,6 @@ public class CartController {
                             Principal principal) {
 
         this.cartService.addProductToCartById(productId, principal.getName(), size);
-
-        return "redirect:/users/cart";
-    }
-
-    @PatchMapping("/cart/update")
-    public String updateCart(@Valid CartUpdateDTO cartUpdateDTO,
-                             BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            return "redirect:/users/cart";
-        }
-
-        this.cartService.updateCart(cartUpdateDTO);
 
         return "redirect:/users/cart";
     }

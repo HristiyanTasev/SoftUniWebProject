@@ -1,6 +1,7 @@
 package bg.softuni.eliteSportsEquipment.model.dto.order;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class CartProductDTO {
@@ -9,6 +10,7 @@ public class CartProductDTO {
     private String name;
     private String size;
     private BigDecimal price;
+    @NotNull
     private Integer productQuantity;
     private BigDecimal totalPrice;
     private String pictureURL;

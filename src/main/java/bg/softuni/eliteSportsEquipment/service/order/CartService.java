@@ -2,7 +2,6 @@ package bg.softuni.eliteSportsEquipment.service.order;
 
 import bg.softuni.eliteSportsEquipment.model.dto.order.CartDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.order.CartProductDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.order.CartUpdateDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.order.CartEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.order.CartProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
@@ -92,6 +91,35 @@ public class CartService {
         }
     }
 
+    // TODO test after fixing the cart.html update form
+    public void updateCart(CartDTO cartDTO, String email) {
+        UserEntity currentUser = this.userRepository.findByEmail(email).orElseThrow();
+        CartEntity cartEntity = currentUser.getCart();
+
+        List<Integer> productQuantities = cartDTO.getCartProducts().stream()
+                .map(CartProductDTO::getProductQuantity)
+                .collect(Collectors.toList());
+
+        List<Long> productIdsForRemoval = new ArrayList<>();
+
+        for (int i = 0; i < productQuantities.size() - 1; i++) {
+            Integer newQuantity = productQuantities.get(i);
+
+            if (newQuantity.equals(0)) {
+                productIdsForRemoval.add(cartEntity.getCartProducts().get(i).getId());
+                cartEntity.getCartProducts().remove(i);
+            }
+
+            Integer currentQuantity = cartEntity.getCartProducts().get(i).getProductQuantity();
+            if (!currentQuantity.equals(newQuantity)) {
+                cartEntity.getCartProducts().get(i).setProductQuantity(newQuantity);
+            }
+        }
+
+        this.cartRepository.save(cartEntity);
+        this.deleteRemovedCartProducts(productIdsForRemoval);
+    }
+
     public void addProductToCartById(Long productId, String email, String size) {
         UserEntity currentUser = this.userRepository.findByEmail(email).orElseThrow();
         ProductEntity productToAdd = this.allProductsRepository.findById(productId).orElseThrow();
@@ -133,11 +161,7 @@ public class CartService {
         }
 
 
-        this.userRepository.save(currentUser);
-    }
-
-    public void updateProductQuantity(Long id, String email) {
-
+        this.cartRepository.save(userCart);
     }
 
     public void deleteProductFromCartById(Long id, String email) {
@@ -149,10 +173,9 @@ public class CartService {
             this.cartRepository.save(cart);
             this.cartProductsRepository.deleteById(id);
         }
-
     }
 
-    public void updateCart(CartUpdateDTO cartUpdateDTO) {
-
+    private void deleteRemovedCartProducts(List<Long> productIds) {
+        productIds.forEach(this.cartProductsRepository::deleteById);
     }
 }
