@@ -132,18 +132,16 @@ public class UserService {
 
         List<UserOrdersDTO> userOrders = new ArrayList<>();
 
-
-        //TODO rework orders in db and fix the getting of orders
-//        if (currentUser.getOrders() != null && currentUser.getOrders().size() >= 1) {
-//            userOrders = currentUser
-//                    .getOrders()
-//                    .stream()
-//                    .map(orderEntity ->
-//                            new UserOrdersDTO(orderEntity.getId(),
-//                                    orderEntity.getCreatedAt(),
-//                                    orderEntity.getOrderStatus().name()))
-//                    .collect(Collectors.toList());
-//        }
+        if (currentUser.getOrders() != null && currentUser.getOrders().size() >= 1) {
+            userOrders = currentUser
+                    .getOrders()
+                    .stream()
+                    .map(orderEntity ->
+                            new UserOrdersDTO(orderEntity.getId(),
+                                    orderEntity.getCreatedAt(),
+                                    orderEntity.getOrderStatus().name()))
+                    .collect(Collectors.toList());
+        }
 
         return new UserDetailsDTO(currentUser.getFullName(),
                 currentUser.getEmail(),

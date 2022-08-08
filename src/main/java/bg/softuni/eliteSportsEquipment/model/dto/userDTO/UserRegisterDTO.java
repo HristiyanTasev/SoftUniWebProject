@@ -14,8 +14,6 @@ import javax.validation.constraints.Size;
 )
 public class UserRegisterDTO {
 
-    //TODO implement custom validators for matching passwords and unique email
-
     @Email(message = "User email should be valid")
     @NotBlank(message = "User email should be provided")
     @UniqueUserEmail(message = "User email should be unique.")

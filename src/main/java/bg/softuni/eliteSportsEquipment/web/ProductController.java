@@ -129,9 +129,6 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("beltAddDTO", beltAddDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.beltAddDTO", bindingResult);
 
-            //TODO add custom error handling for taken product name
-//            redirectAttributes.addFlashAttribute("nameTaken", true);
-
             return "redirect:/products/add/belt";
         }
 

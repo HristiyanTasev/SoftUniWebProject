@@ -6,7 +6,9 @@ import bg.softuni.eliteSportsEquipment.model.entity.order.FavouriteEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.order.OrderEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,8 +36,8 @@ public class UserEntity extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private FavouriteEntity favourites;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<OrderEntity> orders = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<OrderEntity> orders;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
@@ -109,11 +111,11 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    public Set<OrderEntity> getOrders() {
+    public List<OrderEntity> getOrders() {
         return orders;
     }
 
-    public UserEntity setOrders(Set<OrderEntity> orders) {
+    public UserEntity setOrders(List<OrderEntity> orders) {
         this.orders = orders;
         return this;
     }
