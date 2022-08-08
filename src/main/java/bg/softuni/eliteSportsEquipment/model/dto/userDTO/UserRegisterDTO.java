@@ -1,15 +1,24 @@
 package bg.softuni.eliteSportsEquipment.model.dto.userDTO;
 
+import bg.softuni.eliteSportsEquipment.model.validation.FieldMatch;
+import bg.softuni.eliteSportsEquipment.model.validation.UniqueUserEmail;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@FieldMatch(
+        first = "password",
+        second = "confirmPassword",
+        message = "Passwords do not match."
+)
 public class UserRegisterDTO {
 
     //TODO implement custom validators for matching passwords and unique email
 
-    @Email
-    @NotBlank
+    @Email(message = "User email should be valid")
+    @NotBlank(message = "User email should be provided")
+    @UniqueUserEmail(message = "User email should be unique.")
     private String email;
 
     @Size(min = 2, max = 20)

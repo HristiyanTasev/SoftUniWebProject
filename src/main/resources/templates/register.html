@@ -43,7 +43,8 @@
                            class="form-control"
                            placeholder="e.g. email@example.com"/>
                     <p class="invalid-feedback errors alert alert-danger">
-                        Email is required and should be valid.
+                        <th:block th:each="err: ${#fields.errors('email')}"
+                                  th:text="${err}">Email Error</th:block>
                     </p>
                 </div>
 
