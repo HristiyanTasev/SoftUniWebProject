@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/", "/contacts", "/products/all"
                         , "/products/belts", "/products/straps", "/products/sleeves"
-                        , "/products/details/**", "/maintenance").permitAll()
+                        , "/products/details/**", "/maintenance", "/products/search/**").permitAll()
                 .antMatchers("/users/login", "/users/register").anonymous()
                 .antMatchers("/service/orders").hasRole(UserRoleEnum.MODERATOR.name())
                 .antMatchers("/products/add/belt", "/products/add/sleeve", "/products/add/strap")
@@ -50,7 +50,6 @@ public class SecurityConfiguration {
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");
-
 
         return http.build();
     }

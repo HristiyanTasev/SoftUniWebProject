@@ -1,5 +1,6 @@
 package bg.softuni.eliteSportsEquipment.service.product;
 
+import bg.softuni.eliteSportsEquipment.model.dto.SearchDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDetailDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.product.BeltEntity;
@@ -9,6 +10,7 @@ import bg.softuni.eliteSportsEquipment.model.entity.product.StrapEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.ProductMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
+import bg.softuni.eliteSportsEquipment.repository.ProductSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -99,5 +101,13 @@ public class AllProductsService {
                 this.featuredProducts.add(productEntity);
             }
         }
+    }
+
+    public List<ProductDTO> searchProducts(SearchDTO searchDTO) {
+        return this.allProductsRepository
+                .findAll(new ProductSpecification(searchDTO))
+                .stream()
+                .map(this.productMapper::productEntityToProductDTO)
+                .collect(Collectors.toList());
     }
 }

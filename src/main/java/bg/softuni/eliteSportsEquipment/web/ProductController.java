@@ -1,11 +1,11 @@
 package bg.softuni.eliteSportsEquipment.web;
 
+import bg.softuni.eliteSportsEquipment.model.dto.SearchDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.*;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltLeverEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltMaterialEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.SleeveTypeEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.StrapTypeEnum;
-import bg.softuni.eliteSportsEquipment.service.cloudinary.CloudinaryService;
 import bg.softuni.eliteSportsEquipment.service.product.AllProductsService;
 import bg.softuni.eliteSportsEquipment.service.product.BeltService;
 import bg.softuni.eliteSportsEquipment.service.product.SleeveService;
@@ -62,11 +62,40 @@ public class ProductController {
     @GetMapping("/all")
     public String allProducts(Model model,
                               @PageableDefault(page = 0, size = 12) Pageable pageable) {
+
+        if (!model.containsAttribute("searchDTO")) {
+            model.addAttribute("searchDTO", new SearchDTO());
+        }
         Page<ProductDTO> allProducts = this.allProductsService.getAllProducts(pageable);
 
         model.addAttribute("products", allProducts);
 
         return "products";
+    }
+
+    @GetMapping("/search")
+    public String search(@Valid SearchDTO searchDTO,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes,
+                         Model model) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addAttribute("searchDTO", searchDTO);
+            redirectAttributes.addAttribute(
+                    "org.springframework.validation.BindingResult.searchDTO",
+                    bindingResult);
+            return "products-search";
+        }
+
+        if (!model.containsAttribute("searchDTO")) {
+            model.addAttribute("searchDTO", searchDTO);
+        }
+
+        if (!searchDTO.isEmpty()) {
+            model.addAttribute("products", this.allProductsService.searchProducts(searchDTO));
+        }
+
+        return "products-search";
     }
 
     @GetMapping("/details/{id}")
@@ -92,8 +121,8 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add/belt")
     public String beltAdd(@Valid BeltAddDTO beltAddDTO,
-                           BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes) {
+                          BindingResult bindingResult,
+                          RedirectAttributes redirectAttributes) {
 
 
         if (bindingResult.hasErrors() || !this.beltService.addBelt(beltAddDTO)) {
@@ -123,8 +152,8 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add/strap")
     public String strapAdd(@Valid StrapAddDTO strapAddDTO,
-                          BindingResult bindingResult,
-                          RedirectAttributes redirectAttributes) {
+                           BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes) {
 
 
         if (bindingResult.hasErrors() || !this.strapService.addStrap(strapAddDTO)) {
@@ -150,8 +179,8 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add/sleeve")
     public String sleeveAdd(@Valid SleeveAddDTO sleeveAddDTO,
-                           BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes) {
+                            BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes) {
 
 
         if (bindingResult.hasErrors() || !this.sleeveService.addSleeve(sleeveAddDTO)) {
