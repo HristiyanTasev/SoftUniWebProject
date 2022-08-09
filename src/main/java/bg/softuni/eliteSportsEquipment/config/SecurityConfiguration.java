@@ -33,8 +33,9 @@ public class SecurityConfiguration {
                         , "/products/belts", "/products/straps", "/products/sleeves"
                         , "/products/details/**", "/maintenance", "/products/search/**").permitAll()
                 .antMatchers("/users/login", "/users/register").anonymous()
+                //TODO: implement orders page for moderators
                 .antMatchers("/service/orders").hasRole(UserRoleEnum.MODERATOR.name())
-                .antMatchers("/products/add/belt", "/products/add/sleeve", "/products/add/strap")
+                .antMatchers("/service/users", "/products/add/belt", "/products/add/sleeve", "/products/add/strap")
                     .hasRole(UserRoleEnum.ADMIN.name())
                 .anyRequest().authenticated()
         .and()

@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -163,8 +164,24 @@ public class UserService {
 
                     userDTO.setId(u.getId())
                             .setEmail(u.getEmail())
-                            .setFullName(u.getFullName())
-                            .setRoles(u.getRoles().stream().map(userRole -> userRole.getUserRole().name()).collect(Collectors.toList()));
+                            .setUserRoles(u.getRoles().stream().map(userRole -> userRole.getUserRole().name()).collect(Collectors.toList()));
+
+                    if (userDTO.getUserRoles().isEmpty()) {
+                        userDTO.setUserRoles(List.of("NONE"));
+                    }
+
+                    List<String> allRoles = Arrays.stream(UserRoleEnum.values()).map(Enum::name).collect(Collectors.toList());
+
+                    List<String> rolesToAdd = allRoles
+                            .stream()
+                            .filter(uR -> !userDTO.getUserRoles().contains(uR))
+                            .collect(Collectors.toList());
+
+                    userDTO.setRolesToAdd(rolesToAdd);
+
+                    if (rolesToAdd.isEmpty()) {
+                        userDTO.setRolesToAdd(List.of("NONE"));
+                    }
 
                     return userDTO;
                 })

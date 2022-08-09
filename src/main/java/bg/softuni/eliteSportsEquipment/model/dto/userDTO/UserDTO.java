@@ -6,8 +6,8 @@ public class UserDTO {
 
     private Long id;
     private String email;
-    private String fullName;
-    private List<String> roles;
+    private List<String> userRoles;
+    private List<String> rolesToAdd;
 
     public UserDTO() {
     }
@@ -30,21 +30,21 @@ public class UserDTO {
         return this;
     }
 
-    public String getFullName() {
-        return fullName;
+    public List<String> getUserRoles() {
+        return userRoles;
     }
 
-    public UserDTO setFullName(String fullName) {
-        this.fullName = fullName;
+    public UserDTO setUserRoles(List<String> userRoles) {
+        this.userRoles = userRoles;
         return this;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public List<String> getRolesToAdd() {
+        return rolesToAdd;
     }
 
-    public UserDTO setRoles(List<String> roles) {
-        this.roles = roles;
+    public UserDTO setRolesToAdd(List<String> rolesToAdd) {
+        this.rolesToAdd = rolesToAdd;
         return this;
     }
 }
