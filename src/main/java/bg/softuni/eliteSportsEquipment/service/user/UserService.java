@@ -1,8 +1,9 @@
 package bg.softuni.eliteSportsEquipment.service.user;
 
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserDetailsDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserOrdersDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserProfileDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserRegisterDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserRoleEntity;
@@ -127,7 +128,7 @@ public class UserService {
         this.userRepository.save(currentUser);
     }
 
-    public UserDetailsDTO getUserDetails(String email) {
+    public UserProfileDTO getUserDetails(String email) {
         UserEntity currentUser = getUserByEmail(email);
 
         List<UserOrdersDTO> userOrders = new ArrayList<>();
@@ -143,7 +144,7 @@ public class UserService {
                     .collect(Collectors.toList());
         }
 
-        return new UserDetailsDTO(currentUser.getFullName(),
+        return new UserProfileDTO(currentUser.getFullName(),
                 currentUser.getEmail(),
                 currentUser.getAddress(),
                 userOrders);
@@ -151,5 +152,33 @@ public class UserService {
 
     public UserEntity getUserByEmail(String email) {
         return this.userRepository.findByEmail(email).orElseThrow();
+    }
+
+    public List<UserDTO> getAllUsers() {
+        return this.userRepository
+                .findAll()
+                .stream()
+                .map(u -> {
+                    UserDTO userDTO = new UserDTO();
+
+                    userDTO.setId(u.getId())
+                            .setEmail(u.getEmail())
+                            .setFullName(u.getFullName())
+                            .setRoles(u.getRoles().stream().map(userRole -> userRole.getUserRole().name()).collect(Collectors.toList()));
+
+                    return userDTO;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public AddressDTO getUserAddress(String email) {
+        String[] split = this.getUserByEmail(email)
+                .getAddress()
+                .split(", ");
+
+        AddressDTO address = new AddressDTO();
+        address.setCity(split[0]).setAddress(split[1]);
+
+        return address;
     }
 }

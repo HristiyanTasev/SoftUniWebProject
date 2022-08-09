@@ -1,7 +1,7 @@
 package bg.softuni.eliteSportsEquipment.web;
 
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserDetailsDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserProfileDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserFavouritesDTO;
 import bg.softuni.eliteSportsEquipment.service.user.FavouriteService;
 import bg.softuni.eliteSportsEquipment.service.user.UserService;
@@ -28,11 +28,6 @@ public class UserController {
         this.favouriteService = favouriteService;
     }
 
-    @ModelAttribute("addressDTO")
-    private AddressDTO initAddAddressDTO() {
-        return new AddressDTO();
-    }
-
     @GetMapping("/login")
     public String login() {
         return "login";
@@ -52,7 +47,7 @@ public class UserController {
 
     @GetMapping("/profile")
     public String userProfile(Principal principal, Model model) {
-        UserDetailsDTO userDetails = this.userService.getUserDetails(principal.getName());
+        UserProfileDTO userDetails = this.userService.getUserDetails(principal.getName());
 
         model.addAttribute("userDetails", userDetails);
 
@@ -62,6 +57,9 @@ public class UserController {
     @GetMapping("/address")
     public String userAddress(Principal principal, Model model) {
 
+        if (!model.containsAttribute("addressDTO")) {
+            model.addAttribute("addressDTO", this.userService.getUserAddress(principal.getName()));
+        }
 
         return "address";
     }

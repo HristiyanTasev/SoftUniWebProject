@@ -2,14 +2,14 @@ package bg.softuni.eliteSportsEquipment.model.dto.userDTO;
 
 import java.util.List;
 
-public class UserDetailsDTO {
+public class UserProfileDTO {
 
     private String fullName;
     private String email;
     private String address;
     private List<UserOrdersDTO> orders;
 
-    public UserDetailsDTO(String fullName, String email, String address, List<UserOrdersDTO> orders) {
+    public UserProfileDTO(String fullName, String email, String address, List<UserOrdersDTO> orders) {
         this.fullName = fullName;
         this.email = email;
         this.address = address;
@@ -20,7 +20,7 @@ public class UserDetailsDTO {
         return fullName;
     }
 
-    public UserDetailsDTO setFullName(String fullName) {
+    public UserProfileDTO setFullName(String fullName) {
         this.fullName = fullName;
         return this;
     }
@@ -29,7 +29,7 @@ public class UserDetailsDTO {
         return email;
     }
 
-    public UserDetailsDTO setEmail(String email) {
+    public UserProfileDTO setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -38,7 +38,7 @@ public class UserDetailsDTO {
         return address;
     }
 
-    public UserDetailsDTO setAddress(String address) {
+    public UserProfileDTO setAddress(String address) {
         this.address = address;
         return this;
     }
@@ -47,7 +47,7 @@ public class UserDetailsDTO {
         return orders;
     }
 
-    public UserDetailsDTO setOrders(List<UserOrdersDTO> orders) {
+    public UserProfileDTO setOrders(List<UserOrdersDTO> orders) {
         this.orders = orders;
         return this;
     }
