@@ -44,7 +44,7 @@
         <div class="col-2 align-self-center"><h1 class="h5 fw-bold">Add Role</h1></div>
     </div>
     <div class="d-md-flex d-sm-block justify-content-md-between justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3"
-         th:each="user: ${users}">
+         th:each="user: ${users}" th:unless="${user.email == currentUser}">
         <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
             <h1 class="h6" th:text="*{user.id}">2F456DA</h1>
         </div>
@@ -52,28 +52,34 @@
             <h1 class="h6" th:text="*{user.email}">email@example.com</h1>
         </div>
         <div class="col-md-3 text-sm-center text-md-start align-self-center my-2">
-            <form class="row">
+            <form class="row"
+                  th:method="delete"
+                  th:action="@{/service/users/role/remove}">
                 <select th:attr="disabled=${user.getUserRoles().contains('NONE') ? 'true' : 'false'}"
+                        th:field="${userRoleDTO.role}"
                         class="form-select col-12" aria-label="Role select">
                     <option th:each="role: *{user.userRoles}" th:value="${role}" th:text="${role}"
                             class="form-select-button">
                         ADMIN
                     </option>
                 </select>
-                <input class="col" type="hidden" th:name="*{user.id}">
+                <input type="hidden" th:id="*{user.id}" th:value="${user.id}" th:attr="name='id'">
                 <input type="submit" th:classappend="${user.getUserRoles().contains('NONE') ? 'disabled' : ''}"
                        class="btn btn-outline-danger col-12" value="Remove">
             </form>
         </div>
         <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <form class="row">
+            <form class="row"
+                  th:method="put"
+                  th:action="@{/service/users/role/add}">
                 <select th:attr="disabled=${user.getRolesToAdd().contains('NONE') ? 'true' : 'false'}"
+                        th:field="${userRoleDTO.role}"
                         class="form-select col-12" aria-label="Role select">
                     <option th:each="role: *{user.rolesToAdd}" th:value="${role}" th:text="${role}">
                         ADMIN
                     </option>
                 </select>
-                <input type="hidden" th:name="*{user.id}">
+                <input type="hidden" th:id="*{user.id}" th:value="${user.id}" th:attr="name='id'">
                 <input type="submit" th:classappend="${user.getRolesToAdd().contains('NONE') ? 'disabled' : ''}"
                        class="btn btn-outline-success col-12" value="Add">
             </form>

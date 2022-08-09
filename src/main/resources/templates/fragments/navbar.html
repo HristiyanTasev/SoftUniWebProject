@@ -32,7 +32,7 @@
                     <li class="nav-item fs-5">
                         <a class="nav-link active" aria-current="page" th:href="@{/contacts}">Contacts</a>
                     </li>
-                    <li class="nav-item fs-5" sec:authorize="hasRole('MODERATOR')">
+                    <li class="nav-item fs-5" sec:authorize="hasRole('MODERATOR') || hasRole('ADMIN')">
                         <a class="nav-link active" aria-current="page" th:href="@{/service/users}">Service</a>
                     </li>
                 </ul>

@@ -1,10 +1,7 @@
 package bg.softuni.eliteSportsEquipment.service.user;
 
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserOrdersDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserProfileDTO;
-import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserRegisterDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.userDTO.*;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserRoleEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.UserRoleEnum;
@@ -197,5 +194,42 @@ public class UserService {
         address.setCity(split[0]).setAddress(split[1]);
 
         return address;
+    }
+
+    public boolean removeRoleFromUserById(UserRoleDTO userRoleDTO) {
+        UserEntity user = this.userRepository.findById(userRoleDTO.getId()).orElseThrow();
+        List<UserRoleEnum> dtoRoles = Arrays.stream(UserRoleEnum.values())
+                .filter(r -> r.name()
+                        .equals(userRoleDTO.getRole()))
+                .collect(Collectors.toList());
+
+        boolean removeSuccess = false;
+
+        if (dtoRoles.size() == 1) {
+            UserRoleEntity role = this.userRoleRepository.findByUserRole(dtoRoles.get(0)).orElseThrow();
+            removeSuccess = user.getRoles().remove(role);
+            this.userRepository.save(user);
+        }
+
+        return removeSuccess;
+    }
+
+    public boolean addRoleToUserById(UserRoleDTO userRoleDTO) {
+        UserEntity user = this.userRepository.findById(userRoleDTO.getId()).orElseThrow();
+        List<UserRoleEnum> dtoRoles = Arrays.stream(UserRoleEnum.values())
+                .filter(r -> r.name()
+                        .equals(userRoleDTO.getRole()))
+                .collect(Collectors.toList());
+
+
+
+        if (dtoRoles.size() == 1) {
+            UserRoleEntity role = this.userRoleRepository.findByUserRole(dtoRoles.get(0)).orElseThrow();
+            user.getRoles().add(role);
+            this.userRepository.save(user);
+            return true;
+        }
+
+        return false;
     }
 }
