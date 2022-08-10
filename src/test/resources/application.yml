@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+#    defer-datasource-initialization: true
+#  sql:
+#    init:
+#      mode: never
+cloudinary:
+  api-key: 633177433524186
+  api-secret: ${CLOUDINARY_API_SECRET}
+  cloud-name: djoiyj8ia

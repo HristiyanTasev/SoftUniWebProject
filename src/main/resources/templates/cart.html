@@ -68,6 +68,7 @@
                        type="number"
                        th:name="|cartProducts[${itemStat.index}].productQuantity|" th:value="${p.productQuantity}">
 
+
             </div>
             <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
                 <h1 class="fs-5">Total price:</h1>
@@ -83,12 +84,13 @@
         <p class="fs-4">Subtotal:
             <span class="fs-3 fw-bold" th:text="|$${userCart.subTotal}|">$109.99</span>
         </p>
-        <input form="updateForm" type="submit" class="btn btn-light border border-dark" value="UPDATE CART">
+        <input form="updateForm" type="submit" class="btn btn-light border border-dark mb-2" value="UPDATE CART">
         <form
-            th:action="@{/users/orders/create}"
-            th:method="post">
+                th:action="@{/users/orders/create}"
+                th:method="post">
             <input type="submit" class="btn btn-danger btn-lg" value="FINISH ORDER">
         </form>
+
 
     </div>
 
