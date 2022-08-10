@@ -37,7 +37,7 @@ public class UserEntity extends BaseEntity {
     private FavouriteEntity favourites;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<OrderEntity> orders;
+    private List<OrderEntity> orders = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",

@@ -45,7 +45,7 @@
     </div>
     <div class="d-md-flex d-sm-block justify-content-md-between justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3"
          th:each="user: ${users}" th:unless="${user.email == currentUser}">
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
+        <div class="col-md-1 text-sm-center text-md-start align-self-center my-2">
             <h1 class="h6" th:text="*{user.id}">2F456DA</h1>
         </div>
         <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
@@ -63,12 +63,12 @@
                         ADMIN
                     </option>
                 </select>
-                <input type="hidden" th:id="*{user.id}" th:value="${user.id}" th:attr="name='id'">
+                <input type="hidden" th:value="${user.id}" th:attr="name='id'">
                 <input type="submit" th:classappend="${user.getUserRoles().contains('NONE') ? 'disabled' : ''}"
                        class="btn btn-outline-danger col-12" value="Remove">
             </form>
         </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
+        <div class="col-md-3 text-sm-center text-md-start align-self-center my-2">
             <form class="row"
                   th:method="put"
                   th:action="@{/service/users/role/add}">
@@ -79,7 +79,7 @@
                         ADMIN
                     </option>
                 </select>
-                <input type="hidden" th:id="*{user.id}" th:value="${user.id}" th:attr="name='id'">
+                <input type="hidden" th:value="${user.id}" th:attr="name='id'">
                 <input type="submit" th:classappend="${user.getRolesToAdd().contains('NONE') ? 'disabled' : ''}"
                        class="btn btn-outline-success col-12" value="Add">
             </form>

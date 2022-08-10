@@ -2,11 +2,13 @@ package bg.softuni.eliteSportsEquipment.service.order;
 
 import bg.softuni.eliteSportsEquipment.model.dto.order.CartDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.order.CartProductDTO;
+import bg.softuni.eliteSportsEquipment.model.entity.BaseEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.order.CartEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.order.CartProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
+import bg.softuni.eliteSportsEquipment.model.enums.UserRoleEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.CartMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
 import bg.softuni.eliteSportsEquipment.repository.CartProductsRepository;
@@ -59,13 +61,14 @@ public class CartService {
         cart.setCartProducts(cartProducts);
         UserEntity user = this.userRepository.findById(1L).orElseThrow();
         user.setCart(cart);
+        cart.setUser(user);
 
+        this.cartRepository.save(cart);
         this.userRepository.save(user);
     }
 
     public CartDTO getCartByUserEmail(String email) {
-        UserEntity currentUser = this.userRepository.findByEmail(email).orElseThrow();
-        CartEntity cartEntity = currentUser.getCart();
+        CartEntity cartEntity = this.cartRepository.findByUserEmailEager(email).orElse(null);
 
         if (cartEntity == null) {
             return null;
@@ -91,33 +94,33 @@ public class CartService {
         }
     }
 
-    // TODO test after fixing the cart.html update form
     public void updateCart(CartDTO cartDTO, String email) {
-        UserEntity currentUser = this.userRepository.findByEmail(email).orElseThrow();
-        CartEntity cartEntity = currentUser.getCart();
+        CartEntity cartEntity = this.cartRepository.findByUserEmailEager(email).orElseThrow();
 
         List<Integer> productQuantities = cartDTO.getCartProducts().stream()
                 .map(CartProductDTO::getProductQuantity)
                 .collect(Collectors.toList());
 
-        List<Long> productIdsForRemoval = new ArrayList<>();
+        List<CartProductEntity> productsForRemoval = new ArrayList<>();
 
-        for (int i = 0; i < productQuantities.size() - 1; i++) {
+        for (int i = 0; i < productQuantities.size(); i++) {
             Integer newQuantity = productQuantities.get(i);
 
             if (newQuantity.equals(0)) {
-                productIdsForRemoval.add(cartEntity.getCartProducts().get(i).getId());
-                cartEntity.getCartProducts().remove(i);
-            }
-
-            Integer currentQuantity = cartEntity.getCartProducts().get(i).getProductQuantity();
-            if (!currentQuantity.equals(newQuantity)) {
-                cartEntity.getCartProducts().get(i).setProductQuantity(newQuantity);
+                productsForRemoval.add(cartEntity.getCartProducts().get(i));
+                cartEntity.getCartProducts().get(i).setProductQuantity(0);
+            } else {
+                Integer currentQuantity = cartEntity.getCartProducts().get(i).getProductQuantity();
+                if (!currentQuantity.equals(newQuantity)) {
+                    cartEntity.getCartProducts().get(i).setProductQuantity(newQuantity);
+                }
             }
         }
 
+        cartEntity.getCartProducts().removeAll(productsForRemoval);
+
         this.cartRepository.save(cartEntity);
-        this.deleteRemovedCartProducts(productIdsForRemoval);
+        this.deleteRemovedCartProducts(productsForRemoval.stream().map(BaseEntity::getId).collect(Collectors.toList()));
     }
 
     public void addProductToCartById(Long productId, String email, String size) {
@@ -160,7 +163,7 @@ public class CartService {
             userCart.setCartProducts(cartProducts);
         }
 
-
+        userCart.setUser(currentUser);
         this.cartRepository.save(userCart);
     }
 

@@ -32,46 +32,49 @@
 <div class="container my-5" th:unless="${userCart == null || userCart.cartProducts.size < 1}">
 
     <h3 class="text-center border-bottom border-dark py-3">Products:</h3>
-    <!--    <form-->
-    <!--            id="updateForm"-->
-    <!--            th:action="@{/users/cart/update}"-->
-    <!--            th:method="patch">-->
-    <div class="d-md-flex d-sm-block justify-content-md-between justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3"
-         th:each="p: ${userCart.cartProducts}">
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <img th:src="*{p.pictureURL}" class="img-thumbnail" alt="...">
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center">
-            <h1 class="fs-4" th:text="*{p.name}">Product name</h1>
-            <p class="fs-5" th:if="*{p.size != null}" th:text="*{p.size}">L</p>
+    <form
+            id="updateForm"
+            th:action="@{/users/cart/update}"
+            th:method="patch">
+        <div class="d-md-flex d-sm-block justify-content-md-between justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3"
+             th:each="p, itemStat: ${userCart.cartProducts}">
+            <input type="hidden" th:id="*{p.id}" th:value="${p.id}" th:attr="name='id'">
+            <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
+                <img th:src="*{p.pictureURL}" class="img-thumbnail" alt="...">
+            </div>
+            <div class="col-md-2 text-sm-center text-md-start align-self-center">
+                <h1 class="fs-4" th:text="*{p.name}">Product name</h1>
+                <p class="fs-5" th:if="*{p.size != null}" th:text="*{p.size}">L</p>
 
-            <!-- TODO: remove the form after fixing update form (forms can't be nested)
-                        and find a way to make "Remove" change the item quantity to 0
-                        and refresh the page
-            -->
-            <form
-                    th:action="@{/users/cart/delete/{id}(id = ${p.id})}"
-                    th:method="delete">
-                <input type="submit" class="btn btn-light border border-dark" value="Remove">
-            </form>
+                <!-- TODO: remove the form after fixing update form (forms can't be nested)
+                            and find a way to make "Remove" change the item quantity to 0
+                            and refresh the page
+                -->
+                <!--                <form-->
+                <!--                        th:action="@{/users/cart/delete/{id}(id = ${p.id})}"-->
+                <!--                        th:method="delete">-->
+                <!--                    <input type="submit" class="btn btn-light border border-dark" value="Remove">-->
+                <!--                </form>-->
+            </div>
+            <div class="col-md-2 text-sm-center text-md-start align-self-center">
+                <h1 class="fs-4">Price:</h1>
+                <p th:text="|$*{p.price}|">49.99$</p>
+            </div>
+            <div class="col-md-3 text-sm-center text-md-start align-self-center my-2">
+
+                <h1 class="fs-5">Quantity:</h1>
+                <input class="form-control w-50 align-self-center center-block" aria-label="Quantity"
+                       aria-describedby="inputGroup-sizing-sm"
+                       type="number"
+                       th:name="|cartProducts[${itemStat.index}].productQuantity|" th:value="${p.productQuantity}">
+
+            </div>
+            <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
+                <h1 class="fs-5">Total price:</h1>
+                <p th:text="|$*{p.totalPrice}|">$90.00</p>
+            </div>
         </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center">
-            <h1 class="fs-4">Price:</h1>
-            <p th:text="|$*{p.price}|">49.99$</p>
-        </div>
-        <div class="col-md-3 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="fs-5">Quantity:</h1>
-            <input class="form-control w-50 align-self-center center-block" aria-label="Quantity"
-                   aria-describedby="inputGroup-sizing-sm"
-                   type="number" th:attr="value = *{p.productQuantity}"
-                   min="1">
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="fs-5">Total price:</h1>
-            <p th:text="|$*{p.totalPrice}|">$90.00</p>
-        </div>
-    </div>
-    <!--    </form>-->
+    </form>
 
     <div class="container my-3 py-3 text-end">
         <p class="fs-5">Delivery:
@@ -80,8 +83,13 @@
         <p class="fs-4">Subtotal:
             <span class="fs-3 fw-bold" th:text="|$${userCart.subTotal}|">$109.99</span>
         </p>
-        <input type="submit" class="btn btn-light border border-dark" value="UPDATE CART">
-        <button type="submit" class="btn btn-danger btn-lg">FINISH ORDER</button>
+        <input form="updateForm" type="submit" class="btn btn-light border border-dark" value="UPDATE CART">
+        <form
+            th:action="@{/users/orders/create}"
+            th:method="post">
+            <input type="submit" class="btn btn-danger btn-lg" value="FINISH ORDER">
+        </form>
+
     </div>
 
 </div>
@@ -90,6 +98,5 @@
 <!-- Footer start -->
 <div th:replace="fragments/footer">Footer</div>
 <!-- Footer end -->
-<script src="/js/cart.js"></script>
 </body>
 </html>

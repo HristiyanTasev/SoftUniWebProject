@@ -2,6 +2,7 @@ package bg.softuni.eliteSportsEquipment.web;
 
 import bg.softuni.eliteSportsEquipment.model.dto.order.CartDTO;
 import bg.softuni.eliteSportsEquipment.service.order.CartService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,11 +21,6 @@ public class CartController {
     public CartController(CartService cartService) {
         this.cartService = cartService;
     }
-
-//    @ModelAttribute("cartDTO")
-//    private CartDTO initCartDTO() {
-//        return new CartDTO();
-//    }
 
     @GetMapping("/cart")
     public String userCart(Model model, Principal principal) {

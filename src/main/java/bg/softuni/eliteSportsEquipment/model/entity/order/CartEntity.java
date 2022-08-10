@@ -10,8 +10,11 @@ import java.util.List;
 @Table(name = "carts")
 public class CartEntity extends BaseEntity {
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<CartProductEntity> cartProducts;
+
+    @OneToOne
+    private UserEntity user;
 
     public CartEntity() {
     }
@@ -26,6 +29,15 @@ public class CartEntity extends BaseEntity {
 
     public CartEntity setCartProducts(List<CartProductEntity> products) {
         this.cartProducts = products;
+        return this;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public CartEntity setUser(UserEntity user) {
+        this.user = user;
         return this;
     }
 }
