@@ -92,7 +92,7 @@
                 for powerlifting and heavy training.<br></p>
             <div class="d-grid gap-2 mt-2">
                 <input type="submit" form="sizeForm" class="btn btn-success" style="width:100%" value="ADD TO CART">
-                <form
+                <form th:unless="${inFavourites}"
                         th:action="@{/users/favourites/add/{id}(id= ${product.id})}"
                         th:method="put">
                     <input type="submit" class="btn btn-danger" style="width:100%" value="ADD TO FAVOURITES">

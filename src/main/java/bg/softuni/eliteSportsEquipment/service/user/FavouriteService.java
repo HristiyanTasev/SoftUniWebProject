@@ -70,9 +70,15 @@ public class FavouriteService {
         UserEntity currentUser = this.userRepository.findByEmail(name).orElseThrow();
         ProductEntity productToAdd = this.allProductsRepository.findById(productId).orElseThrow();
 
+        if (currentUser.getFavourites() != null &&
+                currentUser.getFavourites().getProducts().contains(productToAdd)) {
+            throw new IllegalArgumentException();
+        }
+
         if (currentUser.getFavourites() == null) {
             currentUser.setFavourites(new FavouriteEntity());
         }
+
 
         currentUser.getFavourites().getProducts().add(productToAdd);
         this.userRepository.save(currentUser);
@@ -89,5 +95,18 @@ public class FavouriteService {
 
         currentUser.getFavourites().getProducts().remove(productToDelete);
         this.userRepository.save(currentUser);
+    }
+
+    public boolean productIsInFavourites(Long productId, String email) {
+        UserEntity user = this.userRepository.findByEmail(email).orElseThrow();
+
+        if (user.getFavourites() == null) {
+            return false;
+        }
+
+        List<ProductEntity> products = user.getFavourites().getProducts();
+        ProductEntity checkProduct = this.allProductsRepository.findById(productId).orElseThrow();
+
+        return products.contains(checkProduct);
     }
 }

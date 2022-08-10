@@ -10,6 +10,7 @@ import bg.softuni.eliteSportsEquipment.service.product.AllProductsService;
 import bg.softuni.eliteSportsEquipment.service.product.BeltService;
 import bg.softuni.eliteSportsEquipment.service.product.SleeveService;
 import bg.softuni.eliteSportsEquipment.service.product.StrapService;
+import bg.softuni.eliteSportsEquipment.service.user.FavouriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,14 +36,16 @@ public class ProductController {
     private final BeltService beltService;
     private final StrapService strapService;
     private final SleeveService sleeveService;
+    private final FavouriteService favouriteService;
 
     @Autowired
     public ProductController(AllProductsService allProductsService, BeltService beltService,
-                             StrapService strapService, SleeveService sleeveService) {
+                             StrapService strapService, SleeveService sleeveService, FavouriteService favouriteService) {
         this.allProductsService = allProductsService;
         this.beltService = beltService;
         this.strapService = strapService;
         this.sleeveService = sleeveService;
+        this.favouriteService = favouriteService;
     }
 
     @ModelAttribute("beltAddDTO")
@@ -99,10 +103,12 @@ public class ProductController {
     }
 
     @GetMapping("/details/{id}")
-    public String productDetails(@PathVariable("id") Long productId, Model model) {
+    public String productDetails(@PathVariable("id") Long productId, Model model, Principal principal) {
         ProductDetailDTO product = this.allProductsService.getProductById(productId);
 
         model.addAttribute("product", product);
+        model.addAttribute("inFavourites",
+                this.favouriteService.productIsInFavourites(productId, principal.getName()));
 
         return "product-details";
     }
