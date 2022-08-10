@@ -106,9 +106,13 @@ public class ProductController {
     public String productDetails(@PathVariable("id") Long productId, Model model, Principal principal) {
         ProductDetailDTO product = this.allProductsService.getProductById(productId);
 
+        boolean inFavourites = false;
+        if (principal != null) {
+            inFavourites = this.favouriteService.productIsInFavourites(productId, principal.getName());
+        }
+
         model.addAttribute("product", product);
-        model.addAttribute("inFavourites",
-                this.favouriteService.productIsInFavourites(productId, principal.getName()));
+        model.addAttribute("inFavourites", inFavourites);
 
         return "product-details";
     }
