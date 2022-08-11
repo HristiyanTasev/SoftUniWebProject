@@ -20,16 +20,66 @@
 
 <div class="container my-3">
     <div class="row">
-        <div class="col-3">
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action active bg-danger" aria-current="true">
-                    Belts
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">Sleeves</a>
-                <a href="#" class="list-group-item list-group-item-action">Straps</a>
+        <div class="col-3 col-sm-12">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                aria-controls="flush-collapseOne">
+                            Belts
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                         data-bs-parent="#accordionFlushExample">
+
+                        <div class="accordion-body">
+                            <a class="link-dark fs-6" href="/products/belts">All Belts</a>
+                        </div>
+
+                        <hr class="dropdown-divider">
+                        <p class="ps-2">Brands:</p>
+                        <div class="accordion-body">
+                            <a class="link-dark fs-6" href="/products/belts">SBD</a>
+                        </div>
+                        <div class="accordion-body">
+                            <a class="link-dark fs-6" href="/products/belts">SBD</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo">
+                        <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                aria-controls="flush-collapseTwo">
+                            Sleeves
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                         data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <a class="link-dark fs-6" href="/products/sleeves">All Sleeves</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            Straps
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <a class="link-dark fs-6" href="/products/straps">All Straps</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-9 row">
+        <div class="col-9 col-sm-12 row">
             <form class="col-12 row"
                   th:method="get"
                   th:action="@{/products/search}"
