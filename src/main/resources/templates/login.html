@@ -20,7 +20,7 @@
 <div class="container-lg">
 
     <div class="text-center pt-5">
-        <h2>LOGIN</h2>
+        <h2 th:text="#{login_header}">LOGIN</h2>
     </div>
     <div class="row justify-content-center my-5">
         <div class="col-lg-6">
@@ -28,7 +28,7 @@
             <form
                     th:action="@{/users/login}"
                     th:method="POST">
-                <label for="username" class="form-label">Email address:</label>
+                <label for="username" class="form-label" th:text="#{login_email}">Email address:</label>
                 <div class="input-group mb-4">
                     <span class="input-group-text">
                         <i class="bi bi-envelope-fill"></i>
@@ -42,7 +42,7 @@
                            class="form-control"
                            placeholder="Email address..."/>
                 </div>
-                <label for="password" class="form-label">Password:</label>
+                <label for="password" class="form-label" th:text="#{login_password}">Password:</label>
                 <div class="mb-4 input-group">
                     <span class="input-group-text">
                         <i class="bi bi-key"></i>
@@ -58,10 +58,10 @@
                     Invalid username or password.
                 </p>
                 <div class="mb-5 mt-3 text-center">
-                    <button type="submit" class="btn btn-danger btn-lg">SIGN IN</button>
+                    <button type="submit" class="btn btn-danger btn-lg" th:text="#{login_login}">SIGN IN</button>
                 </div>
                 <div class="mb-5 text-center">
-                    <a class="text-danger" href="/users/register">Create an account</a>
+                    <a class="text-danger" href="/users/register" th:text="#{login_register}">Create an account</a>
                 </div>
             </form>
 
