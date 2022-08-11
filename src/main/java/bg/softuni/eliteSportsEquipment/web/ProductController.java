@@ -72,6 +72,10 @@ public class ProductController {
         }
         Page<ProductDTO> allProducts = this.allProductsService.getAllProducts(pageable);
 
+        model.addAttribute("beltBrands", this.allProductsService.findAllByType("belt"));
+        model.addAttribute("strapBrands", this.allProductsService.findAllByType("strap"));
+        model.addAttribute("sleeveBrands", this.allProductsService.findAllByType("sleeve"));
+
         model.addAttribute("products", allProducts);
 
         return "products";
@@ -94,6 +98,10 @@ public class ProductController {
         if (!model.containsAttribute("searchDTO")) {
             model.addAttribute("searchDTO", searchDTO);
         }
+
+        model.addAttribute("beltBrands", this.allProductsService.findAllByType("belt"));
+        model.addAttribute("strapBrands", this.allProductsService.findAllByType("strap"));
+        model.addAttribute("sleeveBrands", this.allProductsService.findAllByType("sleeve"));
 
         if (!searchDTO.isEmpty()) {
             model.addAttribute("products", this.allProductsService.searchProducts(searchDTO));

@@ -18,47 +18,47 @@
 <div th:replace="fragments/navbar">Navbar</div>
 
 
-<div class="container text-center pt-5">
-    <h1>SEARCH</h1>
-    <form class="row"
-          th:method="get"
-          th:action="@{/products/search}"
-          th:object="${searchDTO}">
-        <div class="col-lg-10">
-            <div class="input-group">
-                <input th:field="*{type}"
-                       th:errorclass="is-invalid"
-                       type="search" class="form-control" placeholder="Type..." aria-label="Type">
-                <input th:field="*{brand}"
-                       th:errorclass="is-invalid"
-                       type="search" class="form-control" placeholder="Brand..." aria-label="Brand">
-                <input th:field="*{name}"
-                       th:errorclass="is-invalid"
-                       type="search" class="form-control" placeholder="Name..." aria-label="Name">
-            </div>
-        </div>
-        <div class="col-lg-2 col-sm-12 d-flex justify-content-center">
-            <button type="submit" class="btn btn-danger">Search</button>
-        </div>
-    </form>
-</div>
 <div class="container my-3">
     <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6 py-3 text-center" th:if="${products != null}"
-             th:each="product: ${products}">
-            <div class="card">
-                <img th:src="*{product.pictureURL}" src="/images/knee-sleeve.png" class="rounded" alt="...">
-                <div class="card-body">
-                    <h3 th:text="*{product.getName()}">Item name</h3>
-                    <p class="text-danger fs-4" th:text="|$*{product.getPrice()}|">$45.99</p>
-                    <p>
-                        <a class="btn btn-outline-danger stretched-link"
-                           th:href="@{/products/details/{id}(id = ${product.id})}">
-                            View product
-                        </a>
-                    </p>
+        <th:block th:replace="/fragments/products-nav"></th:block>
+        <div class="col-lg-9 col-sm-12 row">
+            <form class="col-12 row"
+                  th:method="get"
+                  th:action="@{/products/search}"
+                  th:object="${searchDTO}">
+                <div class="col-lg-10">
+                    <div class="input-group">
+                        <input th:field="*{type}"
+                               th:errorclass="is-invalid"
+                               type="search" class="form-control" placeholder="Type..." aria-label="Type">
+                        <input th:field="*{brand}"
+                               th:errorclass="is-invalid"
+                               type="search" class="form-control" placeholder="Brand..." aria-label="Brand">
+                        <input th:field="*{name}"
+                               th:errorclass="is-invalid"
+                               type="search" class="form-control" placeholder="Name..." aria-label="Name">
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-12 justify-content-center">
+                    <button type="submit" class="btn btn-danger">Search</button>
+                </div>
+            </form>
+            <div class="col-lg-3 col-md-4 col-sm-6 py-3 text-center" th:each="product: ${products}">
+                <div class="card">
+                    <img th:src="*{product.pictureURL}" src="/images/knee-sleeve.png" class="rounded" alt="...">
+                    <div class="card-body">
+                        <h3 th:text="*{product.getName()}">Item name</h3>
+                        <p class="text-danger fs-4" th:text="|$*{product.getPrice()}|">$45.99</p>
+                        <p>
+                            <a class="btn btn-outline-danger stretched-link"
+                               th:href="@{/products/details/{id}(id = ${product.id})}">
+                                View product
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

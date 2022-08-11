@@ -1,5 +1,6 @@
 package bg.softuni.eliteSportsEquipment.repository;
 
+import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductBrandsDto;
 import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,6 +21,8 @@ public interface AllProductsRepository extends
     Long findCountProductsByType(@Param(value = "type") String type);
 
     Optional<ProductEntity> findByName(String name);
+
+    List<ProductEntity> findAllByType(String type);
 
     //    @Query("SELECT c FROM ProductEntity c WHERE c.type = :type")
     //    List<ProductEntity> findAllProductsByType(String type);

@@ -1,6 +1,7 @@
 package bg.softuni.eliteSportsEquipment.service.product;
 
 import bg.softuni.eliteSportsEquipment.model.dto.SearchDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductBrandsDto;
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDetailDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.product.BeltEntity;
@@ -109,5 +110,23 @@ public class AllProductsService {
                 .stream()
                 .map(this.productMapper::productEntityToProductDTO)
                 .collect(Collectors.toList());
+    }
+
+    public ProductBrandsDto findAllByType(String type) {
+        List<ProductEntity> allByType = this.allProductsRepository.findAllByType(type);
+
+        ProductBrandsDto productBrands = new ProductBrandsDto();
+
+        List<String> collect = allByType.
+                stream()
+                .map(ProductEntity::getBrand).collect(Collectors.toList());
+
+                collect.forEach(brand -> {
+                    if (!productBrands.getBrands().contains(brand)) {
+                        productBrands.getBrands().add(brand);
+                    }
+                });
+
+        return productBrands;
     }
 }

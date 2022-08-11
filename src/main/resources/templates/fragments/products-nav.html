@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<div class="col-lg-3 col-sm-12">
+    <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseOne" aria-expanded="false"
+                        aria-controls="flush-collapseOne">
+                    Belts
+                </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                 data-bs-parent="#accordionFlushExample">
+
+                <div class="accordion-body">
+                    <a class="link-dark fs-6" href="/products/search?type=belt">All Belts</a>
+                </div>
+
+                <hr class="dropdown-divider">
+                <p class="ps-2">Brands:</p>
+                <div class="accordion-body" th:each="brand: ${beltBrands.getBrands()}">
+                    <a class="link-dark fs-6" th:text="${brand}" th:href="@{/products/search?brand={brand}&type=belt(brand=${brand})}">SBD</a>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                        aria-controls="flush-collapseTwo">
+                    Sleeves
+                </button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                 data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <a class="link-dark fs-6" href="/products/search?type=sleeve">All Sleeves</a>
+                </div>
+
+                <hr class="dropdown-divider">
+                <p class="ps-2">Brands:</p>
+                <div class="accordion-body" th:each="brand: ${sleeveBrands.getBrands()}">
+                    <a class="link-dark fs-6" th:text="${brand}" th:href="@{/products/search?brand={brand}&type=sleeve(brand=${brand})}">SBD</a>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseThree" aria-expanded="false"
+                        aria-controls="flush-collapseThree">
+                    Straps
+                </button>
+            </h2>
+            <div id="flush-collapseThree" class="accordion-collapse collapse"
+                 aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <a class="link-dark fs-6" href="/products/search?type=strap">All Straps</a>
+                </div>
+
+                <hr class="dropdown-divider">
+                <p class="ps-2">Brands:</p>
+                <div class="accordion-body" th:each="brand: ${strapBrands.getBrands()}">
+                    <a class="link-dark fs-6" th:text="${brand}" th:href="@{/products/search?brand={brand}&type=strap(brand=${brand})}">SBD</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
