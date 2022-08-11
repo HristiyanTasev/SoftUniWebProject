@@ -17,6 +17,8 @@ public class OrderEntity extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    //TODO: add order number (random UUID) to show to user instead of order id
+
     @Enumerated(EnumType.STRING)
     private OrderStatusEnum orderStatus;
 

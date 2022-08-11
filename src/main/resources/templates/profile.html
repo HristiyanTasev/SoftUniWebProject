@@ -46,7 +46,7 @@
                         <div class="fw-bold" th:text="|Order Id: ${o.getOrderId()}|">
                             Order Id: 123
                         </div>
-                        <div class="ms-2 me-auto" th:text="|Created at: ${o.getCreatedAt()}|">
+                        <div class="ms-2 me-auto" th:text="|Created at: ${#temporals.format(o.getCreatedAt(), 'dd-MM-yyyy HH:mm')}|">
                             Created at: 11/11/1111
                         </div>
                     </div>
