@@ -131,23 +131,26 @@ public class TestDataUtils {
     public CartEntity initCart(UserEntity user) {
         List<ProductEntity> products = new ArrayList<>();
         products.add(initBelt("Kolan", 1L));
-        products.add(initBelt("Kolan", 2L));
-        products.add(initBelt("Kolan", 3L));
-        products.add(initBelt("Kolan", 4L));
+//        products.add(initBelt("Kolan", 2L));
+//        products.add(initBelt("Kolan", 3L));
+//        products.add(initBelt("Kolan", 4L));
 
         List<CartProductEntity> cartProducts = new ArrayList<>();
 
         CartEntity cart = new CartEntity();
 
         cartProducts.add(new CartProductEntity().setProduct(products.get(0)).setProductQuantity(1).setSize(SizeEnum.M));
-        cartProducts.add(new CartProductEntity().setProduct(products.get(1)).setProductQuantity(2).setSize(SizeEnum.L));
-        cartProducts.add(new CartProductEntity().setProduct(products.get(2)).setProductQuantity(3).setSize(SizeEnum.S));
-        cartProducts.add(new CartProductEntity().setProduct(products.get(3)).setProductQuantity(1).setSize(SizeEnum.XS));
+//        cartProducts.add(new CartProductEntity().setProduct(products.get(1)).setProductQuantity(2).setSize(SizeEnum.L));
+//        cartProducts.add(new CartProductEntity().setProduct(products.get(2)).setProductQuantity(3).setSize(SizeEnum.S));
+//        cartProducts.add(new CartProductEntity().setProduct(products.get(3)).setProductQuantity(1).setSize(SizeEnum.XS));
 
         cart.setCartProducts(cartProducts);
-        cart.setId(1L);
+//        cart.setId(1L);
+        cart.setUser(user);
+        user.setCart(cart);
 
         this.cartRepository.save(cart);
+        this.userRepository.save(user);
 
         return cart;
     }
@@ -155,7 +158,8 @@ public class TestDataUtils {
     public BeltEntity initBelt(String name, Long id) {
         BeltEntity baseProduct = new BeltEntity("SBD", name, "Long Belt Description",
                 BigDecimal.valueOf(40.99));
-        baseProduct.setId(id);
+//        baseProduct.setId(id);
+        baseProduct.setSizes(new ArrayList<>());
 
         PictureEntity pic = new PictureEntity()
                 .setUrl("https://res.cloudinary.com/djoiyj8ia/image/upload/v1659890181/prong_belt_xfgtgg.png")
@@ -173,12 +177,12 @@ public class TestDataUtils {
     }
 
     public void cleanUpDatabase() {
-        this.allProductsRepository.deleteAll();
+        this.userRepository.deleteAll();
         this.cartRepository.deleteAll();
         this.orderRepository.deleteAll();
-        this.userRepository.deleteAll();
-        this.userRoleRepository.deleteAll();
         this.favouriteRepository.deleteAll();
+        this.userRoleRepository.deleteAll();
+        this.allProductsRepository.deleteAll();
         this.pictureRepository.deleteAll();
     }
 }

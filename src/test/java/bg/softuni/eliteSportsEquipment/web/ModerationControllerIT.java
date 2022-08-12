@@ -125,8 +125,9 @@ public class ModerationControllerIT {
 
         mockMvc.perform(put("/users/role/add")
                         .with(user(user))
+                        .with(csrf())
                         .param("id", testModerator.getId().toString())
-                        .param("role", "ADMIN"))
+                        .param("role", "ROLE_ADMIN"))
                 .andExpect(status().isOk());
     }
 }

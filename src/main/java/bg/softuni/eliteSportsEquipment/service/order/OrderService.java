@@ -5,6 +5,7 @@ import bg.softuni.eliteSportsEquipment.model.entity.order.OrderEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.order.OrderProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.OrderStatusEnum;
+import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.OrderMapper;
 import bg.softuni.eliteSportsEquipment.repository.CartRepository;
 import bg.softuni.eliteSportsEquipment.repository.OrderProductsRepository;
@@ -88,7 +89,7 @@ public class OrderService {
                         .stream()
                         .map(oP -> {
                             OrderProductEntity orderProductEntity = this.orderMapper.cartProductEntityToOrderProductEntity(oP);
-                            this.orderProductsRepository.save(orderProductEntity);
+                            orderProductEntity.setSize(SizeEnum.valueOf(oP.getSize().name()));
                             return orderProductEntity;
                         })
                         .collect(Collectors.toList()))
@@ -98,6 +99,7 @@ public class OrderService {
                         .map(oP -> oP.getProduct().getPrice().multiply(BigDecimal.valueOf(oP.getProductQuantity())))
                         .reduce(BigDecimal.ZERO, BigDecimal::add));
 
+        this.orderProductsRepository.saveAll(userOrder.getOrderProducts());
         this.orderRepository.save(userOrder);
         currentUser.getOrders().add(userOrder);
         currentUser.setCart(null);
