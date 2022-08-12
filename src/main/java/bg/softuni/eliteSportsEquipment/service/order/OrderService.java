@@ -89,7 +89,9 @@ public class OrderService {
                         .stream()
                         .map(oP -> {
                             OrderProductEntity orderProductEntity = this.orderMapper.cartProductEntityToOrderProductEntity(oP);
-                            orderProductEntity.setSize(SizeEnum.valueOf(oP.getSize().name()));
+                            if (oP.getSize() != null) {
+                                orderProductEntity.setSize(SizeEnum.valueOf(oP.getSize().name()));
+                            }
                             return orderProductEntity;
                         })
                         .collect(Collectors.toList()))

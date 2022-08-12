@@ -8,7 +8,6 @@ import bg.softuni.eliteSportsEquipment.model.entity.order.CartProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
-import bg.softuni.eliteSportsEquipment.model.enums.UserRoleEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.CartMapper;
 import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
 import bg.softuni.eliteSportsEquipment.repository.CartProductsRepository;
@@ -144,8 +143,10 @@ public class CartService {
                 .filter(p -> {
                     boolean product = p.getProduct()
                             .equals(productToAdd);
-                    boolean hasSize = p.getSize().name().equals(size);
-
+                    boolean hasSize = false;
+                    if (p.getSize() != null) {
+                        hasSize = p.getSize().name().equals(size);
+                    }
                     return product && hasSize;
                 })
                 .findFirst();
