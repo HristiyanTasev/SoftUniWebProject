@@ -1,5 +1,6 @@
 package bg.softuni.eliteSportsEquipment.model.dto.productDTO;
 
+import bg.softuni.eliteSportsEquipment.model.validation.FileNotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
@@ -25,7 +26,7 @@ public class StrapAddDTO {
     @NotBlank
     private String strapType;
 
-    @NotNull
+    @FileNotEmpty(message = "Picture is required!")
     private MultipartFile picture;
 
     public StrapAddDTO() {
