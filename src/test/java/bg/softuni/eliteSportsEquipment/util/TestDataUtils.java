@@ -32,16 +32,22 @@ public class TestDataUtils {
     private final PictureRepository pictureRepository;
     private final AllProductsRepository allProductsRepository;
     private final CartRepository cartRepository;
+    private final OrderRepository orderRepository;
+    private final FavouriteRepository favouriteRepository;
 
     public TestDataUtils(UserRepository userRepository,
                          UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder,
-                         PictureRepository pictureRepository, AllProductsRepository allProductsRepository, CartRepository cartRepository) {
+                         PictureRepository pictureRepository, AllProductsRepository allProductsRepository,
+                         CartRepository cartRepository, OrderRepository orderRepository,
+                         FavouriteRepository favouriteRepository) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
         this.pictureRepository = pictureRepository;
         this.allProductsRepository = allProductsRepository;
         this.cartRepository = cartRepository;
+        this.orderRepository = orderRepository;
+        this.favouriteRepository = favouriteRepository;
     }
 
     public AppUserDetails getAdmin() {
@@ -89,6 +95,7 @@ public class TestDataUtils {
                 .setEmail(email)
                 .setAddress("Grad", "Adres")
                 .setPassword(passwordEncoder.encode("asdasd"));
+        admin.setId(1L);
 
         return this.userRepository.save(admin);
     }
@@ -104,6 +111,7 @@ public class TestDataUtils {
                 .setEmail(email)
                 .setAddress("Grad", "Adres")
                 .setPassword(passwordEncoder.encode("asdasd"));
+        moderator.setId(2L);
 
         return this.userRepository.save(moderator);
     }
@@ -115,15 +123,17 @@ public class TestDataUtils {
                 .setEmail(email)
                 .setAddress("Grad", "Adres")
                 .setPassword(passwordEncoder.encode("asdasd"));
+        user.setId(3L);
 
         return this.userRepository.save(user);
     }
 
     public CartEntity initCart(UserEntity user) {
-        List<ProductEntity> products = List.of(initBelt("Kolan"),
-                initBelt("Kolan2"),
-                initBelt("Kolan3"),
-                initBelt("Kolan4"));
+        List<ProductEntity> products = new ArrayList<>();
+        products.add(initBelt("Kolan", 1L));
+        products.add(initBelt("Kolan", 2L));
+        products.add(initBelt("Kolan", 3L));
+        products.add(initBelt("Kolan", 4L));
 
         List<CartProductEntity> cartProducts = new ArrayList<>();
 
@@ -135,18 +145,17 @@ public class TestDataUtils {
         cartProducts.add(new CartProductEntity().setProduct(products.get(3)).setProductQuantity(1).setSize(SizeEnum.XS));
 
         cart.setCartProducts(cartProducts);
-        user.setCart(cart);
-        cart.setUser(user);
+        cart.setId(1L);
 
         this.cartRepository.save(cart);
-        this.userRepository.save(user);
 
         return cart;
     }
 
-    public BeltEntity initBelt(String name) {
+    public BeltEntity initBelt(String name, Long id) {
         BeltEntity baseProduct = new BeltEntity("SBD", name, "Long Belt Description",
                 BigDecimal.valueOf(40.99));
+        baseProduct.setId(id);
 
         PictureEntity pic = new PictureEntity()
                 .setUrl("https://res.cloudinary.com/djoiyj8ia/image/upload/v1659890181/prong_belt_xfgtgg.png")
@@ -164,10 +173,12 @@ public class TestDataUtils {
     }
 
     public void cleanUpDatabase() {
+        this.allProductsRepository.deleteAll();
+        this.cartRepository.deleteAll();
+        this.orderRepository.deleteAll();
         this.userRepository.deleteAll();
         this.userRoleRepository.deleteAll();
-        this.allProductsRepository.deleteAll();
+        this.favouriteRepository.deleteAll();
         this.pictureRepository.deleteAll();
-        this.cartRepository.deleteAll();
     }
 }

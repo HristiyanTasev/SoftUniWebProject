@@ -83,7 +83,7 @@ public class AllProductsService {
                 .collect(Collectors.toList());
     }
 
-    @Scheduled(cron = "@daily")
+    @Scheduled(cron = "@midnight")
     public void generateFeaturedProducts() {
         List<ProductEntity> all = this.allProductsRepository.findAll();
 

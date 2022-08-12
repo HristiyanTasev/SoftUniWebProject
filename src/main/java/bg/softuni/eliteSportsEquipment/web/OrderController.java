@@ -10,6 +10,8 @@ import java.security.Principal;
 @Controller
 public class OrderController {
 
+    //TODO: rework order controller into a RestController :)
+
     private final OrderService orderService;
 
     public OrderController(OrderService orderService) {
