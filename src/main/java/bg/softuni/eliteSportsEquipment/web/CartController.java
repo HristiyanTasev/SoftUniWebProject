@@ -1,19 +1,23 @@
 package bg.softuni.eliteSportsEquipment.web;
 
 import bg.softuni.eliteSportsEquipment.model.dto.order.CartDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.order.CartProductDTO;
 import bg.softuni.eliteSportsEquipment.service.order.CartService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
+@Validated
 public class CartController {
 
     private final CartService cartService;
@@ -35,19 +39,8 @@ public class CartController {
     }
 
     @PatchMapping("/cart/update")
-    public String updateCart(@Valid CartDTO cartDTO,
-                             BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes,
+    public String updateCart(CartDTO cartDTO,
                              Principal principal) {
-
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("userCart", cartDTO);
-            redirectAttributes
-                    .addFlashAttribute("org.springframework.validation.BindingResult.userCart",
-                            bindingResult);
-
-            return "redirect:/users/cart";
-        }
 
         this.cartService.updateCart(cartDTO, principal.getName());
 

@@ -64,7 +64,6 @@ public class UserController {
         return "address";
     }
 
-    //TODO: make it so that only account owners can change the address
     @PostMapping("/address")
     public String userAddress(@Valid AddressDTO addressDTO,
                                BindingResult bindingResult,

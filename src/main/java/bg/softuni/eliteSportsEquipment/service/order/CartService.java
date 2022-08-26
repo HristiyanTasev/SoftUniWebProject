@@ -105,13 +105,19 @@ public class CartService {
         for (int i = 0; i < productQuantities.size(); i++) {
             Integer newQuantity = productQuantities.get(i);
 
-            if (newQuantity.equals(0)) {
+            if (newQuantity == null) {
+                cartEntity.getCartProducts().get(i).setProductQuantity(1);
+            } else if (newQuantity.equals(0)) {
                 productsForRemoval.add(cartEntity.getCartProducts().get(i));
                 cartEntity.getCartProducts().get(i).setProductQuantity(0);
             } else {
                 Integer currentQuantity = cartEntity.getCartProducts().get(i).getProductQuantity();
                 if (!currentQuantity.equals(newQuantity)) {
-                    cartEntity.getCartProducts().get(i).setProductQuantity(newQuantity);
+                    if (newQuantity < 0) {
+                        cartEntity.getCartProducts().get(i).setProductQuantity(1);
+                    } else {
+                        cartEntity.getCartProducts().get(i).setProductQuantity(newQuantity);
+                    }
                 }
             }
         }
