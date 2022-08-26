@@ -4,12 +4,14 @@ import java.util.List;
 
 public class UserProfileDTO {
 
+    private List<String> roles;
     private String fullName;
     private String email;
     private String address;
     private List<UserOrdersDTO> orders;
 
-    public UserProfileDTO(String fullName, String email, String address, List<UserOrdersDTO> orders) {
+    public UserProfileDTO(List<String> roles, String fullName, String email, String address, List<UserOrdersDTO> orders) {
+        this.roles = roles;
         this.fullName = fullName;
         this.email = email;
         this.address = address;
@@ -49,6 +51,15 @@ public class UserProfileDTO {
 
     public UserProfileDTO setOrders(List<UserOrdersDTO> orders) {
         this.orders = orders;
+        return this;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public UserProfileDTO setRoles(List<String> roles) {
+        this.roles = roles;
         return this;
     }
 }

@@ -142,7 +142,10 @@ public class UserService {
                     .collect(Collectors.toList());
         }
 
-        return new UserProfileDTO(currentUser.getFullName(),
+        List<String> roles = currentUser.getRoles().stream().map(r -> r.getUserRole().toString()).collect(Collectors.toList());
+
+        return new UserProfileDTO(roles,
+                currentUser.getFullName(),
                 currentUser.getEmail(),
                 currentUser.getAddress(),
                 userOrders);
@@ -220,7 +223,6 @@ public class UserService {
                 .filter(r -> r.name()
                         .equals(userRoleDTO.getRole()))
                 .collect(Collectors.toList());
-
 
 
         if (dtoRoles.size() == 1) {
