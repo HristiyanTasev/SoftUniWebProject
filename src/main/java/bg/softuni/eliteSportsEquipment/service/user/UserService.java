@@ -131,7 +131,7 @@ public class UserService {
 
         List<UserOrdersDTO> userOrders = new ArrayList<>();
 
-        if (currentUser.getOrders() != null && currentUser.getOrders().size() >= 1) {
+        if (currentUser.getOrders() != null && !currentUser.getOrders().isEmpty()) {
             userOrders = currentUser
                     .getOrders()
                     .stream()
@@ -142,7 +142,8 @@ public class UserService {
                     .collect(Collectors.toList());
         }
 
-        List<String> roles = currentUser.getRoles().stream().map(r -> r.getUserRole().toString()).collect(Collectors.toList());
+        List<String> roles = currentUser.getRoles().stream()
+                .map(r -> r.getUserRole().toString()).collect(Collectors.toList());
 
         return new UserProfileDTO(roles,
                 currentUser.getFullName(),
@@ -170,7 +171,7 @@ public class UserService {
                         userDTO.setUserRoles(List.of("NONE"));
                     }
 
-                    List<String> allRoles = Arrays.stream(UserRoleEnum.values()).map(Enum::name).collect(Collectors.toList());
+                    List<String> allRoles = Arrays.stream(UserRoleEnum.values()).map(Enum::name).toList();
 
                     List<String> rolesToAdd = allRoles
                             .stream()
@@ -204,7 +205,7 @@ public class UserService {
         List<UserRoleEnum> dtoRoles = Arrays.stream(UserRoleEnum.values())
                 .filter(r -> r.name()
                         .equals(userRoleDTO.getRole()))
-                .collect(Collectors.toList());
+                .toList();
 
         boolean removeSuccess = false;
 
@@ -222,7 +223,7 @@ public class UserService {
         List<UserRoleEnum> dtoRoles = Arrays.stream(UserRoleEnum.values())
                 .filter(r -> r.name()
                         .equals(userRoleDTO.getRole()))
-                .collect(Collectors.toList());
+                .toList();
 
 
         if (dtoRoles.size() == 1) {

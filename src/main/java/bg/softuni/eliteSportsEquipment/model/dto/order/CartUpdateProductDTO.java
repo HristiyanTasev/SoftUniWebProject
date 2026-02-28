@@ -1,6 +1,6 @@
 package bg.softuni.eliteSportsEquipment.model.dto.order;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public class CartUpdateProductDTO {
     @NotBlank

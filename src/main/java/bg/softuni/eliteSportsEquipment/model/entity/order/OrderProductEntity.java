@@ -4,7 +4,7 @@ import bg.softuni.eliteSportsEquipment.model.entity.BaseEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "order_products")

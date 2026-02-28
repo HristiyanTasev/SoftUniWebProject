@@ -1,5 +1,6 @@
 package bg.softuni.eliteSportsEquipment.service.order;
 
+import bg.softuni.eliteSportsEquipment.model.dto.order.UserOrderDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.order.CartEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.order.OrderEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.order.OrderProductEntity;
@@ -15,6 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -107,5 +111,33 @@ public class OrderService {
         currentUser.setCart(null);
         this.userRepository.save(currentUser);
         this.cartRepository.deleteById(cart.getId());
+    }
+
+    public UserOrderDTO getOrder(Long orderId, String email) {
+        UserEntity currentUser = this.userRepository.findByEmailEager(email).orElseThrow();
+        List<OrderEntity> userOrders = currentUser.getOrders();
+        Optional<OrderEntity> userOrder = userOrders
+                .stream()
+                .filter(o -> o.getId().equals(orderId))
+                .findFirst();
+
+        UserOrderDTO userOrderDTO = new UserOrderDTO().setOrderProducts(new ArrayList<>());
+
+        userOrder.ifPresent(orderEntity -> orderEntity
+                .getOrderProducts()
+                .forEach(orderProduct -> userOrderDTO
+                        .getOrderProducts()
+                        .add(orderMapper.orderProductEntityToOrderProductDTO(orderProduct)
+                                .setTotalPrice(orderProduct.getProduct().getPrice()
+                                        .multiply(BigDecimal.valueOf(orderProduct.getProductQuantity()))))
+                ));
+
+        userOrder.ifPresent(orderEntity -> {
+            userOrderDTO.setFinalPrice(orderEntity.getFinalPrice());
+            userOrderDTO.setCreatedAt(orderEntity.getCreatedAt());
+            userOrderDTO.setOrderStatus(orderEntity.getOrderStatus().name());
+        });
+
+        return userOrderDTO;
     }
 }

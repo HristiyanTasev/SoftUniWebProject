@@ -3,9 +3,9 @@ package bg.softuni.eliteSportsEquipment.model.dto.userDTO;
 import bg.softuni.eliteSportsEquipment.model.validation.FieldMatch;
 import bg.softuni.eliteSportsEquipment.model.validation.UniqueUserEmail;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @FieldMatch(
         first = "password",

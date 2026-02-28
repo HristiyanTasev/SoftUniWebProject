@@ -17,7 +17,7 @@
 <body>
 
 <!-- Navbar start -->
-<div th:replace="fragments/navbar">Navbar</div>
+<div th:replace="~{fragments/navbar}">Navbar</div>
 <!-- Navbar end -->
 
 <div class="container text-center my-5 ">
@@ -46,13 +46,19 @@
             <h2>ORDERS</h2>
             <p th:if="${userDetails.orders.size() < 1}">You don't have any orders yet.</p>
             <div class="list-group list-group-numbered" th:unless="${userDetails.orders.size() < 1}">
-                <a href="#" class="list-group-item d-flex justify-content-between align-items-start"
-                   th:each="o: *{orders}">
+                <div class="list-group-item d-flex justify-content-between align-items-start"
+                     th:each="o: *{orders}">
+
+                    <a class="stretched-link"
+                       th:href="@{/users/orders/{id}(id = ${o.orderId})}">
+                    </a>
+
                     <div>
                         <div class="fw-bold" th:text="|Order Id: ${o.getOrderId()}|">
                             Order Id: 123
                         </div>
-                        <div class="ms-2 me-auto" th:text="|Created at: ${#temporals.format(o.getCreatedAt(), 'dd-MM-yyyy HH:mm')}|">
+                        <div class="ms-2 me-auto"
+                             th:text="|Created at: ${#temporals.format(o.getCreatedAt(), 'dd-MM-yyyy HH:mm')}|">
                             Created at: 11/11/1111
                         </div>
                     </div>
@@ -70,14 +76,14 @@
                             Completed
                         </span>
                     </th:block>
-                </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Footer start -->
-<div th:replace="fragments/footer">Footer</div>
+<div th:replace="~{fragments/footer}">Footer</div>
 <!-- Footer end -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

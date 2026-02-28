@@ -3,7 +3,7 @@ package bg.softuni.eliteSportsEquipment.model.entity.user;
 import bg.softuni.eliteSportsEquipment.model.entity.BaseEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.UserRoleEnum;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity

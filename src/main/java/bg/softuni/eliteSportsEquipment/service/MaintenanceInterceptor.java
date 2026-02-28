@@ -1,10 +1,11 @@
 package bg.softuni.eliteSportsEquipment.service;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 
 @Configuration
@@ -12,8 +13,8 @@ public class MaintenanceInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response,
-                             Object handler) throws Exception {
+                             @NonNull HttpServletResponse response,
+                             @NonNull Object handler) throws Exception {
 
         if (!request.getRequestURI().equals("/maintenance")) {
             LocalDateTime now = LocalDateTime.now();

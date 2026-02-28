@@ -3,10 +3,10 @@ package bg.softuni.eliteSportsEquipment.model.entity.product;
 import bg.softuni.eliteSportsEquipment.model.enums.StrapTypeEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.TypeOfProductEnum;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import java.math.BigDecimal;
 import java.util.Locale;
 

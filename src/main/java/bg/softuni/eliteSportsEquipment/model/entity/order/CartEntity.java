@@ -3,7 +3,7 @@ package bg.softuni.eliteSportsEquipment.model.entity.order;
 import bg.softuni.eliteSportsEquipment.model.entity.BaseEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity

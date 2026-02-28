@@ -1,6 +1,8 @@
 package bg.softuni.eliteSportsEquipment.model.mapper;
 
+import bg.softuni.eliteSportsEquipment.model.dto.order.OrderProductDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.*;
+import bg.softuni.eliteSportsEquipment.model.entity.order.OrderProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.product.BeltEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.product.SleeveEntity;
