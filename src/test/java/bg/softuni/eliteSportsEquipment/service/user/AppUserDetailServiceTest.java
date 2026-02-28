@@ -66,13 +66,10 @@ public class AppUserDetailServiceTest {
 
         Assertions.assertEquals(2, authorities.size());
 
-        List<GrantedAuthority> authoritiesList = new ArrayList<>(authorities);
+        List<String> roles = authorities.stream().map(GrantedAuthority::getAuthority).toList();
 
-        //Might not pass sometimes because roles are in a HashSet
-        Assertions.assertEquals("ROLE_" + UserRoleEnum.ADMIN.name(),
-                authoritiesList.get(0).getAuthority());
-        Assertions.assertEquals("ROLE_" + UserRoleEnum.MODERATOR.name(),
-                authoritiesList.get(1).getAuthority());
+        Assertions.assertTrue(roles.contains("ROLE_" + UserRoleEnum.ADMIN.name()));
+        Assertions.assertTrue(roles.contains("ROLE_" + UserRoleEnum.MODERATOR.name()));
     }
 
     @Test

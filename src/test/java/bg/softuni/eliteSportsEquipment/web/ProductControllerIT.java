@@ -1,6 +1,7 @@
 package bg.softuni.eliteSportsEquipment.web;
 
-import bg.softuni.eliteSportsEquipment.model.entity.product.BeltEntity;
+import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductBrandsDto;
+import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.user.AppUserDetails;
 import bg.softuni.eliteSportsEquipment.service.cloudinary.CloudinaryService;
@@ -13,13 +14,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -36,25 +42,29 @@ public class ProductControllerIT {
     @Autowired
     private TestDataUtils testDataUtils;
 
-    @MockBean
+    @MockitoBean
     private Pageable mockPageable;
 
-    @MockBean
+    @MockitoBean
     private AllProductsService mockAllProductsService;
 
-    @MockBean
+    @MockitoBean
     private CloudinaryService mockCloudinary;
 
-    @MockBean
+    @MockitoBean
     private PictureService mockPicService;
 
     private UserEntity testAdmin, testModerator, testUser;
 
     @BeforeEach
     void setUp() {
+        testDataUtils.cleanUpDatabase();
         testAdmin = testDataUtils.initAdmin("admin@mail.com");
         testModerator = testDataUtils.initModerator("moderator@mail.com");
         testUser = testDataUtils.initUser("user@mail.com");
+
+        when(mockAllProductsService.findAllByType(anyString()))
+                .thenReturn(new ProductBrandsDto());
     }
 
     @AfterEach
@@ -68,10 +78,10 @@ public class ProductControllerIT {
             roles = {}
     )
     void testAllProducts() throws Exception {
-        Pageable mockPageable = this.mockPageable;
-
+        when(mockAllProductsService.getAllProducts(any(Pageable.class)))
+                .thenReturn(Page.empty());
         mockMvc.perform(get("/products/all")
-                        .flashAttr("products", mockAllProductsService.getAllProducts(mockPageable)))
+                        .flashAttr("products", Page.empty()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("products"));
     }
@@ -135,15 +145,19 @@ public class ProductControllerIT {
     void testAddBeltByAdmin_WithWrongInput() throws Exception {
 
         AppUserDetails admin = testDataUtils.getAdmin();
-        mockMvc.perform(post("/products/add/belt")
+        MockMultipartFile picture = new MockMultipartFile("picture", "test.webp",
+                "image/webp", "Spring Framework".getBytes());
+
+        mockMvc.perform(multipart("/products/add/belt")
+                        .file(picture)
+                        .param("brand", "")
+                        .param("name", "TEST")
+                        .param("description", "testDescription")
+                        .param("price", "20")
+                        .param("materialType", "LEATHER")
+                        .param("leverType", "PRONG")
                         .with(csrf())
-                        .with(user(admin)).
-                        param("brand", "").
-                        param("name", "").
-                        param("description", "testDescription").
-                        param("price", "20").
-                        param("materialType", "asd").
-                        param("leverType", "PRONG"))
+                        .with(user(admin)))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/products/add/belt"));
     }
@@ -157,7 +171,6 @@ public class ProductControllerIT {
 
         mockMvc.perform(multipart("/products/add/belt")
                         .file(picture)
-                        .param("brand", "TEST")
                         .param("brand", "TEST")
                         .param("name", "TEST")
                         .param("description", "testDescription")
@@ -191,8 +204,7 @@ public class ProductControllerIT {
                         param("name", "testName").
                         param("description", "testDescription").
                         param("price", "20").
-                        param("materialType", "LEATHER").
-                        param("leverType", "PRONG"))
+                        param("strapType", "LASSO"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("add-strap"));
     }
@@ -206,8 +218,7 @@ public class ProductControllerIT {
                         param("name", "testName").
                         param("description", "testDescription").
                         param("price", "20").
-                        param("materialType", "LEATHER").
-                        param("leverType", "PRONG"))
+                        param("strapType", "LASSO"))
                 .andExpect(status().isForbidden());
     }
 
@@ -220,8 +231,7 @@ public class ProductControllerIT {
                         param("name", "testName").
                         param("description", "testDescription").
                         param("price", "20").
-                        param("materialType", "LEATHER").
-                        param("leverType", "PRONG"))
+                        param("strapType", "LASSO"))
                 .andExpect(status().isForbidden());
     }
 
@@ -236,8 +246,7 @@ public class ProductControllerIT {
                         param("name", "").
                         param("description", "testDescription").
                         param("price", "20").
-                        param("materialType", "asd").
-                        param("leverType", "PRONG"))
+                        param("strapType", "LASSO"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/products/add/strap"));
     }

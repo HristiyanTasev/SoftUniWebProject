@@ -13,6 +13,7 @@ import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.UserRoleEnum;
 import bg.softuni.eliteSportsEquipment.model.user.AppUserDetails;
 import bg.softuni.eliteSportsEquipment.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -34,12 +35,14 @@ public class TestDataUtils {
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
     private final FavouriteRepository favouriteRepository;
+    private final OrderProductsRepository orderProductsRepository;
+    private final CartProductsRepository cartProductsRepository;
 
     public TestDataUtils(UserRepository userRepository,
                          UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder,
                          PictureRepository pictureRepository, AllProductsRepository allProductsRepository,
                          CartRepository cartRepository, OrderRepository orderRepository,
-                         FavouriteRepository favouriteRepository) {
+                         FavouriteRepository favouriteRepository, OrderProductsRepository orderProductsRepository, CartProductsRepository cartProductsRepository) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -48,6 +51,8 @@ public class TestDataUtils {
         this.cartRepository = cartRepository;
         this.orderRepository = orderRepository;
         this.favouriteRepository = favouriteRepository;
+        this.orderProductsRepository = orderProductsRepository;
+        this.cartProductsRepository = cartProductsRepository;
     }
 
     public AppUserDetails getAdmin() {
@@ -95,7 +100,6 @@ public class TestDataUtils {
                 .setEmail(email)
                 .setAddress("Grad", "Adres")
                 .setPassword(passwordEncoder.encode("asdasd"));
-        admin.setId(1L);
 
         return this.userRepository.save(admin);
     }
@@ -111,7 +115,6 @@ public class TestDataUtils {
                 .setEmail(email)
                 .setAddress("Grad", "Adres")
                 .setPassword(passwordEncoder.encode("asdasd"));
-        moderator.setId(2L);
 
         return this.userRepository.save(moderator);
     }
@@ -123,14 +126,13 @@ public class TestDataUtils {
                 .setEmail(email)
                 .setAddress("Grad", "Adres")
                 .setPassword(passwordEncoder.encode("asdasd"));
-        user.setId(3L);
 
         return this.userRepository.save(user);
     }
 
     public CartEntity initCart(UserEntity user) {
         List<ProductEntity> products = new ArrayList<>();
-        products.add(initBelt("Kolan", 1L));
+        products.add(initBelt("Kolan"));
 //        products.add(initBelt("Kolan", 2L));
 //        products.add(initBelt("Kolan", 3L));
 //        products.add(initBelt("Kolan", 4L));
@@ -155,7 +157,7 @@ public class TestDataUtils {
         return cart;
     }
 
-    public BeltEntity initBelt(String name, Long id) {
+    public BeltEntity initBelt(String name) {
         BeltEntity baseProduct = new BeltEntity("SBD", name, "Long Belt Description",
                 BigDecimal.valueOf(40.99));
 //        baseProduct.setId(id);
@@ -176,13 +178,42 @@ public class TestDataUtils {
         return baseProduct;
     }
 
+    @Transactional
     public void cleanUpDatabase() {
-        this.userRepository.deleteAll();
-        this.cartRepository.deleteAll();
+        // Break User<->Cart one-to-one both ways
+        this.userRepository.findAll().forEach(user -> user.setCart(null));
+        this.cartRepository.findAll().forEach(cart -> cart.setUser(null));
+
+        // Clear join-table relationships
+        this.orderRepository.findAll().forEach(order -> order.getOrderProducts().clear());
+        this.cartRepository.findAll().forEach(cart -> cart.getCartProducts().clear());
+        this.favouriteRepository.findAll().forEach(fav -> fav.getProducts().clear());
+        this.userRepository.findAll().forEach(user -> {
+            user.getRoles().clear();
+            user.getOrders().clear();
+        });
+
+        // Flush relationship clears if needed
+        this.userRepository.flush();
+        this.cartRepository.flush();
+        this.orderRepository.flush();
+        this.favouriteRepository.flush();
+
+        // Delete leaf tables first
+        this.orderProductsRepository.deleteAll();
+        this.cartProductsRepository.deleteAll();
+
+        // Delete middle tables
         this.orderRepository.deleteAll();
         this.favouriteRepository.deleteAll();
-        this.userRoleRepository.deleteAll();
+        this.cartRepository.deleteAll();
+
+        // Delete products then pictures
         this.allProductsRepository.deleteAll();
         this.pictureRepository.deleteAll();
+
+        // Delete users then roles
+        this.userRepository.deleteAll();
+        this.userRoleRepository.deleteAll();
     }
 }

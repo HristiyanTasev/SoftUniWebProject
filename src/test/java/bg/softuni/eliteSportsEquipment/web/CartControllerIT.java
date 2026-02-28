@@ -4,8 +4,10 @@ import bg.softuni.eliteSportsEquipment.model.dto.order.CartDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.order.CartProductDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.order.CartEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.order.CartProductEntity;
+import bg.softuni.eliteSportsEquipment.model.entity.product.BeltEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
+import bg.softuni.eliteSportsEquipment.repository.CartRepository;
 import bg.softuni.eliteSportsEquipment.util.TestDataUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +40,7 @@ public class CartControllerIT {
 
     @BeforeEach
     void setUp() {
+        testDataUtils.cleanUpDatabase();
         testUser = testDataUtils.initUser("user@mail.com");
         testCart = testDataUtils.initCart(testUser);
     }
@@ -69,8 +72,8 @@ public class CartControllerIT {
             value = "user@mail.com",
             userDetailsServiceBeanName = "testUserDataService")
     void testAddToUserCart() throws Exception {
-        CartEntity cart = testUser.getCart();
-        mockMvc.perform(post("/users/cart/add/{id}", cart.getId())
+        BeltEntity testBelt = testDataUtils.initBelt("TestBelt");
+        mockMvc.perform(post("/users/cart/add/{id}", testBelt.getId())
                         .with(csrf())
                         .param("size", SizeEnum.S.name()))
                 .andExpect(status().is3xxRedirection())

@@ -39,6 +39,7 @@ public class ModerationControllerIT {
 
     @BeforeEach
     void setUp() {
+        testDataUtils.cleanUpDatabase();
         testAdmin = testDataUtils.initAdmin("admin@mail.com");
         testModerator = testDataUtils.initModerator("moderator@mail.com");
         testUser = testDataUtils.initUser("user@mail.com");
@@ -111,23 +112,23 @@ public class ModerationControllerIT {
     )
     void testRemoveRole_availableForAdmin() throws Exception {
         AppUserDetails user = testDataUtils.getAdmin();
-        mockMvc.perform(delete("/users/role/remove")
+        mockMvc.perform(delete("/service/users/role/remove")
                         .with(csrf())
                         .with(user(user))
                         .param("id", testModerator.getId().toString())
                         .param("role", "MODERATOR"))
-                .andExpect(status().isOk());
+                .andExpect(status().is3xxRedirection());
     }
 
     @Test
     void testAddRole_availableForAdmin() throws Exception {
         AppUserDetails user = testDataUtils.getAdmin();
 
-        mockMvc.perform(put("/users/role/add")
+        mockMvc.perform(put("/service/users/role/add")
                         .with(user(user))
                         .with(csrf())
                         .param("id", testModerator.getId().toString())
                         .param("role", "ROLE_ADMIN"))
-                .andExpect(status().isOk());
+                .andExpect(status().is3xxRedirection());
     }
 }
