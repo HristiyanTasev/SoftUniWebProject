@@ -1,5 +1,6 @@
 package bg.softuni.eliteSportsEquipment.service.product;
 
+import bg.softuni.eliteSportsEquipment.exception.ResourceNotFoundException;
 import bg.softuni.eliteSportsEquipment.model.dto.SearchDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductBrandsDto;
 import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductDTO;
@@ -40,7 +41,8 @@ public class AllProductsService {
     }
 
     public ProductDetailDTO getProductById(Long productId) {
-        ProductEntity productEntity = this.allProductsRepository.findById(productId).orElseThrow();
+        ProductEntity productEntity = this.allProductsRepository.findById(productId)
+                .orElseThrow(() -> ResourceNotFoundException.forProduct(productId));
 
         ProductDetailDTO product = this.productMapper.productEntityToProductDetailDTO(productEntity);
 
@@ -119,7 +121,7 @@ public class AllProductsService {
 
         List<String> collect = allByType.
                 stream()
-                .map(ProductEntity::getBrand).collect(Collectors.toList());
+                .map(ProductEntity::getBrand).toList();
 
                 collect.forEach(brand -> {
                     if (!productBrands.getBrands().contains(brand)) {

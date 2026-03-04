@@ -1,5 +1,7 @@
 package bg.softuni.eliteSportsEquipment.service.order;
 
+import bg.softuni.eliteSportsEquipment.exception.BadRequestException;
+import bg.softuni.eliteSportsEquipment.exception.ResourceNotFoundException;
 import bg.softuni.eliteSportsEquipment.model.dto.order.UserOrderDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.order.CartEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.order.OrderEntity;
@@ -18,7 +20,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,8 +50,10 @@ public class OrderService {
     }
 
     public void initOrder(String orderStatus) {
-        UserEntity currentUser = this.userRepository.findById(1L).orElseThrow();
-        CartEntity cart = this.cartRepository.findByIdEager(1L).orElseThrow();
+        UserEntity currentUser = this.userRepository.findById(1L)
+                .orElseThrow(() -> ResourceNotFoundException.forUser(1L));
+        CartEntity cart = this.cartRepository.findByIdEager(1L)
+                .orElseThrow(() -> ResourceNotFoundException.forCart(1L));
 
         OrderEntity userOrder = new OrderEntity();
 
@@ -76,11 +79,13 @@ public class OrderService {
     }
 
     public void createOrderAndClearCart(String email) {
-        UserEntity currentUser = this.userRepository.findByEmailEager(email).orElseThrow();
-        CartEntity cart = this.cartRepository.findByUserEmailEager(email).orElseThrow();
+        UserEntity currentUser = this.userRepository.findByEmailEager(email)
+                .orElseThrow(() -> ResourceNotFoundException.forUser(email));
+        CartEntity cart = this.cartRepository.findByUserEmailEager(email)
+                .orElseThrow(() -> ResourceNotFoundException.forUser(email));
 
-        if (cart.getCartProducts().size() <= 0) {
-            throw new IllegalArgumentException();
+        if (cart.getCartProducts().isEmpty()) {
+            throw BadRequestException.emptyCart();
         }
 
         OrderEntity userOrder = new OrderEntity();
@@ -114,29 +119,29 @@ public class OrderService {
     }
 
     public UserOrderDTO getOrder(Long orderId, String email) {
-        UserEntity currentUser = this.userRepository.findByEmailEager(email).orElseThrow();
+        UserEntity currentUser = this.userRepository.findByEmailEager(email)
+                .orElseThrow(() -> ResourceNotFoundException.forUser(email));
+
         List<OrderEntity> userOrders = currentUser.getOrders();
-        Optional<OrderEntity> userOrder = userOrders
+        OrderEntity userOrder = userOrders
                 .stream()
                 .filter(o -> o.getId().equals(orderId))
-                .findFirst();
+                .findFirst()
+                .orElseThrow(() -> ResourceNotFoundException.forOrder(orderId));
 
         UserOrderDTO userOrderDTO = new UserOrderDTO().setOrderProducts(new ArrayList<>());
 
-        userOrder.ifPresent(orderEntity -> orderEntity
-                .getOrderProducts()
+        userOrder.getOrderProducts()
                 .forEach(orderProduct -> userOrderDTO
                         .getOrderProducts()
                         .add(orderMapper.orderProductEntityToOrderProductDTO(orderProduct)
                                 .setTotalPrice(orderProduct.getProduct().getPrice()
                                         .multiply(BigDecimal.valueOf(orderProduct.getProductQuantity()))))
-                ));
+                );
 
-        userOrder.ifPresent(orderEntity -> {
-            userOrderDTO.setFinalPrice(orderEntity.getFinalPrice());
-            userOrderDTO.setCreatedAt(orderEntity.getCreatedAt());
-            userOrderDTO.setOrderStatus(orderEntity.getOrderStatus().name());
-        });
+        userOrderDTO.setFinalPrice(userOrder.getFinalPrice());
+        userOrderDTO.setCreatedAt(userOrder.getCreatedAt());
+        userOrderDTO.setOrderStatus(userOrder.getOrderStatus().name());
 
         return userOrderDTO;
     }

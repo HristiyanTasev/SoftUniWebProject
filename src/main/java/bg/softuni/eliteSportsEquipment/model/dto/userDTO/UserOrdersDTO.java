@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 public class UserOrdersDTO {
 
     private Long orderId;
-
-    //TODO Show createdAt properly
     private LocalDateTime createdAt;
     private String orderStatus;
 

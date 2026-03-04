@@ -17,14 +17,14 @@
 
 <div class="d-flex align-items-center justify-content-center my-5">
     <div class="text-center">
-        <h1 class="display-1 fw-bold" th:text="${status}">404</h1>
-        <p class="fs-3"> <span class="text-danger">Oops!</span> Page not found.</p>
+        <h1 class="display-1 fw-bold" th:text="${status}">400</h1>
+        <p class="fs-3"> <span class="text-danger">Oops!</span> Bad request.</p>
         <p class="lead" th:text="${errorMessage}">
-            The page you’re looking for doesn’t exist.
+            Just a baad baaaad request.
         </p>
         <div class="error-details">
             <strong>Error Details:</strong>
-            <div>Status: <span th:text="${status}">404</span></div>
+            <div>Status: <span th:text="${status}">400</span></div>
             <div>Path: <span th:text="${path}">Unknown</span></div>
             <div>Time: <span th:text="${#temporals.format(timestamp, 'dd/MM/yyyy HH:mm:ss')}">Unknown</span></div>
         </div>

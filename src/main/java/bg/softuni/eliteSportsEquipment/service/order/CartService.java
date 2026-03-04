@@ -1,5 +1,6 @@
 package bg.softuni.eliteSportsEquipment.service.order;
 
+import bg.softuni.eliteSportsEquipment.exception.ResourceNotFoundException;
 import bg.softuni.eliteSportsEquipment.model.dto.order.CartDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.order.CartProductDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.BaseEntity;
@@ -58,7 +59,7 @@ public class CartService {
         cartProducts.add(new CartProductEntity().setProduct(products.get(3)).setProductQuantity(1).setSize(SizeEnum.XS));
 
         cart.setCartProducts(cartProducts);
-        UserEntity user = this.userRepository.findById(1L).orElseThrow();
+        UserEntity user = this.userRepository.findById(1L).orElseThrow(() -> ResourceNotFoundException.forUser(1L));
         user.setCart(cart);
         cart.setUser(user);
 
@@ -94,11 +95,12 @@ public class CartService {
     }
 
     public void updateCart(CartDTO cartDTO, String email) {
-        CartEntity cartEntity = this.cartRepository.findByUserEmailEager(email).orElseThrow();
+        CartEntity cartEntity = this.cartRepository.findByUserEmailEager(email)
+                .orElseThrow(() -> ResourceNotFoundException.forUser(email));
 
         List<Integer> productQuantities = cartDTO.getCartProducts().stream()
                 .map(CartProductDTO::getProductQuantity)
-                .collect(Collectors.toList());
+                .toList();
 
         List<CartProductEntity> productsForRemoval = new ArrayList<>();
 
@@ -129,8 +131,11 @@ public class CartService {
     }
 
     public void addProductToCartById(Long productId, String email, String size) {
-        UserEntity currentUser = this.userRepository.findByEmail(email).orElseThrow();
-        ProductEntity productToAdd = this.allProductsRepository.findById(productId).orElseThrow();
+        UserEntity currentUser = this.userRepository.findByEmail(email)
+                .orElseThrow(() -> ResourceNotFoundException.forUser(email));
+        ProductEntity productToAdd = this.allProductsRepository.findById(productId)
+                .orElseThrow(() -> ResourceNotFoundException.forProduct(productId));
+
         CartEntity userCart = currentUser.getCart();
 
         if (userCart == null) {
@@ -175,7 +180,9 @@ public class CartService {
     }
 
     public void deleteProductFromCartById(Long id, String email) {
-        CartEntity cart = this.userRepository.findByEmail(email).orElseThrow().getCart();
+        CartEntity cart = this.userRepository.findByEmail(email)
+                .orElseThrow(() -> ResourceNotFoundException.forUser(email))
+                .getCart();
         Optional<CartProductEntity> productToRemove = this.cartProductsRepository.findById(id);
 
         if (cart != null && productToRemove.isPresent()) {
