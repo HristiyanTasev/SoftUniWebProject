@@ -6,8 +6,8 @@ import bg.softuni.eliteSportsEquipment.model.entity.product.PictureEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltLeverEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.BeltMaterialEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.ProductMapper;
-import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
-import bg.softuni.eliteSportsEquipment.repository.PictureRepository;
+import bg.softuni.eliteSportsEquipment.repository.product.AllProductsRepository;
+import bg.softuni.eliteSportsEquipment.repository.product.PictureRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

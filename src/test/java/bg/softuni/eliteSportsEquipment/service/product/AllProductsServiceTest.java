@@ -8,13 +8,12 @@ import bg.softuni.eliteSportsEquipment.model.enums.BeltMaterialEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.SleeveTypeEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.StrapTypeEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.ProductMapper;
-import bg.softuni.eliteSportsEquipment.repository.AllProductsRepository;
+import bg.softuni.eliteSportsEquipment.repository.product.AllProductsRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;

@@ -57,8 +57,14 @@
                 <p th:if="${badCredentials}" class="errors alert alert-danger">
                     Invalid username or password.
                 </p>
-                <div class="mb-5 mt-3 text-center">
+                <div class="mb-4 mt-3 text-center">
                     <button type="submit" class="btn btn-danger btn-lg" th:text="#{login_login}">SIGN IN</button>
+                </div>
+                <div class="mb-5 mt-3 text-center">
+                    <label>
+                        <input type="checkbox" name="remember-me" />
+                        Remember me
+                    </label>
                 </div>
                 <div class="mb-5 text-center">
                     <a class="text-danger" href="/users/register" th:text="#{login_register}">Create an account</a>

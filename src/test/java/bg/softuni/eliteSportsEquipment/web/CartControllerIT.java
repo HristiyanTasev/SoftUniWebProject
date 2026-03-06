@@ -7,7 +7,6 @@ import bg.softuni.eliteSportsEquipment.model.entity.order.CartProductEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.product.BeltEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
-import bg.softuni.eliteSportsEquipment.repository.CartRepository;
 import bg.softuni.eliteSportsEquipment.util.TestDataUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

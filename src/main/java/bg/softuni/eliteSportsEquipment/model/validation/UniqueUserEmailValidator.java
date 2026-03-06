@@ -1,6 +1,6 @@
 package bg.softuni.eliteSportsEquipment.model.validation;
 
-import bg.softuni.eliteSportsEquipment.repository.UserRepository;
+import bg.softuni.eliteSportsEquipment.repository.user.UserRepository;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

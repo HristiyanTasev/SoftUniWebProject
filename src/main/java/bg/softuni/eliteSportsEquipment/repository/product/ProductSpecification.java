@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.repository;
+package bg.softuni.eliteSportsEquipment.repository.product;
 
 import bg.softuni.eliteSportsEquipment.model.dto.SearchDTO;
 import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;

@@ -1,7 +1,7 @@
 package bg.softuni.eliteSportsEquipment.service.product;
 
 import bg.softuni.eliteSportsEquipment.model.entity.product.PictureEntity;
-import bg.softuni.eliteSportsEquipment.repository.PictureRepository;
+import bg.softuni.eliteSportsEquipment.repository.product.PictureRepository;
 import bg.softuni.eliteSportsEquipment.service.cloudinary.CloudinaryImage;
 import bg.softuni.eliteSportsEquipment.service.cloudinary.CloudinaryService;
 import org.springframework.stereotype.Service;

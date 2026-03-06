@@ -10,10 +10,10 @@ import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.enums.OrderStatusEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.SizeEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.OrderMapper;
-import bg.softuni.eliteSportsEquipment.repository.CartRepository;
-import bg.softuni.eliteSportsEquipment.repository.OrderProductsRepository;
-import bg.softuni.eliteSportsEquipment.repository.OrderRepository;
-import bg.softuni.eliteSportsEquipment.repository.UserRepository;
+import bg.softuni.eliteSportsEquipment.repository.cart.CartRepository;
+import bg.softuni.eliteSportsEquipment.repository.order.OrderProductsRepository;
+import bg.softuni.eliteSportsEquipment.repository.order.OrderRepository;
+import bg.softuni.eliteSportsEquipment.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

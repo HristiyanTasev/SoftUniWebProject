@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.repository;
+package bg.softuni.eliteSportsEquipment.repository.product;
 
 import bg.softuni.eliteSportsEquipment.model.entity.product.PictureEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

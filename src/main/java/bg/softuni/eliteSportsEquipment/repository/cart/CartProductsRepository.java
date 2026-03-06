@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.repository;
+package bg.softuni.eliteSportsEquipment.repository.cart;
 
 import bg.softuni.eliteSportsEquipment.model.entity.order.CartProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

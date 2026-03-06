@@ -1,4 +1,4 @@
-package bg.softuni.eliteSportsEquipment.repository;
+package bg.softuni.eliteSportsEquipment.repository.user;
 
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findById(Long id);
 
     Optional<UserEntity> findByEmail(String email);
+
+    Optional<UserEntity> findByEmailIgnoreCase(String email);
 
     @Query("SELECT u FROM UserEntity u WHERE u.email = :email")
     @EntityGraph(attributePaths = { "orders" })

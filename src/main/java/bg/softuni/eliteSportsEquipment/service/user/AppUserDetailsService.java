@@ -3,7 +3,7 @@ package bg.softuni.eliteSportsEquipment.service.user;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserRoleEntity;
 import bg.softuni.eliteSportsEquipment.model.user.AppUserDetails;
-import bg.softuni.eliteSportsEquipment.repository.UserRepository;
+import bg.softuni.eliteSportsEquipment.repository.user.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

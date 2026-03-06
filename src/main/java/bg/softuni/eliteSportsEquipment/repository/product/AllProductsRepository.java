@@ -1,6 +1,5 @@
-package bg.softuni.eliteSportsEquipment.repository;
+package bg.softuni.eliteSportsEquipment.repository.product;
 
-import bg.softuni.eliteSportsEquipment.model.dto.productDTO.ProductBrandsDto;
 import bg.softuni.eliteSportsEquipment.model.entity.product.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
