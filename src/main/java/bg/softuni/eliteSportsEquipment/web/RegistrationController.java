@@ -2,12 +2,11 @@ package bg.softuni.eliteSportsEquipment.web;
 
 import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserRegisterDTO;
 import bg.softuni.eliteSportsEquipment.service.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
@@ -46,8 +45,30 @@ public class RegistrationController {
             return "redirect:/users/register";
         }
 
-        userService.registerAndLogin(userRegisterDTO);
+        userService.registerAndSendEmail(userRegisterDTO);
 
+        redirectAttributes.addFlashAttribute("email", userRegisterDTO.getEmail());
+        return "redirect:/users/verify-email";
+    }
+
+    @GetMapping("/verify-email")
+    public String verifyEmail() {
+        return "verify-email";
+    }
+
+    @GetMapping(value = "/verify-email", params = "token")
+    public String confirmEmail(@RequestParam(name = "token") String token,
+                               HttpServletRequest request,
+                               HttpServletResponse response) {
+        userService.verifyUserEmailAndLogin(token, request, response);
         return "redirect:/";
+    }
+
+    @PostMapping("/resend-verification")
+    public String resendVerification(@RequestParam String email, RedirectAttributes redirectAttributes) {
+        this.userService.resendEmailVerification(email);
+
+        redirectAttributes.addFlashAttribute("email", email);
+        return "redirect:/users/verify-email";
     }
 }

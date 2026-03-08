@@ -1,5 +1,6 @@
 package bg.softuni.eliteSportsEquipment.model.user;
 
+import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -7,31 +8,26 @@ import java.util.Collection;
 
 public class AppUserDetails implements UserDetails {
 
-    private final String password;
-    private final String username;
-    private final String firstName;
-    private final String lastName;
+    private final UserEntity user;
     private final Collection<GrantedAuthority> authorities;
 
-    public AppUserDetails(String password,
-                          String username,
-                          String firstName,
-                          String lastName,
+    public AppUserDetails(UserEntity user,
                           Collection<GrantedAuthority> authorities) {
 
-        this.password = password;
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.user = user;
         this.authorities = authorities;
     }
 
     public String getFirstName() {
-        return firstName;
+        return user.getFirstName();
     }
 
     public String getLastName() {
-        return lastName;
+        return user.getLastName();
+    }
+
+    public UserEntity getUser() {
+        return user;
     }
 
     @Override
@@ -41,12 +37,12 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return user.getEmail();
     }
 
     @Override
@@ -66,6 +62,6 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.isEnabled();
     }
 }

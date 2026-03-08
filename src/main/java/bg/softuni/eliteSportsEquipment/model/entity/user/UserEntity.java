@@ -19,6 +19,9 @@ public class UserEntity extends BaseEntity {
     private String email;
 
     @Column(nullable = false)
+    private boolean enabled = false;
+
+    @Column(nullable = false)
     private String firstName;
 
     @Column(nullable = false)
@@ -145,6 +148,15 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setFavourites(FavouriteEntity favourites) {
         this.favourites = favourites;
+        return this;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public UserEntity setEnabled(boolean enabled) {
+        this.enabled = enabled;
         return this;
     }
 }

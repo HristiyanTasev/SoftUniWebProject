@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.jwt.BadJwtException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -58,5 +59,21 @@ public class GlobalExceptionHandler {
         logger.error("Unexpected error occurred", ex);
 
         return "error/500";
+    }
+
+    @ExceptionHandler(BadJwtException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleBadJwtException(Exception ex,
+                                        Model model,
+                                        HttpServletRequest request) {
+        logger.warn("Invalid or expired token: {}", ex.getMessage());
+
+        model.addAttribute("errorMessage",
+                "The verification link is invalid or has expired. Please request a new one.");
+        model.addAttribute("status", 400);
+        model.addAttribute("timestamp", LocalDateTime.now());
+        model.addAttribute("path", request.getRequestURI());
+
+        return "error/400";
     }
 }

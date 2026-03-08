@@ -1,21 +1,34 @@
 package bg.softuni.eliteSportsEquipment.service.user;
 
+import bg.softuni.eliteSportsEquipment.exception.ResourceNotFoundException;
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.userDTO.*;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserRoleEntity;
+import bg.softuni.eliteSportsEquipment.model.enums.TokenUsageEnum;
 import bg.softuni.eliteSportsEquipment.model.enums.UserRoleEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.UserMapper;
 import bg.softuni.eliteSportsEquipment.repository.user.UserRepository;
 import bg.softuni.eliteSportsEquipment.repository.user.UserRoleRepository;
+import bg.softuni.eliteSportsEquipment.service.email.EmailService;
+import bg.softuni.eliteSportsEquipment.service.token.JwtTokenService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,17 +43,24 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
     private final UserMapper userMapper;
+    private final JwtTokenService authTokenService;
+    private final EmailService emailService;
+
+    @Value("${app.base-url}")
+    private String appBaseUrl;
 
     public UserService(UserRepository userRepository,
                        UserRoleRepository userRoleRepository,
                        PasswordEncoder passwordEncoder,
                        UserDetailsService userDetailsService,
-                       UserMapper userMapper) {
+                       UserMapper userMapper, JwtTokenService authTokenService, EmailService emailService) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.userMapper = userMapper;
+        this.authTokenService = authTokenService;
+        this.emailService = emailService;
     }
 
     public void init() {
@@ -92,7 +112,7 @@ public class UserService {
         this.userRepository.save(user);
     }
 
-    public void login(UserEntity userEntity) {
+    public void login(UserEntity userEntity, HttpServletRequest request, HttpServletResponse response) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(userEntity.getEmail());
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -100,20 +120,58 @@ public class UserService {
                 userDetails.getPassword(),
                 userDetails.getAuthorities());
 
-        SecurityContextHolder
-                .getContext()
-                .setAuthentication(authentication);
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authentication);
+        SecurityContextHolder.setContext(context);
+
+        SecurityContextRepository securityContextRepository = new HttpSessionSecurityContextRepository();
+        securityContextRepository.saveContext(context, request, response);
     }
 
-    public void registerAndLogin(UserRegisterDTO userRegisterDTO) {
+    public void registerAndSendEmail(UserRegisterDTO userRegisterDTO) {
 
         UserEntity newUser = userMapper.userDtoToUserEntity(userRegisterDTO);
         newUser.setAddress(userRegisterDTO.getCity(), userRegisterDTO.getAddress());
         newUser.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
 
+        String token = this.authTokenService.generateToken(userRegisterDTO.getEmail(),
+                TokenUsageEnum.EMAIL_VERIFICATION);
+
         this.userRepository.save(newUser);
 
-        this.login(newUser);
+        String url = this.buildTokenUrl(TokenUsageEnum.EMAIL_VERIFICATION, token);
+        this.emailService.sendVerificationEmail(userRegisterDTO.getEmail(), url);
+    }
+
+    public void verifyUserEmailAndLogin(String token, HttpServletRequest request, HttpServletResponse response) {
+        String tokenType = this.authTokenService.getTokenTypeFromToken(token);
+        if (!tokenType.equals(TokenUsageEnum.EMAIL_VERIFICATION.name())) {
+            throw new IllegalArgumentException("Invalid token type!");
+        }
+        String userEmailFromToken = this.authTokenService.getUserEmailFromToken(token);
+
+        UserEntity user = this.userRepository.findByEmailIgnoreCase(userEmailFromToken)
+                .orElseThrow(() -> ResourceNotFoundException.forUser(userEmailFromToken));
+
+        if (user.isEnabled()) {
+            throw new IllegalArgumentException("User is already verified!");
+        }
+
+        user.setEnabled(true);
+        this.userRepository.save(user);
+        this.login(user, request, response);
+    }
+
+    public void resendEmailVerification(String email) {
+        String token = this.authTokenService.generateToken(email,
+                TokenUsageEnum.EMAIL_VERIFICATION);
+        String url = this.buildTokenUrl(TokenUsageEnum.EMAIL_VERIFICATION, token);
+        this.emailService.sendVerificationEmail(email, url);
+    }
+
+    public String buildTokenUrl(TokenUsageEnum type, String token) {
+
+        return appBaseUrl + type.getPath() + "?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8);
     }
 
     public void editAddress(AddressDTO addressDTO, String email) {

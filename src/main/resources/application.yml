@@ -19,3 +19,18 @@ spring:
         multipart:
             max-file-size: 10MB
             max-request-size: 10MB
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: noreply.elitesportsequipment
+        password: ${GMAIL_APP_PASSWORD}
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+app:
+    base-url: "http://localhost:8080"
+    mail:
+        from: "noreply.elitesportsequipment@gmail.com"

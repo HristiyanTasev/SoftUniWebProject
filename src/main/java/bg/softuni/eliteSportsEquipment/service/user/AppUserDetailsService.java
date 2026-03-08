@@ -28,10 +28,7 @@ public class AppUserDetailsService implements UserDetailsService {
 
     private UserDetails map(UserEntity user) {
         return new AppUserDetails(
-                user.getPassword(),
-                user.getEmail(),
-                user.getFirstName(),
-                user.getLastName(),
+                user,
                 user
                         .getRoles()
                         .stream()

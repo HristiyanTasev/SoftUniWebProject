@@ -14,12 +14,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import java.security.KeyPair;
+import java.security.interfaces.RSAPublicKey;
+import java.util.UUID;
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
@@ -32,7 +45,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/", "/contacts", "/products/all",
                                 "/products/belts", "/products/straps", "/products/sleeves",
                                 "/products/details/**", "/maintenance", "/products/search/**").permitAll()
-                        .requestMatchers("/users/login", "/users/register", "/users/login-error").anonymous()
+                        .requestMatchers("/users/login", "/users/register", "/users/login-error",
+                                "/users/verify-email", "/users/resend-verification").anonymous()
                         .requestMatchers("/service/orders").hasRole(UserRoleEnum.MODERATOR.name())
                         .requestMatchers("/service/users", "/products/add/belt", "/products/add/sleeve", "/products/add/strap")
                         .hasRole(UserRoleEnum.ADMIN.name())
@@ -73,5 +87,26 @@ public class SecurityConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8();
+    }
+
+    @Bean
+    public JwtDecoder jwtDecoder(KeyPair keyPair) {
+        return NimbusJwtDecoder.withPublicKey((RSAPublicKey) keyPair.getPublic())
+                .build();
+    }
+
+    @Bean
+    public JWKSource<SecurityContext> jwkSource(KeyPair keyPair) {
+        RSAKey rsaKey = new RSAKey.Builder((RSAPublicKey) keyPair.getPublic())
+                .privateKey(keyPair.getPrivate())
+                .keyID(UUID.randomUUID().toString())
+                .build();
+        JWKSet jwkSet = new JWKSet(rsaKey);
+        return new ImmutableJWKSet<>(jwkSet);
+    }
+
+    @Bean
+    public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
+        return new NimbusJwtEncoder(jwkSource);
     }
 }
