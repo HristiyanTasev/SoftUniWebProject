@@ -32,6 +32,19 @@ public class JwtTokenService {
         }
     }
 
+    public boolean isValidToken(String token, TokenUsageEnum expectedUsage) {
+        try {
+            Jwt jwt = jwtDecoder.decode(token);
+
+            String action = jwt.getClaimAsString("action");
+
+            return expectedUsage.toString().equals(action);
+
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+
     public String getUserEmailFromToken(String token) {
         Jwt decodedToken = this.jwtDecoder.decode(token);
 

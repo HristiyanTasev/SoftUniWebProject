@@ -48,6 +48,9 @@ public class RegistrationController {
         userService.registerAndSendEmail(userRegisterDTO);
 
         redirectAttributes.addFlashAttribute("email", userRegisterDTO.getEmail());
+        redirectAttributes.addFlashAttribute("message",
+                "A verification email was sent to: " + userRegisterDTO.getEmail());
+
         return "redirect:/users/verify-email";
     }
 

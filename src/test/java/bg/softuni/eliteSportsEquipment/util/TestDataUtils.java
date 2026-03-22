@@ -64,27 +64,60 @@ public class TestDataUtils {
     }
 
     public AppUserDetails getAdmin() {
-        return new AppUserDetails("asdasd",
-                "admin@mail.com",
-                "Admin",
-                "Adminov",
-                List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_MODERATOR")));
+        UserEntity user = new UserEntity();
+        user.setEmail("admin@mail.com")
+                .setPassword("asdasd")
+                .setFirstName("Admin")
+                .setLastName("Adminov")
+                .setEnabled(true);
+
+        return new AppUserDetails(
+                user,
+                List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_MODERATOR"))
+        );
+//        return new AppUserDetails("asdasd",
+//                "admin@mail.com",
+//                "Admin",
+//                "Adminov",
+//                List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_MODERATOR")));
     }
 
     public AppUserDetails getModerator() {
-        return new AppUserDetails("asdasd",
-                "admin@mail.com",
-                "Admin",
-                "Adminov",
-                List.of(new SimpleGrantedAuthority("ROLE_MODERATOR")));
+        UserEntity user = new UserEntity();
+        user.setEmail("admin@mail.com")
+                .setPassword("asdasd")
+                .setFirstName("Admin")
+                .setLastName("Adminov")
+                .setEnabled(true);
+
+        return new AppUserDetails(
+                user,
+                List.of(new SimpleGrantedAuthority("ROLE_MODERATOR"))
+        );
+//        return new AppUserDetails("asdasd",
+//                "admin@mail.com",
+//                "Admin",
+//                "Adminov",
+//                List.of(new SimpleGrantedAuthority("ROLE_MODERATOR")));
     }
 
     public AppUserDetails getUser() {
-        return new AppUserDetails("asdasd",
-                "admin@mail.com",
-                "Admin",
-                "Adminov",
-                List.of());
+        UserEntity user = new UserEntity();
+        user.setEmail("admin@mail.com")
+                .setPassword("asdasd")
+                .setFirstName("Admin")
+                .setLastName("Adminov")
+                .setEnabled(true);
+
+        return new AppUserDetails(
+                user,
+                List.of()
+        );
+//        return new AppUserDetails("asdasd",
+//                "admin@mail.com",
+//                "Admin",
+//                "Adminov",
+//                List.of());
     }
 
     private void initRoles() {

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
@@ -75,5 +76,13 @@ public class GlobalExceptionHandler {
         model.addAttribute("path", request.getRequestURI());
 
         return "error/400";
+    }
+
+    @ExceptionHandler(TokenValidationException.class)
+    public String handleTokenValidationException(TokenValidationException ex, RedirectAttributes redirectAttributes) {
+        if (ex.getFlashKey() != null) {
+            redirectAttributes.addFlashAttribute(ex.getFlashKey(), ex.getFlashValue());
+        }
+        return "redirect:" + ex.getRedirectPath();
     }
 }

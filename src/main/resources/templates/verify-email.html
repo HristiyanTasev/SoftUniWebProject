@@ -17,9 +17,11 @@
 
 <div class="d-flex align-items-center justify-content-center my-5">
     <div class="text-center">
-        <h1 class="display-2 fw-bold">Email Verification</h1>
-        <p class="fs-2" th:text="'A verification email was sent to: ' + ${email}"></p>
-        <p class="fs-3">If a verification email doesn't send in a few minutes, click the button below to re-send verification</p>
+        <h1 class="display-4 fw-bold">Email Verification</h1>
+        <div th:if="${message}" class="alert alert-success text-center fs-4">
+            <p th:text="${message}">Email sent message</p>
+        </div>
+        <p class="fs-4">If a verification email doesn't send in a few minutes, click the button below to re-send verification</p>
 
         <form th:action="@{/users/resend-verification}" method="post" class="d-inline">
             <input type="hidden" name="email" th:value="${email}">

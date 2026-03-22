@@ -11,6 +11,8 @@ import bg.softuni.eliteSportsEquipment.model.enums.UserRoleEnum;
 import bg.softuni.eliteSportsEquipment.model.mapper.UserMapper;
 import bg.softuni.eliteSportsEquipment.repository.user.UserRepository;
 import bg.softuni.eliteSportsEquipment.repository.user.UserRoleRepository;
+import bg.softuni.eliteSportsEquipment.service.email.EmailService;
+import bg.softuni.eliteSportsEquipment.service.token.JwtTokenService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,6 +46,12 @@ public class UserServiceTest {
     @Mock
     private UserMapper mockUserMapper;
 
+    @Mock
+    private JwtTokenService mockJwtTokenService;
+
+    @Mock
+    private EmailService mockEmailService;
+
     private UserService toTest;
 
     @BeforeEach
@@ -53,7 +61,9 @@ public class UserServiceTest {
                 mockRoleRepository,
                 mockPasswordEncoder,
                 mockUserDetailsService,
-                mockUserMapper
+                mockUserMapper,
+                mockJwtTokenService,
+                mockEmailService
         );
     }
 

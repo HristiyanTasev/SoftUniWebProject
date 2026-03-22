@@ -1,6 +1,7 @@
 package bg.softuni.eliteSportsEquipment.service.user;
 
 import bg.softuni.eliteSportsEquipment.exception.ResourceNotFoundException;
+import bg.softuni.eliteSportsEquipment.exception.TokenValidationException;
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.userDTO.*;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
@@ -53,7 +54,9 @@ public class UserService {
                        UserRoleRepository userRoleRepository,
                        PasswordEncoder passwordEncoder,
                        UserDetailsService userDetailsService,
-                       UserMapper userMapper, JwtTokenService authTokenService, EmailService emailService) {
+                       UserMapper userMapper,
+                       JwtTokenService authTokenService,
+                       EmailService emailService) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -84,7 +87,8 @@ public class UserService {
                 .setLastName("Adminov")
                 .setEmail("admin@mail.com")
                 .setAddress("Grad", "Adres")
-                .setPassword(this.passwordEncoder.encode("asdasd"));
+                .setPassword(this.passwordEncoder.encode("asdasd"))
+                .setEnabled(true);
 
         this.userRepository.save(admin);
     }
@@ -96,7 +100,8 @@ public class UserService {
                 .setLastName("Moderatorov")
                 .setEmail("moderator@mail.com")
                 .setAddress("Grad", "Adres")
-                .setPassword(this.passwordEncoder.encode("asdasd"));
+                .setPassword(this.passwordEncoder.encode("asdasd"))
+                .setEnabled(true);
 
         this.userRepository.save(moderator);
     }
@@ -107,7 +112,8 @@ public class UserService {
                 .setLastName("Userov")
                 .setEmail("user@mail.com")
                 .setAddress("Grad", "Adres")
-                .setPassword(this.passwordEncoder.encode("asdasd"));
+                .setPassword(this.passwordEncoder.encode("asdasd"))
+                .setEnabled(true);
 
         this.userRepository.save(user);
     }
@@ -144,10 +150,9 @@ public class UserService {
     }
 
     public void verifyUserEmailAndLogin(String token, HttpServletRequest request, HttpServletResponse response) {
-        String tokenType = this.authTokenService.getTokenTypeFromToken(token);
-        if (!tokenType.equals(TokenUsageEnum.EMAIL_VERIFICATION.name())) {
-            throw new IllegalArgumentException("Invalid token type!");
-        }
+        assertValidToken(token, TokenUsageEnum.EMAIL_VERIFICATION,
+                TokenUsageEnum.EMAIL_VERIFICATION.getPath(), "message",
+                "Verification link is invalid or expired. You can request a new one.");
         String userEmailFromToken = this.authTokenService.getUserEmailFromToken(token);
 
         UserEntity user = this.userRepository.findByEmailIgnoreCase(userEmailFromToken)
@@ -169,9 +174,39 @@ public class UserService {
         this.emailService.sendVerificationEmail(email, url);
     }
 
+    public void sendPasswordResetLink(EmailForPasswordResetDto email) {
+        if (this.userRepository.findByEmailIgnoreCase(email.getEmail()).isPresent()) {
+            String token = this.authTokenService.generateToken(email.getEmail(), TokenUsageEnum.PASSWORD_RESET);
+            String url = this.buildTokenUrl(TokenUsageEnum.PASSWORD_RESET, token);
+
+            this.emailService.sendPasswordResetEmail(email.getEmail(), url);
+        }
+    }
+
+    public void resetPassword(String token, PasswordResetDTO passwordResetDTO) {
+        assertValidToken(token, TokenUsageEnum.PASSWORD_RESET,
+                TokenUsageEnum.PASSWORD_RESET.getPath(), "message",
+                "Reset link is invalid or expired. You can request a new one.");
+
+        String userEmailFromToken = this.authTokenService.getUserEmailFromToken(token);
+        UserEntity user = this.userRepository.findByEmailIgnoreCase(userEmailFromToken)
+                .orElseThrow(() -> ResourceNotFoundException.forUser(userEmailFromToken));
+
+        user.setPassword(passwordEncoder.encode(passwordResetDTO.getPassword()));
+        this.userRepository.save(user);
+    }
+
     public String buildTokenUrl(TokenUsageEnum type, String token) {
 
         return appBaseUrl + type.getPath() + "?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8);
+    }
+
+    private void assertValidToken(String token, TokenUsageEnum expectedUsage,
+                                  String redirectPath, String flashKey, String flashValue) {
+        if (!authTokenService.isValidToken(token, expectedUsage)) {
+            throw new TokenValidationException("Invalid or expired token!",
+                    redirectPath, flashKey, flashValue);
+        }
     }
 
     public void editAddress(AddressDTO addressDTO, String email) {

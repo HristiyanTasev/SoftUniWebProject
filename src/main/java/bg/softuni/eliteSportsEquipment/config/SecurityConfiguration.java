@@ -46,7 +46,8 @@ public class SecurityConfiguration {
                                 "/products/belts", "/products/straps", "/products/sleeves",
                                 "/products/details/**", "/maintenance", "/products/search/**").permitAll()
                         .requestMatchers("/users/login", "/users/register", "/users/login-error",
-                                "/users/verify-email", "/users/resend-verification").anonymous()
+                                "/users/verify-email", "/users/resend-verification", "/users/forgot-password",
+                                "users/reset-password").anonymous()
                         .requestMatchers("/service/orders").hasRole(UserRoleEnum.MODERATOR.name())
                         .requestMatchers("/service/users", "/products/add/belt", "/products/add/sleeve", "/products/add/strap")
                         .hasRole(UserRoleEnum.ADMIN.name())

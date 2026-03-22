@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class RegistrationControllerIT {
+public class RegistrationControllerIT extends BaseIT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,7 +37,7 @@ public class RegistrationControllerIT {
                         .param("confirmPassword", "asdasd")
                         .with(csrf())
                 ).andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/"));
+                .andExpect(redirectedUrl("/users/verify-email"));
     }
 
     @Test

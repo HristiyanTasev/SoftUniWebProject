@@ -1,5 +1,6 @@
 package bg.softuni.eliteSportsEquipment.util;
 
+import bg.softuni.eliteSportsEquipment.model.entity.user.UserEntity;
 import bg.softuni.eliteSportsEquipment.model.entity.user.UserRoleEntity;
 import bg.softuni.eliteSportsEquipment.model.user.AppUserDetails;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,10 +19,16 @@ import java.util.List;
 public class TestUserDataService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return new AppUserDetails("asdasd",
-                username,
-                "Test",
-                "User",
-                List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_MODERATOR")));
+        UserEntity user = new UserEntity();
+        user.setEmail(username)
+                .setPassword("asdasd")
+                .setFirstName("Test")
+                .setLastName("User")
+                .setEnabled(true);
+
+        return new AppUserDetails(
+                user,
+                List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_MODERATOR"))
+        );
     }
 }

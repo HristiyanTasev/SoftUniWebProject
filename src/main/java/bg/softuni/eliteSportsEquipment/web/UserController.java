@@ -1,6 +1,8 @@
 package bg.softuni.eliteSportsEquipment.web;
 
 import bg.softuni.eliteSportsEquipment.model.dto.AddressDTO;
+import bg.softuni.eliteSportsEquipment.model.dto.userDTO.EmailForPasswordResetDto;
+import bg.softuni.eliteSportsEquipment.model.dto.userDTO.PasswordResetDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserProfileDTO;
 import bg.softuni.eliteSportsEquipment.model.dto.userDTO.UserFavouritesDTO;
 import bg.softuni.eliteSportsEquipment.service.user.FavouriteService;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
+
 import java.security.Principal;
 import java.util.List;
 
@@ -45,6 +48,61 @@ public class UserController {
         return "redirect:/users/login";
     }
 
+    @GetMapping("/forgot-password")
+    public String forgotPassword(Model model) {
+        if (!model.containsAttribute("emailForPasswordResetDto")) {
+            model.addAttribute("emailForPasswordResetDto", new EmailForPasswordResetDto());
+        }
+        return "forgot-password";
+    }
+
+    @PostMapping("/forgot-password")
+    public String forgotPassword(@Valid @ModelAttribute("emailForPasswordResetDto") EmailForPasswordResetDto emailForPasswordResetDto,
+                                 BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("emailForPasswordResetDto", emailForPasswordResetDto);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.emailForPasswordResetDto",
+                    bindingResult);
+
+            return "redirect:/users/forgot-password";
+        }
+
+        userService.sendPasswordResetLink(emailForPasswordResetDto);
+        redirectAttributes.addFlashAttribute("message",
+                "Password reset link has been sent to " + emailForPasswordResetDto.getEmail() + " if an account with it exists.");
+
+        return "redirect:/users/forgot-password";
+    }
+
+    @GetMapping("/reset-password")
+    public String resetPassword(@RequestParam("token") String token, Model model) {
+        if (!model.containsAttribute("passwordResetDTO")) {
+            model.addAttribute("passwordResetDTO", new PasswordResetDTO());
+        }
+
+        model.addAttribute("token", token);
+
+        return "reset-password";
+    }
+
+    @PostMapping("/reset-password")
+    public String resetPassword(@RequestParam(name = "token") String token,
+                                @Valid @ModelAttribute("passwordResetDTO") PasswordResetDTO passwordResetDTO,
+                                BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("passwordResetDTO", passwordResetDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.passwordResetDTO",
+                    bindingResult);
+
+            return "redirect:/users/reset-password?token=" + token;
+        }
+        userService.resetPassword(token, passwordResetDTO);
+
+        return "redirect:/users/login";
+    }
+
     @GetMapping("/profile")
     public String userProfile(Principal principal, Model model) {
         UserProfileDTO userDetails = this.userService.getUserDetails(principal.getName());
@@ -66,9 +124,9 @@ public class UserController {
 
     @PostMapping("/address")
     public String userAddress(@Valid AddressDTO addressDTO,
-                               BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes,
-                               Principal principal) {
+                              BindingResult bindingResult,
+                              RedirectAttributes redirectAttributes,
+                              Principal principal) {
 
 
         if (bindingResult.hasErrors()) {
